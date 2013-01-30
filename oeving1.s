@@ -47,11 +47,7 @@ _start: /* programutføring vil starte her */
     csrf SR_GM
 
 loop:   /* evig løkke */
-    rjmp loop
-
-button_interrupt_routine:
     st.w r0[AVR32_PIO_CODR], r5 /* turns all LEDs off*/
-    rcall read_buttons
     cp.w r12, 0x1
     brne else_if /* branches to else_if if button 0 was not pushed */
     rcall move_paddle_right
@@ -64,10 +60,12 @@ else_if:
 
 end_if:
     st.w r0[AVR32_PIO_SODR], r4 /* Enable the LED that should be enabled */
+    rjmp loop
+
+button_interrupt_routine:
+    rcall read_buttons
     ld.w r8, r2[AVR32_PIO_ISR]
     rete
-
-
 
 read_buttons:
     ld.w r12, r2[AVR32_PIO_PDSR]
