@@ -6,9 +6,15 @@
  *
  *****************************************************************************/
 
-.include "io.s"  /* include various convenient symbols (constants) */
+/************************
+ * INCLUDES AND DEFINES *
+ ************************/
 
-SR_GM =   16  /* Status register flag "GM" is bit 16 */
+/* include various convenient symbols (constants) */
+.include "io.s"
+
+/* Status register flag "GM" is bit 16 */
+SR_GM =   16  
 
 /* led masks */
 LED_0 = 0x1
@@ -19,6 +25,7 @@ LED_4 = 0x10
 LED_5 = 0x20
 LED_6 = 0x40
 LED_7 = 0x80
+ALL_LEDS = 0xff
 
 /* button masks */
 SW_0 = 0x1
@@ -30,13 +37,21 @@ SW_5 = 0x20
 SW_6 = 0x40
 SW_7 = 0x80
 
+/* change this to configure debounce length */
+DEBOUNCE = 0xfff
+
+/* change this to configure paddle start position */
+PADDLE_START_POSITION = LED_3
+
 /* #yolo */
 NULL = 0
 
-/*****************************************************************************/
-/* text-segment */
-/* all programkoden må plasseres i dette segmentet */
 
+
+
+/****************
+ * DATA SEGMENT *
+ ****************/
 .text
 
 /* main entry point */
@@ -57,11 +72,11 @@ _start:
     mov r1, NULL
 
     /* r4 holds the paddle */
-    mov r4, LED_3
+    mov r4, PADDLE_START_POSITION
 
     /* set up some nice constants */
-    mov r6, 0xff
-    mov r5, 0x05
+    mov r6, ALL_LEDS
+    mov r5, SW_0 | SW_2
 
     /* enable IO pins for the LEDs */
     st.w r3[AVR32_PIO_PER], r6
@@ -108,7 +123,7 @@ loop:
     just handled, and r12 contains the state of the buttons */
 
     /* if SW0 was pressed */
-    cp.w r12, 0x1
+    cp.w r12, SW_0
     brne else_if
         /* move paddle to the right */
         rcall move_paddle_right
@@ -116,7 +131,7 @@ loop:
 
     /* else if SW2 was pressed */
     else_if:
-        cp.w r12, 0x4
+        cp.w r12, SW_2
         brne end_if
         /* move paddle to the left */
         rcall move_paddle_left
@@ -170,11 +185,11 @@ button_interrupt_routine:
  * See fig 2.9 in the compendium.
  */
 debounce:
-    mov r0, 0xffff
+    mov r0, DEBOUNCE
     debouce_loop:
         sub r0, 1
         cp.w r0, 0
-        breq debouce_loop_end
+        brle debouce_loop_end
         rjmp debouce_loop
     debouce_loop_end:
     ret r12
@@ -195,6 +210,18 @@ read_buttons:
     /* mask away everything but the lower 8 bits */
     and r12, r6
 
+    /* cache the button state */
+    mov r0, r12
+
+    /* invert old button state */
+    eor r7, r6
+
+    /* we only want buttons that are set now, but not in the old state  */
+    and r12, r7
+
+    /* save the new button state to be the new old button state */
+    mov r7, r12
+
     /* finally, return button status in r12 */
     ret r12
 
@@ -204,16 +231,16 @@ read_buttons:
  */
 move_paddle_right:
     /* if paddle is not at the far-right end of the board */
-    cp.w r4, 0x1
+    cp.w r4, LED_0
     breq move_paddle_right_reset
         /* shift paddle register to the right */
-        lsr r4, 0x1
+        lsr r4, 1
         rjmp move_paddle_right_end
 
     /* else, the paddle is at the end... */
     move_paddle_right_reset:
         /*and we must reset to the far-left end */
-        mov r4, 0x80
+        mov r4, LED_7
 
     /* end if */
     move_paddle_right_end:
@@ -227,16 +254,16 @@ move_paddle_right:
  */
 move_paddle_left:
     /* if paddle is not at the far-left end of the board */
-    cp.w r4, 0x80
+    cp.w r4, LED_7
     breq move_paddle_left_reset
         /* shift paddle register to the left */
-        lsl r4, 0x1
+        lsl r4, 1
         rjmp move_paddle_left_end
 
     /* else, the paddle is at the end... */
     move_paddle_left_reset:
         /*and we must reset to the far-left end */
-        mov r4, 0x01
+        mov r4, LED_0
 
     /* end if */
     move_paddle_left_end:

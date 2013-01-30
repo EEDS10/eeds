@@ -1,3 +1,12 @@
+cable setup:
+J1/B == buttons
+J3/C == LEDs
+
+getting the debugger to work:
+avr32gdbroxy //proxy thing for the debugger or what
+default port is 4711
+avr32-gdb //start the debugger
+
 Got the paddle to work when pushing button 0 and 2.
 The paddle loops back to the end when pushed off the edge (button 0 pushed when LED 0 is lit, or when btn 2 is pushed when LED 7 is lit).
 
@@ -50,3 +59,38 @@ button_interrupt_routine: ; button interrupt routine
 added csrf 16 to last line of init
 and that worked.
 
+sleep 1 seems safe
+sleep 2 renders the board unresponsive to the buttans
+
+implementing debouncing per the example in Figure 2.9 (page 23) in the compendium
+we load some high number into a register and loop until the register's is 0
+at which point the debouncing loop returns
+
+//board name is AT32AP7000
+puer = pull up resistors enable registers
+
+we rewrote the code to use the following 'convention' for the register's contents
+conventions sigve found in a pdf:
+r0 = texas
+r1 = 0x00
+r2 = piob_offset 
+r3 = pioc_offset
+r4 = paddle
+r5 = 0x05 
+r6 = 0xff (this is used like four times)
+r7 = previous button state
+r8 =
+r9 =
+r10=
+r11=
+r12= return address
+
+rewrite of code also had us writing major comments, yo
+
+without debouncing, pressing SW_0 caused so many interrupts that the board decides to reset the program.
+
+post-debouncing we are still left with the issue of each push of the buttans registering as two
+fixing the two registered presses per press problem:
+fix 1) assume each button push registers two (one when it goes down, one when it goes up)
+    this does not seem to work properly (it works fine for SW_0, but has us pressing SW_2 twice for the paddle to move), probably due to the switches being worn.
+fix 1-2) tweak debouncing (set to 0xfff) with fix1, and it works. further experimentation lead us to believe that 0xfff is a "pretty optimal" debouncing time
