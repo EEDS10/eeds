@@ -1,110 +1,254 @@
 /******************************************************************************
  *
- * Øving 1 UCSysDes
+ * Exercise 1 EEDS
+ *
+ * by emiltayl, trondrud and sigveseb
  *
  *****************************************************************************/
 
-.include "io.s"  /* inkludere noen nyttige symboler (konstanter) */
+.include "io.s"  /* include various convenient symbols (constants) */
 
-/* Eksempel på hvordan sette symboler (se også io.s) */
-SR_GM =   16  /* statusregisterflag "GM" er bit 16 */
+SR_GM =   16  /* Status register flag "GM" is bit 16 */
+
+/* led masks */
+LED_0 = 0x1
+LED_1 = 0x2
+LED_2 = 0x4
+LED_3 = 0x8
+LED_4 = 0x10
+LED_5 = 0x20
+LED_6 = 0x40
+LED_7 = 0x80
+
+/* button masks */
+SW_0 = 0x1
+SW_1 = 0x2
+SW_2 = 0x4
+SW_3 = 0x8
+SW_4 = 0x10
+SW_5 = 0x20
+SW_6 = 0x40
+SW_7 = 0x80
+
+/* #yolo */
+NULL = 0
 
 /*****************************************************************************/
 /* text-segment */
 /* all programkoden må plasseres i dette segmentet */
 
-/*
- * r0: pioc
- * r1: 0x00
- * r2: piob
- * r4: current light position
- * r5: 0xff
- * r6: 0x05
- * r7: intc
- * r8: button_interrupt_routine
-*/
 .text
 
+/* main entry point */
 .globl  _start
-_start: /* programutføring vil starte her */
-    lddpc r0, pioc_offset
+_start:
+
+    /********
+     * INIT *
+     ********/
+
+    /* load pointers to piob and pioc */
     lddpc r2, piob_offset
+    lddpc r3, pioc_offset
     lddpc r7, intc_base
     mov r8, button_interrupt_routine
-    mov r1, 0x00
-    mov r4, 0x08 /* 4 holds the paddle */
-    mov r5, 0xff
-    mov r6, 0x05
-    st.w r0[AVR32_PIO_PER], r5 /* Set PER for all LEDs */
-    st.w r0[AVR32_PIO_OER], r5 /* Set OER for all LEDs */
-    st.w r2[AVR32_PIO_PER], r5 /* Set PER for all buttons */
-    st.w r2[AVR32_PIO_PUER], r5 /* Set PUER for all buttons */
-    st.w r0[AVR32_PIO_OER], r5 /* Disable the LEDs in R1 */
-    st.w r2[AVR32_PIO_IDR], r5
-    st.w r2[AVR32_PIO_IER], r6 /* Turn on interrupts for button 0 and 2 */
+
+    /* set 0 in r1, as per convention */
+    mov r1, NULL
+
+    /* r4 holds the paddle */
+    mov r4, LED_3
+
+    /* set up some nice constants */
+    mov r6, 0xff
+    mov r5, 0x05
+
+    /* enable IO pins for the LEDs */
+    st.w r3[AVR32_PIO_PER], r6
+
+    /* set the IO pins to be outputs */
+    st.w r3[AVR32_PIO_OER], r6
+
+    /* enable IO pins for the buttons */
+    st.w r2[AVR32_PIO_PER], r6
+
+    /* enable pull-up resistors */
+    st.w r2[AVR32_PIO_PUER], r6
+
+    /* defensively turn off all interrupts */
+    st.w r2[AVR32_PIO_IDR], r6
+
+    /* turn on button interrupts for SW0 and SW2 */
+    st.w r2[AVR32_PIO_IER], r5 
+
+    /* set the EVBA to 0, as specified in the compendium */
     mtsr 4, r1
+
+    /* set button_interrupt_routine to handle button interrupts */
     st.w r7[AVR32_INTC_IPR14], r8
+
+    /* finally, enable interrupts! */
     csrf SR_GM
 
-loop:   /* evig løkke */
-    st.w r0[AVR32_PIO_CODR], r5 /* turns all LEDs off*/
+
+    
+
+/*************
+ * MAIN LOOP *
+ *************/
+loop:
+
+    /* set the leds to the new state */
+    rcall set_leds
+
+    /* chill-out zone */
+    sleep 1
+
+    /* when we break out of the sleep, a button interrupt was
+    just handled, and r12 contains the state of the buttons */
+
+    /* if SW0 was pressed */
     cp.w r12, 0x1
-    brne else_if /* branches to else_if if button 0 was not pushed */
-    rcall move_paddle_right
-    rjmp end_if
+    brne else_if
+        /* move paddle to the right */
+        rcall move_paddle_right
+        rjmp end_if
 
-else_if:
-    cp.w r12, 0x4
-    brne end_if /* branches to end_if if button 2 was not pressed */
-    rcall move_paddle_left
+    /* else if SW2 was pressed */
+    else_if:
+        cp.w r12, 0x4
+        brne end_if
+        /* move paddle to the left */
+        rcall move_paddle_left
 
-end_if:
-    st.w r0[AVR32_PIO_SODR], r4 /* Enable the LED that should be enabled */
+    /* end if */
+    end_if:
+
+    /* go back to the top of the loop */
     rjmp loop
 
-button_interrupt_routine:
-    rcall read_buttons
-    ld.w r8, r2[AVR32_PIO_ISR]
-    rete
-
-read_buttons:
-    ld.w r12, r2[AVR32_PIO_PDSR]
-    eor r12, r5 /* == not R12, for the first 8 bits */
-    and r12, r5 /* to ensure the first 8 bits remain untouched while the last 8 are set to zero */
-    ret r12
-
-
-move_paddle_right: /*moves the 'paddle' right by right rotating the value in r4 */
-    cp.w r4, 0x01
-    breq move_paddle_right_reset
-    lsr r4, 0x1
-    rjmp move_paddle_right_end
-
-move_paddle_right_reset:
-    mov r4, 0x80
-
-move_paddle_right_end:
-    ret r12
-
-
-move_paddle_left: /* moves the 'paddle' left by left rotating the value in r4 */
-    cp.w r4, 0x80
-    breq move_paddle_left_reset
-    lsl r4, 0x1
-    rjmp move_paddle_left_end
-
-move_paddle_left_reset:
-    mov r4, 0x01
-
-move_paddle_left_end:
-    ret r12
 
 /*
+ * Subroutine that turns on the LED the paddle is at.
+ * The paddle's state is in r4.
+ */
+set_leds:
+
+    /* turns all LEDs off*/
+    st.w r3[AVR32_PIO_CODR], r6
+
+    /* turn on the appropriate LED */
+    st.w r3[AVR32_PIO_SODR], r4
+
+    /* return */
+    ret r12
+
+
+/*
+ * Interrupt routine for handling button presses. It reads
+ * the button status, debounces, notifies that the interrupt
+ * has been handled, and returns the button state in r12.
+ */
 button_interrupt_routine:
+
+    /* read button state */
     rcall read_buttons
-    ld.w r8, r2[AVR32_PIO_ISR]
+
+    /* software debounce to stop button glitching */
+    rcall debounce 
+
+    /* notify that the interrupt has been handled */
+    ld.w r0, r2[AVR32_PIO_ISR]
+
+    /* return */
     rete
-*/
+
+
+
+/*
+ * Debounce routine. It loops for a while, then returns.
+ * See fig 2.9 in the compendium.
+ */
+debounce:
+    mov r0, 0xffff
+    debouce_loop:
+        sub r0, 1
+        cp.w r0, 0
+        breq debouce_loop_end
+        rjmp debouce_loop
+    debouce_loop_end:
+    ret r12
+     
+
+
+/*
+ * Read button status routine. Returns button status in r12. 
+ * Note: button status is inverted to make it easier to work with.
+ */
+read_buttons:
+    /* read button status from piob */
+    ld.w r12, r2[AVR32_PIO_PDSR]
+
+    /* invert the lower 8 bits of the button status for convenience */
+    eor r12, r6
+    
+    /* mask away everything but the lower 8 bits */
+    and r12, r6
+
+    /* finally, return button status in r12 */
+    ret r12
+
+
+/*
+ * Move paddle right routine. Loops off the end of the board. 
+ */
+move_paddle_right:
+    /* if paddle is not at the far-right end of the board */
+    cp.w r4, 0x1
+    breq move_paddle_right_reset
+        /* shift paddle register to the right */
+        lsr r4, 0x1
+        rjmp move_paddle_right_end
+
+    /* else, the paddle is at the end... */
+    move_paddle_right_reset:
+        /*and we must reset to the far-left end */
+        mov r4, 0x80
+
+    /* end if */
+    move_paddle_right_end:
+    
+    /* finally, return */
+    ret r12
+
+
+/*
+ * Move paddle left routine. Loops off the end of the board. 
+ */
+move_paddle_left:
+    /* if paddle is not at the far-left end of the board */
+    cp.w r4, 0x80
+    breq move_paddle_left_reset
+        /* shift paddle register to the left */
+        lsl r4, 0x1
+        rjmp move_paddle_left_end
+
+    /* else, the paddle is at the end... */
+    move_paddle_left_reset:
+        /*and we must reset to the far-left end */
+        mov r4, 0x01
+
+    /* end if */
+    move_paddle_left_end:
+
+    /* finally, return */
+    ret r12
+
+
+
+/************
+ * POINTERS *
+ ************/
 
 pioc_offset:
     .int AVR32_PIOC
@@ -113,8 +257,8 @@ piob_offset:
 intc_base:
     .int AVR32_INTC
 
-/*****************************************************************************/
-/* data-segment */
-/* alle dataområder som skal kunne skrives til må plasseres her */
+/****************
+ * DATA SEGMENT *
+ ****************/
 
 .data
