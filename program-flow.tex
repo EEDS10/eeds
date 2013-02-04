@@ -1,0 +1,33 @@
+<diagrams, descriptions>
+
+yuml.me-source for diagrams
+
+Main program flow:
+(start)->(Init)->(Main loop)->(Main loop)
+
+
+Init:
+(start)->(Load pointers)->(Set up start values in registers)->(Enable I/O with interrupts)->(end)
+
+Main loop:
+(start)->(Set leds)->(Sleep)[interrupt]-><interrupt routine>->[Was SW0 pressed][Yes]->(Move paddle right)->(end),[Was SW0 pressed][No]->(Move paddle left)->(end)
+
+
+Set leds:
+(start)->(Turn off all LEDs)->(Turn on the paddle LED)->(end)
+
+Button interrupt routine:
+(start)->(Read button states)->(Software debounce)->(Notify that the interrupt has been handled)->(end)
+
+Debounce:
+(start)->(Set register to a high constant)->(Is value in register equal to 0)[Yes]->(end),(Is value in register equal to 0)[No]->(Decrease value in register by 1)->(Is value in register equal to 0)
+
+Read buttons:
+(start)->(Read button status)->(Mask away buttons that were pressed in previous interrupt)->(end)
+
+Move paddle right:
+(start)->(Is paddle at far-right end of the board)[Yes]->(Move paddle to far-left)->(end),(Is paddle at far-right end of the board)[No]->(Move paddle one step to the left)->(end)
+
+Move paddle left (analogous to move paddle right, but included for completeness):
+(start)->(Is paddle at far-left end of the board)[Yes]->(Move paddle to far-right)->(end),(Is paddle at far-left end of the board)[No]->(Move paddle one step to the right)->(end)
+
