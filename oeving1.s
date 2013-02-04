@@ -1,10 +1,33 @@
-/******************************************************************************
- *
- * Exercise 1 EEDS
- *
- * by emiltayl, trondrud and sigveseb
- *
- *****************************************************************************/
+/*********************************************************
+ *                                                       *
+ *                      Exercise 1                       *
+ *                                                       *
+ *                          of                           *
+ *                                                       *
+ *       TDT4258 Energy Efficient Computer Systems       *
+ *                      Spring 2013                      *
+ *                                                       *
+ *                          by                           *
+ *                                                       *
+ *                    Emil Taylor Bye                    *
+ *                Sigve Sebastian Farstad                *
+ *                    Odd M. Trondrud                    *
+ *                                                       *
+ *********************************************************/
+
+
+
+/*****************
+ * CONFIGURATION *
+ *****************/
+
+/* change this to configure debounce length */
+DEBOUNCE = 0xfff
+
+/* change this to configure paddle start position */
+PADDLE_START_POSITION = LED_3
+
+
 
 /************************
  * INCLUDES AND DEFINES *
@@ -16,15 +39,15 @@
 /* Status register flag "GM" is bit 16 */
 SR_GM =   16  
 
-/* led masks */
-LED_0 = 0x1
-LED_1 = 0x2
-LED_2 = 0x4
-LED_3 = 0x8
-LED_4 = 0x10
-LED_5 = 0x20
-LED_6 = 0x40
-LED_7 = 0x80
+/* LED masks */
+LED_0    = 0x1
+LED_1    = 0x2
+LED_2    = 0x4
+LED_3    = 0x8
+LED_4    = 0x10
+LED_5    = 0x20
+LED_6    = 0x40
+LED_7    = 0x80
 ALL_LEDS = 0xff
 
 /* button masks */
@@ -37,21 +60,16 @@ SW_5 = 0x20
 SW_6 = 0x40
 SW_7 = 0x80
 
-/* change this to configure debounce length */
-DEBOUNCE = 0xfff
-
-/* change this to configure paddle start position */
-PADDLE_START_POSITION = LED_3
 
 /* #yolo */
 NULL = 0
 
 
 
-
 /****************
- * DATA SEGMENT *
+ * TEXT SEGMENT *
  ****************/
+
 .text
 
 /* main entry point */
