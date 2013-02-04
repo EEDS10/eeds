@@ -59,6 +59,9 @@ button_interrupt_routine: ; button interrupt routine
 added csrf 16 to last line of init
 and that worked.
 
+tried sleep 5
+whoops, looks like we broke it per the warning on http://www.idi.ntnu.no/emner/tdt4258/exercises
+
 sleep 1 seems safe
 sleep 2 renders the board unresponsive to the buttans
 
