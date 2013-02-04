@@ -1,0 +1,160 @@
+
+\documentclass{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage[pdftex]{graphicx}
+
+%TCIDATA{OutputFilter=LATEX.DLL}
+%TCIDATA{Version=5.50.0.2953}
+%TCIDATA{<META NAME="SaveForMode" CONTENT="1">}
+%TCIDATA{BibliographyScheme=Manual}
+%TCIDATA{Created=Monday, January 30, 2012 17:20:46}
+%TCIDATA{LastRevised=Monday, February 27, 2012 12:06:08}
+%TCIDATA{<META NAME="GraphicsSave" CONTENT="32">}
+%TCIDATA{<META NAME="DocumentShell" CONTENT="Standard LaTeX\Blank - Standard LaTeX Article">}
+%TCIDATA{CSTFile=40 LaTeX article.cst}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{solution}[theorem]{Solution}
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+% Sets page margins to 1", which is standard
+\geometry{left=1in,right=1in,top=1in,bottom=1in} 
+% allows the included extensions of graphic files
+\DeclareGraphicsExtensions{.pdf,.png,.jpg}
+% sets graphic path. Otherwise it just looks around
+\graphicspath{{}}
+% I do not remember what this does
+\setlength{\headheight}{15.2pt}
+% allows the xhead parameters
+\pagestyle{fancy}
+% replace with your name
+\lhead{Group \#10}
+% replace 
+\rhead{Group 10 IS BEST GROUP}
+% \input{tcilatex}
+\begin{document}
+
+% INCLUDEGRAPHICS EXPLANATION
+% \includegraphics[scale=1]{name of file}
+% sometimes you want to twice encase the filename in squiggly brackets. I do not know why but sometimes it is required.
+
+% begin title page, use \\ for newline
+\title{\#EEDS\\Report from Lab Assignment \#1\\TDT4258 Energy Efficient Computer Systems}
+% now one can list the authors, \textbf{} makes bold text
+\author{Emil Taylor Bye}
+\author{Sigve Sebastian Farstad}
+\author{Odd M. Trondrud}
+% make title page
+\maketitle
+
+% create new page
+\newpage
+
+% uncomment this if you want to include a ToC
+% \tableofcontents
+% disables chapter, section and subsection numbering
+% set to 1 or higher to enable section numbering
+% it goes something like 0:Part, 1:Section, 2:Section, 3:Subsection, 4:Subsubsection, ...
+\setcounter{secnumdepth}{-1}
+
+% use \newpage to get newpage
+% \bigskip to get some space between paragraphs
+% \texttt{TEXTHERE} to get typewriter-like (basically just monospaced) text
+
+\part{Abstract}
+
+This report is the solution to assignment 1 of TDT4258 at NTNU, spring 2013.
+In the assigment, an Atmel STK1000 development board is programmed to display a moveable LED 'paddle' using AVR32 assembly and the GNU tool chain.
+
+\part{Introduction}
+
+\input{introduction.tex}
+
+\part{Description and Methodology}
+
+This is the description and methodology.
+
+\subsection{Configuration of the STK1000}
+
+\subsubsection{Jumpers}
+
+\input{jumpers.tex}
+
+\subsubsection{GPIO connections}
+
+\input{gpio-connections.tex}
+
+\subsection{Programming environment}
+
+\subsubsection{JTAGICE}
+
+<General info about JTAGICE>.
+The JTAGICE was connected to the STK1000 (taking care not to connect the connector upside-down) and the PC using <cables>.
+
+\subsubsection{GNU Debugger}
+
+\subsubsection{Make, other tools etc}
+
+\subsection{Development of the program}
+
+\subsubsection{Setting up the LED diodes}
+
+\subsubsection{Setting up the buttons}
+
+\subsubsection{Interrupt Routine}
+
+\subsubsection{Refactoring and Modularization}
+
+\subsubsection{Register Overview}
+
+<description of which registers do what>
+
+\subsubsection{Program flow}
+
+\input{program-flow.tex}
+
+\part{Results and Tests}
+
+This is the results and tests section.
+
+\subsection{Energy Efficiency}
+
+\subsection{Testing}
+
+\part{Evaluation of Assignment}
+
+Here comes the evaluation of the assignment.
+
+\part{Conclusion}
+
+This is the place for the conclusion.
+
+\part{Acknowledgement}
+
+Here, we acknowledge those who deserve to be acknowledged.
+
+\part{References}
+
+And finally, references.
+
+\end{document}

@@ -1,0 +1,11 @@
+The STK1000 provides a general purpose input/output (GPIO) interface.
+16 of the available 32 signal lines are in this assigment connected to the 8 on-board LEDs and the 8 on-board switches, to be used as output and input for the paddle move program.
+
+The buttons were connected to GPIO0-GPIO7 (J1 on the STK1000) using a flat cable as in <diagram X>, mapping them to ports 0-7 of PIOB.
+The choice of low port numbers 0-7 is convenient for coding later, and the choice of PIOB is purely memnonic ('B' for buttons).
+
+The leds were connected to GPIO16-GPIO23 (J3 on the STK1000) using a flat cable as in <diagram X>, makking them to ports 0-7 of PIOB.
+Having the same port numbers for the buttons and the LEDs is a nice convenience for cleaner code.
+
+
+<diagram X>, note the orientation of the flat cables
