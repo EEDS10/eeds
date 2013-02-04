@@ -1,0 +1,38 @@
+The STK1000 has 13 general purpose registers named r0-r12. The programmer is free to use these registers for whatever they want.
+However, several conventions are commonplace to introduce a certain degree of structure.
+
+Conventions:
+
+r0 is a scratch register, used for intermediate calculations and such.
+r1 holds the constant 0.
+
+...
+
+r8, r9, r10, r11, r12:
+
+used to hold parameters when calling a routine.
+
+r12:
+
+used to hold the return value when returning from a routine.
+
+
+List of registers and what they are used for in the paddle move program:
+
+\begin{table}
+    \begin{tabular}{|l|l|}
+        r0  & Scratch register used to hold intermediate values. \\
+        r1  & Constant: 0 \\ 
+        r2  & Constant: base offset to PIOB \\ 
+        r3  & Constant: base offset to PIOC \\ 
+        r4  & Variable: holds the position of the paddle \\ 
+        r5  & Constant: 5 \\ 
+        r6  & Constant: 0xff \\ 
+        r7  & Variable: holds the previous button state \\ 
+        r8  & Constant: pointer to button interrupt routine \\ 
+        r9  & (not used) \\ 
+        r10 & (not used) \\ 
+        r11 & (not used) \\ 
+        r12 & Holds return value from routines \\
+    \end{tabular}
+\end{table}
