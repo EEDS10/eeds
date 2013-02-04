@@ -1,0 +1,25 @@
+The connection to the input buttons must be set up before the buttons can be used in a program.
+First, the I/O pins that the buttons are connected to must be enabled.
+In this assignment, the buttons are connected to the pins GPIO0-7, corresponding to PIO B lines 0-7.
+To enable the correct I/O pins, we must therefore set to 'high' bits 0-7 of the PIO B PIO Enable Register (PIOB PER), as in <code excerpt>.
+
+    st.w r2[AVR32_PIO_PER], r6
+
+
+    <code excerpt>: Here, r2 is the base offset of PIOB, AVR32_PIO_PERhis the PIO Enable Register offset, and r6 contains the bitfield indicating which pins to enable.
+
+
+Second, the pull-up resistors for the buttons must be enabled. This is because <reason>.
+This is done by setting to 'high' the corresponding bits (0-7) of the PIO B Pull-Up Enable Register (PIOC PUER), as in <code excerpt>.
+
+    st.w r2[AVR32_PIO_PUER], r6
+
+    <code excerpt>: Here, r2 is the base offset of PIOB, AVR32_PIO_PUER is the Pull-Up Enable Register offset, and r6 contains the bitfield indicating which pull-up resistors should be enabled.
+
+
+Once this is done, the button state can be read by reading the appropriate bits from PIO B Pin-Data Status Register (PIOB PDSR), as in <code excerpt>.
+
+    ld.w r12, r2[AVR32_PIO_PDSR]
+    
+    <code excerpt>: Here, r2 is the offset of PIOB, AVR32_PIO_PDSR is the Pin-Data Status Register offset.
+
