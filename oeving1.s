@@ -221,27 +221,19 @@ debounce:
 read_buttons:
     /* read button status from piob */
     ld.w r12, r2[AVR32_PIO_PDSR]
-
-    /* invert the lower 8 bits of the button status for convenience */
-    eor r12, r6
     
     /* mask away everything but the lower 8 bits */
     and r12, r6
 
-    /* cache the button state */
-    mov r0, r12
+    /* We only want buttons that are set now, but not in the old state.
+     * This instruction also updates the old button state */
+    or r7, r12
 
-    /* invert old button state */
+    /* invert the lower 8 bits of the button status for convenience */
     eor r7, r6
 
-    /* we only want buttons that are set now, but not in the old state  */
-    and r12, r7
-
-    /* save the new button state to be the new old button state */
-    mov r7, r12
-
     /* finally, return button status in r12 */
-    ret r12
+    ret r7
 
 
 /*

@@ -88,107 +88,30 @@ In the assigment, an Atmel STK1000 development board is programmed to display a 
 
 \part{Introduction}
 
-\input{introduction.tex}
+\input{introduction/introduction.tex}
 
 \part{Description and Methodology}
 
-This is the description and methodology.
-
-\subsection{Configuration of the STK1000}
-
-\subsubsection{Jumpers}
-
-The STK1000 has <number> jumpers that can be set to configure the board.
-For this assignment, the following settings were set for the jumpers:
-
-* SW1
-Set to SPI0.
-This is because <reason>.
-
-
-* SW2
-Set to PS2A/MMCI/USART1. 
-This enables <something>.
-
-* SW3
-Set to SSC0/PWM[0,1]/GCLK to turn on <whatever>.
-
-* SW5
-Set to LCDC.
-Doing this causes <stuff>.
-
-* SW6
-Set to GPIO.
-This is because <reason>.
-
-* JP4
-Set to "INT. DAC".
-Sets the right audio channel to use the internal digital-to-analog converter (DAC).
-This is has no effect on this assignment, but is included here for completeness.
-
-* JP5
-Set to "INT. DAC".
-Sets the left audio channel to use the internal digital-to-analog converter (DAC).
-This is has no effect on this assignment, but is included here for completeness.
-
-\subsubsection{GPIO connections}
-
-<General info about GPIO on STK1000>.
-The connectors were connected to some pins using a flat cable, as shown in diagram.
-<diagram>.
-
-
-\subsection{Programming environment}
-
-\subsubsection{JTAGICE}
-
-<General info about JTAGICE>. The JTAGICE was connected to the STK1000 (taking care not to connect the connector upside-down) and the PC using <cables>.
-
-\subsubsection{GNU Debugger}
-
-\subsubsection{Make, other tools etc}
-
-\subsection{Development of the program}
-
-\subsubsection{Setting up the LED diodes}
-
-\subsubsection{Setting up the buttons}
-
-\subsubsection{Interrupt Routine}
-
-\subsubsection{Refactoring and Modularization}
-
-\subsubsection{Register Overview}
-
-<description of which registers do what>
-
-\subsubsection{Program flow}
-
-<diagrams, descriptions>
-
+\input{description-and-methodology/description-and-methodology.tex}
 
 \part{Results and Tests}
 
-This is the results and tests section.
-
-\subsection{Energy Efficiency}
-
-\subsection{Testing}
+\input{results-and-tests/results-and-tests.tex}
 
 \part{Evaluation of Assignment}
 
-Here comes the evaluation of the assignment.
+\input{evaluation-of-assignment/evaluation-of-assignment.tex}
 
 \part{Conclusion}
 
-This is the place for the conclusion.
+\input{conclusion/conclusion.tex}
 
 \part{Acknowledgement}
 
-Here, we acknowledge those who deserve to be acknowledged.
+\input{acknowledgement/acknowledgement.tex}
 
 \part{References}
 
-And finally, references.
+\input{references/references.tex}
 
 \end{document}
