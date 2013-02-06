@@ -1,0 +1,31 @@
+see http://en.wikipedia.org/wiki/Bibtex#Examples
+and http://www.bibtex.org/Using/
+
+@misc{ex1-tutorial-lecture,
+title	= "Tutorial Lecture for Exercise 1",
+author	= "Stefano Nichele",
+url		= "http://www.idi.ntnu.no/emner/tdt4258/_media/ex1.pdf",
+}
+
+@misc{lab-intro-lecture,
+title	= "Introduction, TDT4258 Energy Efficient Computer Systems",
+author	= "Stefano Nichele",
+url		= "http://www.idi.ntnu.no/emner/tdt4258/_media/intro.pdf",
+}
+
+@misc{lab-compendium,
+title	= "Lab Assignments in TDT4258 Energy Efficient Computer Systems",
+url		= "http://www.idi.ntnu.no/emner/tdt4258/_media/kompendium.pdf",
+}
+
+@manual{AVR32-archdoc,
+title	= "AVR32 Architecture Document",
+url		= "http://www.atmel.com/images/doc32000.pdf",
+author 	= "Atmel",
+}
+
+@manual{AVR-assmblguid,
+title	= "AVR Assembler User Guide",
+url		= "http://www.atmel.com/Images/doc1022.pdf",
+author	= "Atmel",
+}
