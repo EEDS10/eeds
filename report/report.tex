@@ -15,43 +15,33 @@
 %TCIDATA{<META NAME="DocumentShell" CONTENT="Standard LaTeX\Blank - Standard LaTeX Article">}
 %TCIDATA{CSTFile=40 LaTeX article.cst}
 
-\newtheorem{theorem}{Theorem}
-\newtheorem{acknowledgement}[theorem]{Acknowledgement}
-\newtheorem{algorithm}[theorem]{Algorithm}
-\newtheorem{axiom}[theorem]{Axiom}
-\newtheorem{case}[theorem]{Case}
-\newtheorem{claim}[theorem]{Claim}
-\newtheorem{conclusion}[theorem]{Conclusion}
-\newtheorem{condition}[theorem]{Condition}
-\newtheorem{conjecture}[theorem]{Conjecture}
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{criterion}[theorem]{Criterion}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{example}[theorem]{Example}
-\newtheorem{exercise}[theorem]{Exercise}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{notation}[theorem]{Notation}
-\newtheorem{problem}[theorem]{Problem}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{remark}[theorem]{Remark}
-\newtheorem{solution}[theorem]{Solution}
-\newtheorem{summary}[theorem]{Summary}
 \newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+
 % Sets page margins to 1", which is standard
 \geometry{left=1in,right=1in,top=1in,bottom=1in} 
+
 % allows the included extensions of graphic files
 \DeclareGraphicsExtensions{.pdf,.png,.jpg}
-% sets graphic path. Otherwise it just looks around
+
+% sets/adds graphic path. If empty it just looks around the folder the .tex file is in
 \graphicspath{{}}
+
 % I do not remember what this does
 \setlength{\headheight}{15.2pt}
+
 % allows the xhead parameters
 \pagestyle{fancy}
-% replace with your name
+
+% Sets the left header
 \lhead{Group \#10}
-% replace 
+
+% Sets the right header
 \rhead{Group 10 IS BEST GROUP}
+
+% ????
 % \input{tcilatex}
+
+% everything before this is considered the header or whatever.
 \begin{document}
 
 % INCLUDEGRAPHICS EXPLANATION
@@ -60,10 +50,12 @@
 
 % begin title page, use \\ for newline
 \title{\#EEDS\\Report from Lab Assignment \#1\\TDT4258 Energy Efficient Computer Systems}
+
 % now one can list the authors, \textbf{} makes bold text
 \author{Emil Taylor Bye}
 \author{Sigve Sebastian Farstad}
 \author{Odd M. Trondrud}
+
 % make title page
 \maketitle
 
@@ -83,7 +75,7 @@
 
 \part{Abstract}
 
-This report is the solution to assignment 1 of TDT4258 at NTNU, spring 2013.
+This report presents our solution to assignment #1 of TDT4258 at NTNU, spring 2013.
 In the assigment, an Atmel STK1000 development board is programmed to display a moveable LED 'paddle' using AVR32 assembly and the GNU tool chain.
 
 \part{Introduction}
@@ -113,5 +105,4 @@ In the assigment, an Atmel STK1000 development board is programmed to display a 
 \part{References}
 
 \input{references/references.tex}
-
 \end{document}

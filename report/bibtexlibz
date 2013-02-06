@@ -1,6 +1,11 @@
 see http://en.wikipedia.org/wiki/Bibtex#Examples
 and http://www.bibtex.org/Using/
 
+HOW TO CITE
+~\cite{XXX}
+replace XXX with for example ex1-tutorial-lecture to cite the Tutorial Lecture
+
+
 @misc{ex1-tutorial-lecture,
 title	= "Tutorial Lecture for Exercise 1",
 author	= "Stefano Nichele",
