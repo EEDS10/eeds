@@ -1,0 +1,85 @@
+%% EXECUTIVE SUMMARY
+Our interrupt routine first reads the state of the buttons before calling a debounce routine which runs for some amount of time.
+When the debounce routine is finished the button interrupt routine notifies that the interrupt has been handled before returning to the main loop.
+\\ % starts a new paragraph
+The debounce routine's running time can be modified by altering the DEBOUNCE constant, which can be considered the routine's loop counter. The routine keeps the CPU busy by repeatedly subtracting one from this value until it reaches zero. This prevents further interrupts from being registered for the duration of the debouncing routine.
+
+%% full blown deets.
+In order to implement an interrupt routine we have to enable the relevant interrupts and tell the interrupt controller where it can find the interrupt routine.
+Interrupts are enabled for specific I/O units by loading the appropriate values into the Interrupt Enable Register.
+We want to enable interrupts for SW_0 and SW_2.
+Their masks are \texttt{0x1} and \texttt{0x4}, respectively.
+
+
+We enable interrupts by loading the appropriate values into the Interrupt Enable Register (PER).
+Specifically, the \"appropriate values\" are the masks for SW_0 and SW_2, which are \texttt{0x1} and \texttt{0x4}, respectively.
+Since our buttons are connected to PIOB, we load the masks
+More specifically, we load these masks into a register, and then 
+\\*
+We load PIO B's base address into r2
+\texttt{
+		/* */
+		lddpc r2, piob_offset
+		/* The masks of SW_0 and SW_2 are loaded into r5 */\\*
+		mov r5, SW_0 | SW_2  \\*
+		/* */
+		st.w r2[AVR32_PIO_IER], r5
+}
+% store the mask of SW0 and SW2 in r5
+
+\\* % starts a new line, but not a new paragraph
+% PIO_IER is the interrupt enable register
+\texttt{st.w r2[AVR32_PIO_IER], r5}
+\\*
+
+This is done by storing the appropriate values in the PIO Enable Register (PER).
+We enabled button interrupts for \texttt{SW0} and \texttt{SW2} by loading their masks into the PIOB, with the appropriate offset to specify
+GPIO pins = PIO
+general purpose input/output pins
+
+% load the pointer to PIOB's base address into r2
+lddpc r2, piob_offset
+% load the pointer to the interrupt controller's base address into r7
+lddpc r7, intc_base
+% store the address of the interrupt routine in r8
+mov r8, button_interrupt_routine
+% store the mask of SW0 and SW2 in r5
+mov r5, SW_0 | SW_2
+% enable button interrupts for SW0 and SW2
+% PIO_IER is the interrupt enable register
+st.w r2[AVR32_PIO_IER], r5 
+% stores the address of our button interrupt routine in the interrupt controller
+st.w r7[AVR32_INTC_IPR14], r8
+
+\texttt{st.w r2[AVR32_PIO_IER], r5}
+Enables button interrupts for SW0 and SW2.
+First, interrupts must be disabled
+
+
+lddpc r7, intc_base
+% intc_base is a pointer to the address of the interrupt controller
+
+mov r8, button_interrupt_routine
+% the address of the interrupt routine is loaded into r8
+
+st.w r7[AVR32_INTC_IPR14], r8
+% the address of the interrupt routine is stored in the interrupt controller's button h
+
+The time is specified 
+First the state of the buttons is read.
+The debounce routine simply waits for a time decided by the DEBOUNCE constant in CONFIGURATION.
+
+st.w rd, rs
+% writes the value in rs to the address found in rd
+
+
+et spesielt minneområde som skal inneholde adressen til en rutine som vil bli kjørt når kortet mottar en relevant interrupt. I dette tilfelle er relevante interrupts knappe-interrupts.
+
+rcall read_buttons
+rcall debounce
+
+ld.w r0, r2[AVR32_PIO_ISR]
+
+rd, rs
+
+rete
