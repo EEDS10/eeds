@@ -34,3 +34,9 @@ title	= "AVR Assembler User Guide",
 url		= "http://www.atmel.com/Images/doc1022.pdf",
 author	= "Atmel",
 }
+
+@misc{lab-report-guide-UoT,
+title	= "Lab Reports",
+url		= "http://www.engineering.utoronto.ca/Directory/students/ecp/handbook/documents/lab.htm",
+institution = "Faculty of Applied Engineering, University of Toronto",
+}
