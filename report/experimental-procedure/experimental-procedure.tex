@@ -1,0 +1,15 @@
+We unpacked the board and hooked it up per the description and methodology section.
+We wrote code to enable all the LEDs.
+Once that was working we enabled the buttons.
+Just one LED was enabled.
+Button 0 moves the paddle right (logical shift did not work, used arithmetic shift).
+Button 2 moves paddle left.
+When either button is pushed down the board registers it as a fuckton of presses, causing the paddle to fly off.
+We wrote code so that the paddle gets moved to the opposite side of the LEDs when it hits the edge.
+This was all done with busy waiting.
+We then implemented debouncing.
+At this point we had a problem where each button push was registered as two, causing the paddle to move to LED_{n+2} rather than LED_{n+1}.
+We ignored that and implemented interrupts.
+After which we went through our code and inserted comments.
+Then we made it even nicer looking.
+And finally we fixed the issue with the paddle moving two LEDs per push by masking or something idk Sigve solved this one.
