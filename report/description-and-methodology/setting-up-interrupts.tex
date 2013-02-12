@@ -1,0 +1,20 @@
+Before interrupts can be utilized we have to configure the board in an appropriate manner.
+This process is outlined on page 24 of the compendium \cite{lab-compendium}.
+
+
+Buttons are connected to PIO B.
+LEDs are connected to PIO C.
+
+
+
+\subsubsubsection{Enabling interrupts}
+% load PIO B base address into r2
+lddpc r2, piob_offset
+% load the specified bits we want to enable interrupts for into r5
+mov r5, SW_0 | SW_2
+% enables interrupts for SW_0 and SW_2 by setting the appropriate bits to 1 in the interrupt enable register
+st.w r2[AVR32_PIO_IER], r5
+% loads the address of our button_interrupt_routine into r8
+mov r8, button_interrupt_routine
+% tells the interrupt controller where the interrupt routine is
+st.w r7[AVR32_INTC_IPR14], r8
