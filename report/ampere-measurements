@@ -1,0 +1,65 @@
+Multimeter used:
+BST BS1901W
+
+
+Instruction-optimized with interrupts (commit: 8555bc317f370909096b57cbb69754000dad4c93) (wrong connection setup om multimeter)
+
+SW3:
+    idle: No measurement (20mA)
+    button activity: No measurement (20mA)
+SW1:
+    idle: No measurement (20mA)
+    button activity: No measurement (20mA)
+SW2:
+    idle: No measurement (20mA)
+    button activity: No measurement (20mA)
+SW4:
+    idle: No measurement (20mA)
+    button activity: No measurement (20mA)
+SW6:
+    idle: No measurement (20mA)
+    button activity: No measurement (20mA)
+
+
+Instruction-optimized with interrupts (commit: 8555bc317f370909096b57cbb69754000dad4c93)
+
+SW4:
+    idle: 0.32 (20mA)
+    button activity: 0.32 (20mA)
+SW6:
+    idle: 0.32 (20mA)
+    button activity: 0.32 (20mA)
+SW2:
+    idle: 0.32 (20mA)
+    button activity: 0.32 (20mA)
+SW1:
+    idle: 0.32 (20mA)
+    button activity: 0.32 (20mA)
+SW5:
+    idle: 0.32 (20mA)
+    button activity: 0.32 (20mA)
+SW3:
+    idle: 0.32 (20mA)
+    button activity: 0.32 (20mA)
+
+
+Busy wait version (commit: 6401863ce4769e91bcf78edc21e73059c2cd475f)
+
+SW4:
+    idle: 0.32 (20mA)
+    button activity: 0.32 (20mA)
+SW6:
+    idle: 0.32 (20mA)
+    button activity: 0.32 (20mA)
+SW2:
+    idle: 0.32 (20mA)
+    button activity: 0.32 (20mA)
+SW1:
+    idle: 0.32 (20mA)
+    button activity: 0.32 (20mA)
+SW5:
+    idle: 0.32 (20mA)
+    button activity: 0.32 (20mA)
+SW3:
+    idle: 0.32 (20mA)
+    button activity: 0.32 (20mA)
