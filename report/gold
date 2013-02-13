@@ -12,3 +12,6 @@ Lab Introduction, TDT4258
 
 http://www.atmel.com/Images/doc1022.pdf
 AVR Assembler User Guide
+
+http://support.atmel.no/knowledgebase/avr32studiohelp/com.atmel.avr32.tool.stk1000/html/jumper_settings.html
+Jumper settings (contains info about power measurement)
