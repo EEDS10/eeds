@@ -1,5 +1,5 @@
 %% EXECUTIVE SUMMARY
-Our interrupt routine first reads the state of the buttons before calling a debounce routine which runs for some amount of time.
+The button interrupt routine first reads the state of the buttons before calling a debounce routine which runs for some amount of time.
 When the debounce routine is finished the button interrupt routine notifies that the interrupt has been handled before returning to the main loop.
 \\ % starts a new paragraph
 The debounce routine's running time can be modified by altering the DEBOUNCE constant, which can be considered the routine's loop counter. The routine keeps the CPU busy by repeatedly subtracting one from this value until it reaches zero. This prevents further interrupts from being registered for the duration of the debouncing routine.
