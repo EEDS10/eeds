@@ -1,20 +1,14 @@
-The first thing we did was locate the lab, on the fourth floor of the IT-Vest building, room \#\#\#. 
-We removed one of the AVR32STK1000 boards from their box and set the jumpers to the appropriate positions (see page 37 of \cite{lab-compendium}).
+The first thing we did was locate the lab, on the fourth floor of the IT-Vest building, room 458. 
+We removed one of the AVR32STK1000 boards from their box and set the jumpers to the appropriate positions (\cite{lab-compendium}, pg 37).
 We booted up one of the computers and connected the AVR32STK1000 to it. 
-Our first piece of code simply enabled all the LEDs and turned them on. Once we got the LEDs working we enabled the buttons. We followed this up by writing code to turn on just one of the LEDs, which designated the ''paddle'' per the assignment's description on page 37 \cite{lab-compendium}. Around this point we stopped using GDB because we couldn't figure out how it works.
-
-one of the LEDs
-We wrote code to enable all the LEDs.
-Once that was working we enabled the buttons.
-Just one LED was enabled.
-Button 0 moves the paddle right (logical shift did not work, used arithmetic shift).
-Button 2 moves paddle left.
-When either button is pushed down the board registers it as a fuckton of presses, causing the paddle to fly off.
-We wrote code so that the paddle gets moved to the opposite side of the LEDs when it hits the edge.
-This was all done with busy waiting.
-We then implemented debouncing.
-At this point we had a problem where each button push was registered as two, causing the paddle to move to LED_{n+2} rather than LED_{n+1}.
-We ignored that and implemented interrupts.
-After which we went through our code and inserted comments.
-Then we made it even nicer looking.
-And finally we fixed the issue with the paddle moving two LEDs per push by masking or something idk Sigve solved this one.
+Our first piece of code simply enabled all the LEDs and turned them on. Once we got the LEDs working we enabled the buttons.
+We followed this up by writing code to turn on just one of the LEDs, designated the ''paddle'' per the assignment's description (\cite{lab-compendium}, pg 37).
+Shortly thereafter we gave up on trying to figure out GDB.
+Code was written to move right when \texttt{$SW_0$} is pushed, and left when\texttt{$SW_2$} is pushed, employing arithmetic shift to move the paddle bit in the appropriate direction.
+However, a single push of either button caused the paddle to disappear, due to a combination of us simply letting the paddle's bit overflow when it reached either edge and the \emph{bouncing effect} (\cite{lab-compendium}, pg 22). We altered our code so that the paddle would ''loop around'' to the opposite side of the row of LEDs when it is ''pushed off'' either side.
+When pushing either buttons, all the LEDs would light up briefly in turn at such high a speed that it looked like they were all lit simultaneously, again due to the bouncing effect.
+Implementing debouncing (\cite{lab-compendium}, Fig. 2.9a) seemed like the next logical step, so the next thing we did was change our program to an interrupt-based solution.
+Then we implemented debouncing.
+\\ % new line, paragraph
+We had an issue where the paddle would move over one additional LED when either button was pushed (i.e. from \texttt{$LED_n$} to \texttt{$LED_n+2$} rather than from \texttt{$LED_n$} to \texttt{$LED_n+1$}), which we fixed by, in effect, by ignoring every second registered push of either buttons.
+Finally we measured the current on the board's various pins while an interrupt-based program running, and again with a busy-waiting program in order to compare the energy efficiency of the two solutions.
