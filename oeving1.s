@@ -120,6 +120,9 @@ _start:
     /* set button_interrupt_routine to handle button interrupts */
     st.w r7[AVR32_INTC_IPR14], r8
 
+    /* clear r7 so it can be used to hold old button state */
+    mov r7, NULL
+
     /* finally, enable interrupts! */
     csrf SR_GM
 
