@@ -1,20 +1,11 @@
 Before interrupts can be utilized we have to configure the board in an appropriate manner.
-This process is outlined on page 24 of the compendium \cite{lab-compendium}.
-
-
-Buttons are connected to PIO B.
-LEDs are connected to PIO C.
-
-
-% subsubsubsection seems to not exist
-%\subsubsubsection{Enabling interrupts}
-% load PIO B base address into r2
-lddpc r2, piob_offset
-% load the specified bits we want to enable interrupts for into r5
-mov r5, SW_0 | SW_2
-% enables interrupts for SW_0 and SW_2 by setting the appropriate bits to 1 in the interrupt enable register
-st.w r2[AVR32_PIO_IER], r5
-% loads the address of our button_interrupt_routine into r8
-mov r8, button_interrupt_routine
-% tells the interrupt controller where the interrupt routine is
-st.w r7[AVR32_INTC_IPR14], r8
+This process is outlined in section 2.5 of \cite{lab-compendium}.
+Since we connected the buttons to PIO port B, we will be detailing how we enabled interrupts from PIO port B.
+First, we set the appropriate bits in the Interrupt Enable Register to 1.
+\code{84}{84}{The base address of PIO port B is loaded into r2.}
+\code{97}{97}{The masks of Button 0 and Button 2 are loaded into r5}
+\code{114}{115}{Interrupts are enabled for Button 0 and Button 2}
+Before we enable interrupts for Button 0 and Button 2, we defensively disable interrupts for everything by loading \texttt{0xff} into the Interrupt Disable Register.
+Finally, we enable interrupts globally by setting the bit GM (Global Interrupt Mas) in the processor's status register to 0. % taken from pg 26 of the compendium
+\code{126}{127}{}
+% EVBA = Exception Vector Base Address
