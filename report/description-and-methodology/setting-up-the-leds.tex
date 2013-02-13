@@ -6,8 +6,6 @@ Here, r3 is the base offset of PIOC, AVR32\_PIO\_PER is the PIO Enable Register 
 
 \code{99}{100}{Enable the I/O pins}
 
-
-
 Second, the I/O pins must be set to act as output pins, as opposed to input pins.
 This is done by setting to 'high' the corresponding bits (0-7) of the PIO C Output Enable Register (PIOC OER), as in listing x.
 Here, r3 is the base offset of PIOC, AVR32\_PIO\_OER is the Output Enable Register offset, and r6 contains the bitfield indicating which pins to set as outputs.

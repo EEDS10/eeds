@@ -7,12 +7,12 @@ The debounce routine's running time can be modified by altering the DEBOUNCE con
 %% full blown deets.
 In order to implement an interrupt routine we have to enable the relevant interrupts and tell the interrupt controller where it can find the interrupt routine.
 Interrupts are enabled for specific I/O units by loading the appropriate values into the Interrupt Enable Register.
-We want to enable interrupts for SW_0 and SW_2.
+We want to enable interrupts for SW0 and SW2.
 Their masks are \texttt{0x1} and \texttt{0x4}, respectively.
 
 
 We enable interrupts by loading the appropriate values into the Interrupt Enable Register (PER).
-Specifically, the \"appropriate values\" are the masks for SW_0 and SW_2, which are \texttt{0x1} and \texttt{0x4}, respectively.
+Specifically, the \"appropriate values\" are the masks for SW0 and SW2, which are \texttt{0x1} and \texttt{0x4}, respectively.
 Since our buttons are connected to PIOB, we load the masks
 More specifically, we load these masks into a register, and then 
 \\*
@@ -20,17 +20,16 @@ We load PIO B's base address into r2
 \texttt{
 		/* */
 		lddpc r2, piob_offset
-		/* The masks of SW_0 and SW_2 are loaded into r5 */\\*
-		mov r5, SW_0 | SW_2  \\*
+		/* The masks of SW_0 and SW_2 are loaded into r5 */
+		mov r5, SW_0 | SW_2
 		/* */
 		st.w r2[AVR32_PIO_IER], r5
 }
 % store the mask of SW0 and SW2 in r5
 
-\\* % starts a new line, but not a new paragraph
+% starts a new line, but not a new paragraph
 % PIO_IER is the interrupt enable register
-\texttt{st.w r2[AVR32_PIO_IER], r5}
-\\*
+\texttt{st.w r2[AVR32_PIO_IER], r5 }
 
 This is done by storing the appropriate values in the PIO Enable Register (PER).
 We enabled button interrupts for \texttt{SW0} and \texttt{SW2} by loading their masks into the PIOB, with the appropriate offset to specify
