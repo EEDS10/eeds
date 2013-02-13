@@ -1,34 +1,56 @@
 This section presents a detailed overview of the program flow of the final interrupt-oriented paddle program.
 
+\begin{figure}
+\includegraphics[width = \textwidth]{description-and-methodology/program-flow/main-program-flow.pdf}
+\caption{Main superficial program flow}
+\label{fig:hist}
+\end{figure}
 
-yuml.me-source for diagrams
+\begin{figure}
+\includegraphics[width = \textwidth]{description-and-methodology/program-flow/init.pdf}
+\caption{Initialization}
+\label{fig:hist}
+\end{figure}
 
-Main program flow:
-(start)->(Init)->(Main loop)->(Main loop)
+\begin{figure}
+\includegraphics[width = \textwidth]{description-and-methodology/program-flow/main-loop.pdf}
+\caption{Main loop}
+\label{fig:hist}
+\end{figure}
 
+\begin{figure}
+\includegraphics[width = \textwidth]{description-and-methodology/program-flow/set-leds.pdf}
+\caption{Set leds subroutine}
+\label{fig:hist}
+\end{figure}
 
-Init:
-(start)->(Load pointers)->(Set up start values in registers)->(Enable I/O with interrupts)->(end)
+\begin{figure}
+\includegraphics[width = \textwidth]{description-and-methodology/program-flow/button-interrupt-routine.pdf}
+\caption{Button interrupt routine}
+\label{fig:hist}
+\end{figure}
 
-Main loop:
-(start)->(Set leds)->(Sleep)[interrupt]-><interrupt routine>->[Was SW0 pressed][Yes]->(Move paddle right)->(end),[Was SW0 pressed][No]->(Move paddle left)->(end)
+\begin{figure}
+\includegraphics[width = \textwidth]{description-and-methodology/program-flow/debounce.pdf}
+\caption{Debounce subroutine}
+\label{fig:hist}
+\end{figure}
 
+\begin{figure}
+\includegraphics[width = \textwidth]{description-and-methodology/program-flow/read-buttons.pdf}
+\caption{Read buttons subroutine}
+\label{fig:hist}
+\end{figure}
 
-Set leds:
-(start)->(Turn off all LEDs)->(Turn on the paddle LED)->(end)
+\begin{figure}
+\includegraphics[width = \textwidth]{description-and-methodology/program-flow/move-paddle-right.pdf}
+\caption{Move paddle right subroutine}
+\label{fig:hist}
+\end{figure}
 
-Button interrupt routine:
-(start)->(Read button states)->(Software debounce)->(Notify that the interrupt has been handled)->(end)
-
-Debounce:
-(start)->(Set register to a high constant)->(Is value in register equal to 0)[Yes]->(end),(Is value in register equal to 0)[No]->(Decrease value in register by 1)->(Is value in register equal to 0)
-
-Read buttons:
-(start)->(Read button status)->(Mask away buttons that were pressed in previous interrupt)->(end)
-
-Move paddle right:
-(start)->(Is paddle at far-right end of the board)[Yes]->(Move paddle to far-left)->(end),(Is paddle at far-right end of the board)[No]->(Move paddle one step to the left)->(end)
-
-Move paddle left (analogous to move paddle right, but included for completeness):
-(start)->(Is paddle at far-left end of the board)[Yes]->(Move paddle to far-right)->(end),(Is paddle at far-left end of the board)[No]->(Move paddle one step to the right)->(end)
+\begin{figure}
+\includegraphics[width = \textwidth]{description-and-methodology/program-flow/move-paddle-left.pdf}
+\caption{Move paddle left subroutine (analogous to move paddle right subroutine, but included for completeness}
+\label{fig:hist}
+\end{figure}
 
