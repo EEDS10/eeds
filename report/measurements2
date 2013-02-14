@@ -1,0 +1,19 @@
+head:8555bc31
+measuring at 20mA
+    1/2: 1.77 idle & active
+    3/4: 1.97 idle & active
+    5/6: 0.00 idle & active
+measuring at 200mA
+    7/8: 30.6 idle, 30.5 active
+measuring at 20mA
+    9/10: 4.90 idle, 4.99 active
+
+head:8d7cc5f
+measuring at 20mA
+    1/2: 1.77 idle & active
+    3/4: 1.97 idle & active
+    5/6: 0.00 idle & active
+measuring at 200mA
+    7/8: 26.0 idle, 25.8 active
+measuring at 20mA
+    9/10: 8.05 idle, 8.13 active
