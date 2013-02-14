@@ -36,7 +36,7 @@ upload : oeving1.elf
 	$(AVR32PROGRAM) program -e -f0,8Mb $<
 
 # DEBUG
-debug : #upload
+debug : 
 	avr32gdbproxy &
 	sleep 3
 	(echo target remote:4711;cat) | avr32-gdb oeving1.elf
