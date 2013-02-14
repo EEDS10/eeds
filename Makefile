@@ -36,10 +36,11 @@ upload : oeving1.elf
 	$(AVR32PROGRAM) program -e -f0,8Mb $<
 
 # DEBUG
-debug : upload
+debug : #upload
 	avr32gdbproxy &
-	avr32-gdb -x oeving1.elf $(echo 'target remote:4711') 
-	#(echo 'target remote:4711'; cat) | avr32-gdb oeving1.elf
+	sleep 3
+	(echo target remote:4711;cat) | avr32-gdb oeving1.elf
+	killall avr32gdbproxy
 
 
 # fjern alle autogenererte filer
