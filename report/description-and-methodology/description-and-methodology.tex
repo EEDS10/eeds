@@ -1,65 +1,69 @@
 This section describes how the paddle program was developed.
 It covers setup and configuration, tools and program details.
 
-\subsection{Configuration of the STK1000}
+\section{Experimental Procedure}
+    
+    \input{description-and-methodology/experimental-procedure.tex}
 
-    \subsubsection{Jumpers}
+\section{Configuration of the STK1000}
+
+    \subsection{Jumpers}
 
         \input{description-and-methodology/jumpers.tex}
 
-    \subsubsection{GPIO connections}
+   \subsection{GPIO connections}
 
         \input{description-and-methodology/gpio-connections.tex}
 
-\subsection{Programming environment}
+\section{Programming environment}
 
-    \subsubsection{JTAGICE}
+    \subsection{JTAGICE}
 
         \input{description-and-methodology/jtagice.tex}
 
-    \subsubsection{GNU Debugger}
+    \subsection{GNU Debugger}
     % Done.
         \input{description-and-methodology/gnu-debugger.tex}
 
-    \subsubsection{Make, other tools etc}
+    \subsection{Make, other tools etc}
 
         \input{description-and-methodology/make.tex}
 
-    \subsubsection{Other tools}
+    \subsection{Other tools}
 
         \input{description-and-methodology/other-tools.tex}
 
-\subsection{Development of the program}
+\section{Development of the program}
 
 This section details the steps taken during the development of the program.
 Initially, a bare-bones program was developed with minimal functionality, to get familiar with the environment.
 Features were added iteratively, starting with simple LED and button integration, and moving on to more sophisticated interrupt-oriented logic/program flow.
 
-    \subsubsection{Setting up the LEDs}
+    \subsection{Setting up the LEDs}
         
         \input{description-and-methodology/setting-up-the-leds.tex}
 
-    \subsubsection{Setting up the buttons}
+    \subsection{Setting up the buttons}
 
         \input{description-and-methodology/setting-up-the-buttons.tex}
 
-    \subsubsection{Setting up the interrupts}
+    \subsection{Setting up the interrupts}
 
         \input{description-and-methodology/setting-up-interrupts.tex}
 
-    \subsubsection{Interrupt Routine}
+    \subsection{Interrupt Routine}
     % bein' worked at
         \input{description-and-methodology/interrupt-routine.tex}
 
-    \subsubsection{Refactoring and Modularization}
+    \subsection{Refactoring and Modularization}
 
         YO!
 
-    \subsubsection{Program flow}
+    \subsection{Program flow}
 
         \input{description-and-methodology/program-flow.tex}
 
-    \subsubsection{Register Overview}
+    \subsection{Register Overview}
 
         \input{description-and-methodology/register-overview.tex}
 
