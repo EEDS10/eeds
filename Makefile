@@ -35,6 +35,13 @@ upload : oeving1.elf
 	sleep 3
 	$(AVR32PROGRAM) program -e -f0,8Mb $<
 
+# DEBUG
+debug : upload
+	avr32gdbproxy &
+	avr32-gdb -x oeving1.elf $(echo 'target remote:4711') 
+	#(echo 'target remote:4711'; cat) | avr32-gdb oeving1.elf
+
+
 # fjern alle autogenererte filer
 .PHONY : clean
 clean :

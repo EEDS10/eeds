@@ -1,23 +1,23 @@
 On the STK1000, the connection to the output LEDs must be set up before the LEDs can be used in a program.
 First, the I/O pins that the LEDs are connected to must be enabled.
 In this assignment, the LEDs were connected to the pins \texttt{GPIO16-23}, corresponding to \texttt{PIO C} lines \texttt{0-7}.
-To enable the correct I/O pins, we must therefore set to 'high' bits \texttt{0-7} of the \texttt{PIO C PIO Enable Register} (\texttt{PIOC PER}), as in listing x.
+To enable the correct I/O pins, we must therefore set to 'high' bits \texttt{0-7} of the \texttt{PIO C PIO Enable Register} (\texttt{PIOC PER}), as in listing 1.
 Here, \texttt{r3} is the base offset of \texttt{PIOC}, \texttt{AVR32\_PIO\_PER} is the \texttt{PIO Enable Register} offset, and \texttt{r6} contains the bitfield indicating which pins to enable.
 
 \code{99}{100}{Enable the I/O pins}
 
 Second, the I/O pins must be set to act as output pins, as opposed to input pins.
-This is done by setting to 'high' the corresponding bits (\texttt{0-7}) of the \texttt{PIO C Output Enable Register} (\texttt{PIOC OER}), as in listing x.
+This is done by setting to 'high' the corresponding bits (\texttt{0-7}) of the \texttt{PIO C Output Enable Register} (\texttt{PIOC OER}), as in listing 22.
 Here, \texttt{r3} is the base offset of \texttt{PIOC}, \texttt{AVR32\_PIO\_OER} is the \texttt{Output Enable Register} offset, and \texttt{r6} contains the bitfield indicating which pins to set as outputs.
 
 \code{102}{103}{Set the pins to act as output pins}
 
-Once this is done, LEDs can be turned on by writing the appropriate bits to \texttt{PIO C Set Output Data Register} (\texttt{PIOC SODR}), as in listing x.
+Once this is done, LEDs can be turned on by writing the appropriate bits to \texttt{PIO C Set Output Data Register} (\texttt{PIOC SODR}), as in listing 3.
 Here, \texttt{r3} is the offset of \texttt{PIOC}, \texttt{AVR32\_PIO\_SODR} is the \texttt{Set Output Data Register} offset, and \texttt{r4} contains the bitfield indicating which LEDs to switch on.
 
 \code{176}{177}{Switch on LEDs}
 
-Analogously, LEDs can be turned of by writing the approtiate bits to \texttt{PIO C Clear Output Data Register} (\texttt{PIOC CODR}), as in listing x. 
+Analogously, LEDs can be turned of by writing the approtiate bits to \texttt{PIO C Clear Output Data Register} (\texttt{PIOC CODR}), as in listing 4. 
 Here, \texttt{r3} is the offset of \texttt{PIOC}, \texttt{AVR32\_PIO\_SODR} is the \texttt{Set Output Data Register} offset, and \texttt{r4} contains the bitfield indicating which LEDs to switch off.
 
 \code{173}{174}{Switch on LEDs}
