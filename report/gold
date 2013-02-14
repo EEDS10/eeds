@@ -15,3 +15,6 @@ AVR Assembler User Guide
 
 http://support.atmel.no/knowledgebase/avr32studiohelp/com.atmel.avr32.tool.stk1000/html/jumper_settings.html
 Jumper settings (contains info about power measurement)
+
+http://stackoverflow.com/questions/2461905/compiling-latex-bib-source
+To compile the report (exchange latex with pdflatex)
