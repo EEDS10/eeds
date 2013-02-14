@@ -25,9 +25,14 @@ Prerequisites:
 \begin{itemize}
 	\item{Multimeter or amperemeter}
 	\item{Hands, or other tool with similar prehensile ability}
+    \item{STK1000 development board with the desired program code running.}
 \end{itemize}
 Procedure:
 \begin{enumerate}
-	\item{Turn the STK1000 on and upload your code.}
-
+    \item{Remove the jumper from the pins that are to be measured.}
+    \item{Touch the pins that are now free from the jumper with the measuring device's probes.}
+	\item{Press the \texttt{RESET} button on the STK1000.}
+    \item{Read the measurement from the display of the measurement device.}
 \end{enumerate}
+The board can optionally be interacted with while performing the last step of the procedure in order to measure power consumption during certain interactions.
+When the test has been performed it is recommended to replace the jumper.
