@@ -7,7 +7,7 @@ First, we set the appropriate bits in the Interrupt Enable Register to 1.
 \code{114}{115}{Interrupts are enabled for Button 0 and Button 2}
 Before we enable interrupts for Button 0 and Button 2, we defensively disable interrupts for everything by loading \texttt{0xff} into the Interrupt Disable Register.
 Finally, then enable interrupts globally by setting the bit GM (Global Interrupt Mask) in the processor's status register to 0. % taken from pg 26 of the compendium
-\code{126}{127}{}
+\code{126}{127}{Enable interrupts globally.}
 % EVBA = Exception Vector Base Address
 \paragraph{Loading the interrupt routine}
 After enabling interrupts, we have to inform the processor about what to do when it receives an interrupt.
