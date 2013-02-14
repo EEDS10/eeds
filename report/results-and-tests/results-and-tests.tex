@@ -3,22 +3,70 @@ This is the results and tests section.
 
 \subsection{Energy Efficiency}
 
-The STK1000 offers 5 power pin pairs that may be used to measure current flow, and therefore also energy efficiency.
+The STK1000AP7000 offers 5 power pin pairs that may be used to measure current consumption of the STK1002 sister board, and therefore also energy efficiency.
 These 5 pins are situated on the daughterboard, see figure \ref{power-pins-location}.
 Current flow through the pins was measured by connecting an ampere meter in series.
 Current flow was measured on all five pin pairs on two different versions of the program: the final optimized interrupt-based program, and an earlier busy-wait based program without debouncing.
 For both programs current flow was measured twice: once with the program in an idle state, and once where the paddle was moved about by a user frantically pressing \texttt{SW0} and \texttt{SW2} as fast as possible.
 The ampere meter used was a BST BS1901W, with a reported accuracy of +-(1.2\% +3d) CITE http://www.docstoc.com/docs/67828383/BS1901W .
 \\
-The measurements can be found in table \ref{energy-measurements-table}
+The measurements can be found in table \ref{energy-measurements-table}.
+
+
+\begin{table}
+    \label{energy-measurements-table}
+        \begin{tabular}{|l|l|l|l|l|}
+                              & Interrupt-based &        & Busy-wait-based &        \\
+                Pins          & idle            & active & idle            & active \\
+                AVDDUSB (1,2) & 1.77mA          & ~      & 1.77mA          & ~      \\
+                AVDDPLL (3,4) & 1.97mA          & ~      & 1.97mA          & ~      \\
+                AVDDOSC (5,6) & 0.00mA          & ~      & 0.00mA          & ~      \\
+                VDDCORE (7,8) & 30.6mA          & 30.5mA & 26.0mA          & 25.8mA \\
+                VDDIO (9,10)  & 4.90mA          & 4.99mA & 8.05mA          & 8.13mA \\
+        \end{tabular}
+\end{table}
+
+\begin{figure}
+\includegraphics[width = \textwidth]{results-and-tests/power-pins-location.jpg}
+\caption{Location of the power pins on the STK1002. Image courtesy of ATMEL.}
+\label{power-pins-location}
+\end{figure}
+
+VDDCORE and VDDIO are the interesting measurements, as AVDDUSB (usb power supply), AVDDPLL (PLL power supply) and AVDDOSC (Oscillator power supply) are not used in the assignment.
+
+Using the sum of the power consumption over each of the 5 measuring points during the idle state as an indicator of the total power consumption of the AP7000, we can evaluate the relative energy efficiency performance of the two programs' use of the AP7000.
+
+The power consumption of the interrupt-based version is 
+$
+1.77mA * 1.8V +
+1.97mA * 1.8V +
+0.00mA * 1.8V +
+30.6mA * 1.8V +
+4.90mA * 3.3V
+=
+78mW
+$
+.
+
+The power consumption of the busy-wait version is 
+$
+1.77mA * 1.8V +
+1.97mA * 1.8V +
+0.00mA * 1.8V +
+25.8mA * 1.8V +
+8.05mA * 3.3V
+=
+79.7mW
+$
+.
+
+The difference in power consumption is around 1\%, which is negligable.
 
 
 \subsection{Testing}
 
 	\input{results-and-tests/testing.tex}
 
-
 \subsection{Discussion}
 
 maybe we could turn down the clock speeds, see pagenumer 933 of http://www.atmel.com/Images/doc32003.pdf
-
