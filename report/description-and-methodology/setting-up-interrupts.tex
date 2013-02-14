@@ -17,4 +17,5 @@ First, we specify the address of our interrupt routine to be used as the autovec
 \code{120}{121}{The address of our interrupt routine is stored in IPR14's register in the interrupt controller.}
 Then we have to set the processor's EVBA\footnote{Exception Vector Base Address} register to the desired value, i.e. zero.
 \code{117}{118}{Setting the EVBA to 0. 0 is stored in r1.}
-This is because the interrupt routine address is calculated by performing bitwise logical AND on the EVBA and autovector, where the autovector is represented by the 14 least significant bits in the interrupt routine address. By setting the EVBA to 0, the interrupt routine address simply becomes the autovector, which we have specified as the address of our interrupt routine.
+This is because the interrupt routine address is calculated by performing bitwise logical AND on the EVBA and autovector, where the autovector is represented by the 14 least significant bits in the interrupt routine address.
+By setting the EVBA to 0, the interrupt routine address simply becomes the autovector, which we have specified as the address of our interrupt routine.
