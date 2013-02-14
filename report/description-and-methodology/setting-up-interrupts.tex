@@ -1,5 +1,5 @@
 Before interrupts can be utilized we have to configure the board in an appropriate manner. This process is outlined in section 2.5 of \cite{lab-compendium}.
-\paragraph{Enabling Interrupts}
+\subsubsection{Enabling Interrupts}
 Since we connected the buttons to PIO port B, we will be detailing how we enabled interrupts from PIO port B.
 First, we set the appropriate bits in the Interrupt Enable Register to 1.
 \code{84}{84}{The base address of PIO port B is loaded into r2.}
@@ -9,7 +9,7 @@ Before we enable interrupts for Button 0 and Button 2, we defensively disable in
 Finally, then enable interrupts globally by setting the bit GM (Global Interrupt Mask) in the processor's status register to 0. % taken from pg 26 of the compendium
 \code{126}{127}{Enable interrupts globally.}
 % EVBA = Exception Vector Base Address
-\paragraph{Loading the interrupt routine}
+\subsubsection{Loading the interrupt routine}
 After enabling interrupts, we have to inform the processor about what to do when it receives an interrupt.
 First, we specify the address of our interrupt routine to be used as the autovector when the interrupt controller receives an interrupt from group 14.
 \code{86}{86}{The base address of the interrupt controller is loaded into r7.}
