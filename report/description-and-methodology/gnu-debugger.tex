@@ -2,8 +2,6 @@ The instructions presented in the compendium were followed in an attempt to empl
 Because of this, the GNU debugger did not play a important role in the development of the solution.
 After the main development of the program was complete, the proper setup procedure for the debugger was discovered by another group and subsequently shared.
 For completeness, the already developed program was debugged using the GNU debugger, to confirm that debugging did indeed work.
-As the setup procedure differs somewhat from that of the compendium, it is reproduced in its entirety here.
-\\
-\texttt{\$ avr32gdbproxy \&\\
-\$ avr32-gdb oeving1.elf \\
-(gdb) target remote:4711}
+As the setup procedure differs somewhat from that of the compendium, it is reproduced in its entirety here in listing 0, in the form of a Make-command from the program's Makefile.
+
+\codewithfile{39}{43}{Makefile code for automatic debugging of the STK1000}{../Makefile}
