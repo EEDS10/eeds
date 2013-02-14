@@ -1,19 +1,28 @@
+Description of what the pins mean:
+
+1/2: AVDDUSB: USB power supply
+3/4: AVDDPLL: PLL power supply
+5/6: AVDDOSC: Oscillator power supply
+7/8: VDDCORE: Core power supply
+9/10: VDDIO: I/O power supply
+
+
 head:8555bc31
 measuring at 20mA
-    1/2: 1.77 idle & active
-    3/4: 1.97 idle & active
-    5/6: 0.00 idle & active
+    1/2: 1.77mA idle & active
+    3/4: 1.97mA idle & active
+    5/6: 0.00mA idle & active
 measuring at 200mA
-    7/8: 30.6 idle, 30.5 active
+    7/8: 30.6mA idle, 30.5mA active
 measuring at 20mA
-    9/10: 4.90 idle, 4.99 active
+    9/10: 4.90mA idle, 4.99mA active
 
 head:8d7cc5f
 measuring at 20mA
-    1/2: 1.77 idle & active
-    3/4: 1.97 idle & active
-    5/6: 0.00 idle & active
+    1/2: 1.77mA idle & active
+    3/4: 1.97mA idle & active
+    5/6: 0.00mA idle & active
 measuring at 200mA
-    7/8: 26.0 idle, 25.8 active
+    7/8: 26.0mA idle, 25.8mA active
 measuring at 20mA
-    9/10: 8.05 idle, 8.13 active
+    9/10: 8.05mA idle, 8.13mA active
