@@ -1,17 +1,10 @@
-For the interrupt routine to work, we need to set the processor's EVBA\footnote{Exception Vector Base Address} register to the desired value, i.e. the base address of our interrupt routine\footnote{For some reason, this value is 0}.
-\code{117}{118}{Setting the EVBA to 0}
+Our interrupt routine first reads the state of the buttons by calling another routine which stores the buttons' state in \texttt{r12}.
+\code{190}{191}{Read button state.}
+Once the buttons' state has been read, the debouncing routine (\cite{lab-compendium}, Figure 2.9a) is called to prevent bouncing. 
+\code{193}{194}{Debounce!}
+Wthat \texttt{0xfff} 
 
 
-\code{86}{86}{The base address of the interrupt controller is loaded into r7}
-\code{87}{87}{The address of our interrupt routine is loaded into r8}
-
-EVBA is set to 0
-and the address of our interrupt routine is stored in the interrupt controller (group 14)
-
-Page 24
-Do we set the EVBA to 0 because the PIO B controller has interrupt line number 0 (group4 is accounted for )
-According to \cite{lab-compendium} (pg 24), 
-We tell the interrupt controller 
 %% EXECUTIVE SUMMARY
 The button interrupt routine first reads the state of the buttons before calling a debounce routine which runs for some amount of time.
 When the debounce routine is finished the button interrupt routine notifies that the interrupt has been handled before returning to the main loop.
