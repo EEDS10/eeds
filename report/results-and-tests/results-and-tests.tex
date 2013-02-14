@@ -5,7 +5,13 @@ This is the results and tests section.
 
 The STK1000 offers 5 power pin pairs that may be used to measure current flow, and therefore also energy efficiency.
 These 5 pins are situated on the daughterboard, see figure \ref{power-pins-location}.
-Current flow was measured over the pins by connecting an amperemeter in series.
+Current flow through the pins was measured by connecting an ampere meter in series.
+Current flow was measured on all five pin pairs on two different versions of the program: the final optimized interrupt-based program, and an earlier busy-wait based program without debouncing.
+For both programs current flow was measured twice: once with the program in an idle state, and once where the paddle was moved about by a user frantically pressing \texttt{SW0} and \texttt{SW2} as fast as possible.
+The ampere meter used was a BST BS1901W, with a reported accuracy of +-(1.2\% +3d) CITE http://www.docstoc.com/docs/67828383/BS1901W .
+\\
+The measurements can be found in table \ref{energy-measurements-table}
+
 
 \subsection{Testing}
 
