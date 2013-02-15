@@ -1,7 +1,8 @@
-Our interrupt routine first reads the state of the buttons by calling another routine which stores the buttons' state in \texttt{r12}.
+Our interrupt routine first reads the state of the buttons by calling another routine which stores the buttons' state in \texttt{r12}, detailed in listig 16.
 \code{190}{191}{Read button state.}
-Once the buttons' state has been read, the debouncing routine (\cite{lab-compendium}, Figure 2.9a) is called to prevent bouncing. 
+Once the buttons' state has been read, the debouncing routine (\cite{lab-compendium}, Figure 2.9a) is called to prevent bouncing (see listing 17). 
 \code{193}{194}{Debounce!}
 The debouncing routine keeps the processor busy by repeatedly subtracting one from some value\footnote{This value is specified as the \texttt{DEBOUNCE} constant in our code.} until it reaches zero. As we have not yet notified the processor that the interrupt has been handled, this prevents further interrupts from being registered until the debouncing is finished.
-The last thing our interrupt routine does before returning is notify the processor that the interrupt has been handled, by reading the Interrupt Status Register. The value is stored in r0, which is our designated free-for-all register.
+The last thing our interrupt routine does before returning is notify the processor that the interrupt has been handled, by reading the Interrupt Status Register (see listing 18).
+The value is stored in r0, which is our designated free-for-all register.
 \code{196}{197}{Reading the Interrupt Status Register}
