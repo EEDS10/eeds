@@ -17,14 +17,13 @@
 \contentsline {subsubsection}{\numberline {4.3.1}Enabling Interrupts}{7}
 \contentsline {subsubsection}{\numberline {4.3.2}Loading the interrupt routine}{7}
 \contentsline {subsection}{\numberline {4.4}Interrupt Routine}{8}
-\contentsline {subsection}{\numberline {4.5}Refactoring and Modularization}{8}
-\contentsline {subsection}{\numberline {4.6}Program flow}{8}
-\contentsline {subsection}{\numberline {4.7}Register Overview}{11}
+\contentsline {subsection}{\numberline {4.5}Program flow}{8}
+\contentsline {subsection}{\numberline {4.6}Register Overview}{8}
 \contentsline {part}{IV\hspace {1em}Results and Tests}{11}
-\contentsline {subsection}{\numberline {4.8}Energy Efficiency}{11}
-\contentsline {subsection}{\numberline {4.9}Testing}{14}
-\contentsline {subsubsection}{\numberline {4.9.1}Button Functionality Test}{14}
-\contentsline {subsubsection}{\numberline {4.9.2}Measurement of Power Consumption}{14}
-\contentsline {subsection}{\numberline {4.10}Discussion}{15}
+\contentsline {subsection}{\numberline {4.7}Energy Efficiency}{11}
+\contentsline {subsection}{\numberline {4.8}Testing}{14}
+\contentsline {subsubsection}{\numberline {4.8.1}Button Functionality Test}{14}
+\contentsline {subsubsection}{\numberline {4.8.2}Measurement of Power Consumption}{14}
+\contentsline {subsection}{\numberline {4.9}Discussion}{15}
 \contentsline {part}{V\hspace {1em}Evaluation of Assignment}{15}
 \contentsline {part}{VI\hspace {1em}Conclusion}{15}
