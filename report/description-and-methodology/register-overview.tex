@@ -1,14 +1,14 @@
 The STK1000 has 13 general purpose registers named \texttt{r0-r12}. The programmer is free to use these registers for whatever they want.
 However, several conventions are commonplace to introduce a certain degree of structure.
 
-Convetions:\\
+\paragraph{Conventions}
 \texttt{r0} is a scratch register, used for intermediate calculations and such.
 \texttt{r1} holds the constant 0.
 \texttt{r8-12} are used to hold parameters when calling a routine.
 \texttt{r12} is used to hold the return value when returning from a routine.
 
-On the basis of these conventions, a set of rules has been laid down, governing what each register of the processor is used for.
-For a this list of registers and what they are used for in the paddle move program see table \ref{register-table}.
+On the basis of these conventions, a set of rules has been laid down governing what each register of the processor is used for.
+This list of registers and their usage is presented in table \ref{register-table}.
 
 \begin{table}
     \centering

@@ -36,8 +36,25 @@ It covers procedure, setup and configuration, tools and program details.
 \section{Development of the program}
 
 This section details the steps taken during the development of the program.
-Initially, a bare-bones program was developed with minimal functionality, to get familiar with the environment.
 Features were added iteratively, starting with simple LED and button integration, and moving on to more sophisticated interrupt-oriented logic/program flow.
+The first piece of code written simply enabled all the LEDs and turned them on. Once the LEDs were working, buttons were enabled.
+The next step was to write code to turn on just one of the LEDs, designated the ''paddle'' per the assignment's description (\cite{lab-compendium}, pg 37).
+
+Code was written to move the paddle right when \texttt{SW0} was pushed, and left when \texttt{SW2} was pushed, employing arithmetic shift to move the paddle bit in the appropriate direction.
+However, a single push of either button caused the paddle to disappear.
+This was due to a combination of the paddle's bit overflowing when it reached either edge, making the paddle disappear, and the fact that a single button press was registered many, many times.
+The latter happened because a button press was registered for each iteration of the program's main loop while a button was held down.
+The code was altered so that the paddle would loop around to the opposite side of the row of LEDs when it was pushed off either side.
+
+At this point, when pushing either buttons, all the LEDs would light up briefly in turn at such high a speed that it looked like they were all dimly lit simultaneously.
+This is again because of the massive amount of times the main loop would iterate whilst a button was pressed, causing the paddle to cycle the LED row at break-neck speeds.
+Implementing some sort of button cool-down to reduce the frequency of registered button presses would be the next step if we wanted to continue working with the polling approach to button handling, but we opted rather to migrate to an interrupt-based approach.
+This choice had the benefit of making the program more energy efficient, as well as it being a hard requirement of the assignment.
+Implementing interrupts for the buttons introduced hardware bouncing problems, which were solved by implementing software debouncing (\cite{lab-compendium}, Fig. 2.9a).
+
+An issue arised where the paddle would move over one additional LED when a button was pushed (i.e. from \texttt{LEDn} to \texttt{LEDn+2} rather than from \texttt{LEDn} to \texttt{LEDn+1}).
+This was caused by the fact that lifting a button from a pressed state to an unpressed state generated an unwanted interrupt.
+This was fixed by ignoring every second registered push of each button.
 
     \subsection{Setting up the LEDs}
         
@@ -54,6 +71,8 @@ Features were added iteratively, starting with simple LED and button integration
     \subsection{Interrupt Routine}
 
         \input{description-and-methodology/interrupt-routine.tex}
+
+    \newpage
 
     \subsection{Program flow}
 

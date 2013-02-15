@@ -4,5 +4,6 @@ One way to measure the current consumption of the entire STK1000 would be to con
 Unfortunately, further investigation of the currency consumption measurements falls outside of the scope of these authors' resources.
 
 On the topic of energy efficiency, the power consumption could probably be reduced further by reducing the CPU's clock speed (\cite{AT32AP7000-prelim}, pg 933-).
-
-The program's code could be further optimized by rewriting it so that it employs less branches. Branching is expensive in terms of clock cycles, and fewer clock cycles equals lower power consumption.
+The program's code can be optimized to use less clock cycles, and fewer clock cycles equals lower power consumption, as the processor can spend more time in a low-power state.
+The code in this assignment is already reasonably well energy optimized - it spends most of its time in a sleeping state. It also uses as few instructions and does as little IO as possible to the degree that it can without entirely defenestrating readability.
+The code could be further optimized by rewriting it so that it employs less branches. Branching is expensive in terms of clock cycles, as missed branch predictions will make the CPU pipline less efficient.

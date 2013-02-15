@@ -1,6 +1,6 @@
 Before interrupts can be utilized the board has to be configured in an appropriate manner. This process is outlined in section 2.5 of \cite{lab-compendium}, and further detailed here.
 \subsubsection{Enabling Interrupts}
-Since the buttons werw connected to PIO port B in this solution, how to enable interrupts from PIO port B will be detailed in this report.
+Since the buttons were connected to PIO port B in this solution, how to enable interrupts from PIO port B will be detailed in this report.
 First, the appropriate bits must be set to 1 in the Interrupt Enable Register, see listing 9, 10 and 11.
 \code{84}{84}{The base address of PIO port B is loaded into r2.}
 \code{97}{97}{The masks of Button 0 and Button 2 are loaded into r5}

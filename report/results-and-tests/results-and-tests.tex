@@ -19,15 +19,15 @@ The measurements can be found in table \ref{energy-measurements-table}.
                 Pins          & idle            & active & idle            & active \\
                 \hline
                 \hline
-                AVDDUSB (1,2) & 1.77mA          & 1.77mA & 1.77mA          & 1.77mA \\
+                \texttt{AVDDUSB} (1,2) & 1.77mA          & 1.77mA & 1.77mA          & 1.77mA \\
                 \hline
-                AVDDPLL (3,4) & 1.97mA          & 1.97mA & 1.97mA          & 1.97mA \\
+                \texttt{AVDDPLL} (3,4) & 1.97mA          & 1.97mA & 1.97mA          & 1.97mA \\
                 \hline
-                AVDDOSC (5,6) & 0.00mA          & 0.00mA & 0.00mA          & 0.00mA \\
+                \texttt{AVDDOSC} (5,6) & 0.00mA          & 0.00mA & 0.00mA          & 0.00mA \\
                 \hline
-                VDDCORE (7,8) & 30.6mA          & 30.5mA & 26.0mA          & 25.8mA \\
+                \texttt{VDDCORE} (7,8) & 30.6mA          & 30.5mA & 26.0mA          & 25.8mA \\
                 \hline
-                VDDIO (9,10)  & 4.90mA          & 4.99mA & 8.05mA          & 8.13mA \\
+                \texttt{VDDIO} (9,10)  & 4.90mA          & 4.99mA & 8.05mA          & 8.13mA \\
                 \hline
         \end{tabular}
     \caption{Results of the current consumption measurements of the STK1002}
@@ -40,11 +40,11 @@ The measurements can be found in table \ref{energy-measurements-table}.
 \label{power-pins-location}
 \end{figure}
 
-VDDCORE (core power supply) and VDDIO (I/O power supply) are the interesting measurements, as AVDDUSB (usb power supply), AVDDPLL (PLL power supply) and AVDDOSC (Oscillator power supply) are not actively affected in the assignment.
+\texttt{VDDCORE} (core power supply) and \texttt{VDDIO} (I/O power supply) are the interesting measurements, as \texttt{AVDDUSB} (usb power supply), \texttt{AVDDPLL} (PLL power supply) and \texttt{AVDDOSC} (Oscillator power supply) are not actively affected in the assignment.
 
-Using the sum of the power consumption over VDDCORE and VDDIO during the idle state as an indicator of the total power consumption of the AP7000, we can evaluate the relative energy efficiency performance of the two programs' use of the AP7000.
+Using the sum of the power consumption over \texttt{VDDCORE} and \texttt{VDDIO} during the idle state as an indicator of the total power consumption of the AP7000, we can evaluate the relative energy efficiency performance of the two programs' use of the AP7000.
 
-The power consumption of VDDCORE and VDDIO of the interrupt-based version is 
+The power consumption of \texttt{VDDCORE} and \texttt{VDDIO} of the interrupt-based version is 
 $
 30.6mA \cdot 1.8V +
 4.90mA \cdot 3.3V

@@ -1,13 +1,13 @@
 The connection to the input buttons must be set up before the buttons can be used in a program.
 First, the I/O pins that the buttons are connected to must be enabled.
 In this assignment, the buttons were connected to the pins \texttt{GPIO0-7}, corresponding to \texttt{PIO B} lines \texttt{0-7}.
-To enable the correct I/O pins, we must therefore set to 'high' bits \texttt{0-7} of the \texttt{PIO B} PIO Enable Register (\texttt{PIOB PER}), as in listing 6.
+To enable the correct I/O pins, bits \texttt{0-7} of the \texttt{PIO B} PIO Enable Register (\texttt{PIOB PER}) must therefore be set to 1, as in listing 6.
 Here, \texttt{r2} is the base address of \texttt{PIOB}, \texttt{AVR32\_PIO\_PER} is the PIO Enable Register offset, and \texttt{r6} contains the bit field indicating which pins to enable.
 
 \code{105}{106}{Enabling I/0 pins}
 
 Second, the pull-up resistors for the buttons must be enabled.
-This is done by setting to 'high' the corresponding bits (\texttt{0-7}) of the \texttt{PIO B} Pull-Up Enable Register (\texttt{PIOC PUER}), as in listing 7.
+This is done by setting high' the corresponding bits (\texttt{0-7}) of the \texttt{PIO B} Pull-Up Enable Register (\texttt{PIOC PUER}) to 1, as in listing 7.
 Here, \texttt{r2} is the base address of \texttt{PIOB}, \texttt{AVR32\_PIO\_PUER} is the Pull-Up Enable Register offset, and \texttt{r6} contains the bit field indicating which pull-up resistors should be enabled.
 
 \code{108}{109}{Enabling pull-up resistors}

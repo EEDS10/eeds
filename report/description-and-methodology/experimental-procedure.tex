@@ -1,23 +1,15 @@
-The first thing we did was locate the lab, on the fourth floor of the IT-Vest building at NTNU, room 458. 
-We removed one of the AVR32STK1000 boards from their box and set the jumpers to the appropriate positions (\cite{lab-compendium}, pg 37).
-We booted up one of the computers and connected the AVR32STK1000 to it. 
-Our first piece of code simply enabled all the LEDs and turned them on. Once we got the LEDs working we enabled the buttons.
-We followed this up by writing code to turn on just one of the LEDs, designated the ''paddle'' per the assignment's description (\cite{lab-compendium}, pg 37).
-Shortly thereafter we gave up on trying to figure out GDB, as the GDB setup instructions in the compendium \cite{compendium} were erroneous.
+The described procedures were carried out in the PC lab on the fourth floor of the IT-Vest building at NTNU, room 458.
+The lab is stocked with development PCs and boxed AVR32STK1000 development boards with all necessary extra equipment, such as cables and a JTAGICE.
+An AVR32STK1000 board was removed from its box and the jumpers were set to the appropriate positions (\cite{lab-compendium}, pg 37).
+A computer was booted up and the unboxed AVR32STK1000 was connected to it using a USB JTAGICE.
+The assembly program was then developed on the development PC.
+Initially, a bare-bones program was developed with minimal functionality, to get familiar with the environment.
+Features were added iteratively, starting with simple LED and button integration, and moving on to more sophisticated interrupt-oriented logic/program flow.
+The development of the program is elaborated upon in section 4: Development of the program.
 
-Code was written to move the paddle right when \texttt{SW0} is pushed, and left when \texttt{SW2} is pushed, employing arithmetic shift to move the paddle bit in the appropriate direction.
-However, a single push of either button caused the paddle to disappear.
-This was due to a combination of the paddle's bit overflowing when it reached either edge, making the paddle disappear, and the fact that a single button press was registered many, many times.
-The latter happened because a button press was registered for each iteration of the program's main loop while a button was held down.
-We altered our code so that the paddle would loop around to the opposite side of the row of LEDs when it was pushed off either side.
+Although the GNU debugger would have been a useful tool during development, it was not used, as the GDB setup instructions in the compendium \cite{lab-compendium} were erroneous, and efforts to find a work-around did not prove to be successful.
 
-At this point, when pushing either buttons, all the LEDs would light up briefly in turn at such high a speed that it looked like they were all dimly lit simultaneously.
-This is again because of the massive amount of times the main loop would iterate whilst a button was pressed, causing the paddle to cycle the LED row at break-neck speeds.
-Implementing some sort of button cool-down to reduce the frequency of registered button presses would be the next step if we wanted to continue working with the polling approach to button handling, but we opted rather to migrate to an interrupt-based approach.
-Implementing interrupts for the buttons introduced hardware bouncing problems, which we solved by implementing software debouncing (\cite{lab-compendium}, Fig. 2.9a).
+During this development, the code was manually tested on the STK1000 by uploading the program using the JTAGICE.
 
-We had an issue where the paddle would move over one additional LED when a button was pushed (i.e. from \texttt{LEDn} to \texttt{LEDn+2} rather than from \texttt{LEDn} to \texttt{LEDn+1}).
-This was caused by the fact that lifting a button from a pressed state to an unpressed state generated an unwanted interrupt.
-This was fixed by ignoring every second registered push of each button.
 
-Finally we measured the current throughpuon the board's various pins while an interrupt-based program was running, and again with a busy-waiting program in order to compare the energy efficiency of the two solutions.
+Finally the current throughput over the board's various pins was measured while an interrupt-based program was running, and again with a busy-waiting program in order to compare the energy efficiency of the two solutions.

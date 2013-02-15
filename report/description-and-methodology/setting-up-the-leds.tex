@@ -7,7 +7,7 @@ Here, \texttt{r3} is the base address of \texttt{PIOC}, \texttt{AVR32\_PIO\_PER}
 \code{99}{100}{Enable the I/O pins}
 
 Second, the I/O pins must be set to act as output pins, as opposed to input pins.
-This is done by setting to 'high' the corresponding bits (\texttt{0-7}) of the \texttt{PIO C} Output Enable Register (\texttt{PIOC OER}), as in listing 3.
+This is done by setting the corresponding bits (\texttt{0-7}) of the \texttt{PIO C} Output Enable Register (\texttt{PIOC OER}) to 1, as in listing 3.
 Here, \texttt{r3} is the base address of \texttt{PIOC}, \texttt{AVR32\_PIO\_OER} is the Output Enable Register offset, and \texttt{r6} contains the bit field indicating which pins to set as outputs.
 
 \code{102}{103}{Set the pins to act as output pins}
@@ -17,7 +17,7 @@ Here, \texttt{r3} is the address of \texttt{PIOC}, \texttt{AVR32\_PIO\_SODR} is 
 
 \code{176}{177}{Switch on LEDs}
 
-Analogously, LEDs can be turned of by writing the approtiate bits to \texttt{PIO C} Clear Output Data Register (\texttt{PIOC CODR}), as in listing 5. 
+Analogously, LEDs can be turned off by writing the appropriate bits to \texttt{PIO C} Clear Output Data Register (\texttt{PIOC CODR}), as in listing 5. 
 Here, \texttt{r3} is the address of \texttt{PIOC}, \texttt{AVR32\_PIO\_SODR} is the Set Output Data Register offset, and \texttt{r4} contains the bit field indicating which LEDs to switch off.
 
 \code{173}{174}{Switch off LEDs}
