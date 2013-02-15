@@ -1,21 +1,22 @@
-Before interrupts can be utilized we have to configure the board in an appropriate manner. This process is outlined in section 2.5 of \cite{lab-compendium}.
+Before interrupts can be utilized the board has to be configured in an appropriate manner. This process is outlined in section 2.5 of \cite{lab-compendium}, and further detailed here.
 \subsubsection{Enabling Interrupts}
-Since we connected the buttons to PIO port B, we will be detailing how we enabled interrupts from PIO port B.
-First, we set the appropriate bits in the Interrupt Enable Register to 1, see listing 8, 9 and 10.
+Since the buttons werw connected to PIO port B in this solution, how to enable interrupts from PIO port B will be detailed in this report.
+First, the appropriate bits must be set to 1 in the Interrupt Enable Register, see listing 9, 10 and 11.
 \code{84}{84}{The base address of PIO port B is loaded into r2.}
 \code{97}{97}{The masks of Button 0 and Button 2 are loaded into r5}
 \code{114}{115}{Interrupts are enabled for Button 0 and Button 2}
-Before we enable interrupts for Button 0 and Button 2, we defensively disable interrupts for everything by loading \texttt{0xff} into the Interrupt Disable Register.
-Finally, then enable interrupts globally by setting the bit GM (Global Interrupt Mask) in the processor's status register to 0 (see listing 11) % taken from pg 26 of the compendium
+Before interrupts are enabled for Button 0 and Button 2, interrupts are defensively disabled for everything by loading \texttt{0xff} into the Interrupt Disable Register.
+Finally, interrupts are enabled globally by setting the GM (Global Interrupt Mask) bit in the processor's status register to 0 (see listing 12). % taken from pg 26 of the compendium
 \code{126}{127}{Enable interrupts globally.}
 % EVBA = Exception Vector Base Address
 \subsubsection{Loading the interrupt routine}
-After enabling interrupts, we have to inform the processor about what to do when it receives an interrupt.
-First, we specify the address of our interrupt routine to be used as the autovector when the interrupt controller receives an interrupt from group 14. The code for this is displayed in listing 12, 13 and 14.
+After enabling interrupts, the processor must be informed about what to do when it receives an interrupt.
+First, the address of the interrupt routine to be used as the autovector when the interrupt controller receives an interrupt from group 14 is specified.
+The code for this is displayed in listing 13, 14 and 15.
 \code{86}{86}{The base address of the interrupt controller is loaded into r7.}
 \code{87}{87}{The address of our interrupt routine is loaded into r8.}
 \code{120}{121}{The address of our interrupt routine is stored in IPR14's register in the interrupt controller.}
-Then we have to set the processor's EVBA\footnote{Exception Vector Base Address} register to the desired value, i.e. zero (see listing 15).
+Then processor's EVBA\footnote{Exception Vector Base Address} register must be set to the desired value, i.e. zero (see listing 16).
 \code{117}{118}{Setting the EVBA to 0. 0 is stored in r1.}
 This is because the interrupt routine address is calculated by adding together the EVBA and autovector, where the autovector is represented by the 14 least significant bits in the interrupt routine address.
 By setting the EVBA to 0, the interrupt routine address simply becomes the autovector, which we have specified as the address of our interrupt routine.

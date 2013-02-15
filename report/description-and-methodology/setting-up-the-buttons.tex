@@ -1,18 +1,19 @@
 The connection to the input buttons must be set up before the buttons can be used in a program.
 First, the I/O pins that the buttons are connected to must be enabled.
 In this assignment, the buttons were connected to the pins \texttt{GPIO0-7}, corresponding to \texttt{PIO B} lines \texttt{0-7}.
-To enable the correct I/O pins, we must therefore set to 'high' bits \texttt{0-7} of the \texttt{PIO B} PIO Enable Register (\texttt{PIOB PER}), as in listing 5.
-Here, \texttt{r2} is the base offset of \texttt{PIOB}, \texttt{AVR32\_PIO\_PER} is the PIO Enable Register offset, and \texttt{r6} contains the bit field indicating which pins to enable.
+To enable the correct I/O pins, we must therefore set to 'high' bits \texttt{0-7} of the \texttt{PIO B} PIO Enable Register (\texttt{PIOB PER}), as in listing 6.
+Here, \texttt{r2} is the base address of \texttt{PIOB}, \texttt{AVR32\_PIO\_PER} is the PIO Enable Register offset, and \texttt{r6} contains the bit field indicating which pins to enable.
 
 \code{105}{106}{Enabling I/0 pins}
 
 Second, the pull-up resistors for the buttons must be enabled.
-This is done by setting to 'high' the corresponding bits (\texttt{0-7}) of the \texttt{PIO B} Pull-Up Enable Register (\texttt{PIOC PUER}), as in listing 6.
-Here, \texttt{r2} is the base offset of \texttt{PIOB}, \texttt{AVR32\_PIO\_PUER} is the Pull-Up Enable Register offset, and \texttt{r6} contains the bit field indicating which pull-up resistors should be enabled.
+This is done by setting to 'high' the corresponding bits (\texttt{0-7}) of the \texttt{PIO B} Pull-Up Enable Register (\texttt{PIOC PUER}), as in listing 7.
+Here, \texttt{r2} is the base address of \texttt{PIOB}, \texttt{AVR32\_PIO\_PUER} is the Pull-Up Enable Register offset, and \texttt{r6} contains the bit field indicating which pull-up resistors should be enabled.
 
 \code{108}{109}{Enabling pull-up resistors}
 
-Once this is done, the button state can be read by reading the appropriate bits from \texttt{PIO B} Pin-Data Status Register (\texttt{PIOB PDSR}), as in listing 7.
-Here, \texttt{r2} is the offset of \texttt{PIOB} and \texttt{AVR32\_PIO\_PDSR} is the Pin-Data Status Register offset which is saved in \texttt{r12}.
+Once this is done, the button state can be read by reading the appropriate bits from \texttt{PIO B} Pin-Data Status Register (\texttt{PIOB PDSR}), as in listing 8.
+Here, \texttt{r2} is the address of \texttt{PIOB} and \texttt{AVR32\_PIO\_PDSR} is the Pin-Data Status Register offset.
+The button state is stored in \texttt{r12}.
 
 \code{225}{226}{Reading the button state}

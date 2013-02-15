@@ -1,5 +1,5 @@
-All tests assume that you are in possession of at least one (1) functional STK1000 development board (with cables), a JTAGICE mkII (with USB cable) and a computer with software and hardware capable of interfacing with the JTAGICE.
-\subsubsection{Button Functionality Test}
+All tests assume that you are in possession of at least one (1) functional STK1000 development board (with cables), a JTAGICE mkII firmware version 7.29 (with USB cable) and a computer with software and hardware capable of interfacing with the JTAGICE.
+\subsection{Button Functionality Test}
 This test aims to uncover if pushing Button 0 has the desired effect. The desired effect from pushing Button 0 is that the paddle moves one LED to the right.
 \\ Prerequisites:
 \begin{itemize}
@@ -15,11 +15,12 @@ Procedure:
 	\item Note the paddle's position.
 \end{enumerate}
 If the paddle's position in the last step is not one to the right of its position in step \#3, Button 0 does not have the appropriate functionality.
+
 The test can be refactored to test Button 2: simply push Button 2 instead in step \#4 and note that the test will have failed if the paddle's position in step \#5 is not one to the left of its position in step \#3.
 Optionally, LED0 could be considered to be to the left of LED7, while LED7 could be considered to be to the right of LED0.
 
-\subsubsection{Measurement of Power Consumption}
-This test measures the board's power consumption by removing a jumper and connecting an amperemeter in series.
+\subsection{Measurement of Power Consumption}
+This test measures the board's power consumption by removing a jumper and connecting an ammeter in series.
 Power consumption is traditionally measured while the board is turned on. 
 \\
 Prerequisites:
@@ -31,9 +32,9 @@ Prerequisites:
 Procedure:
 \begin{enumerate}
     \item{Remove the jumper from the pins that are to be measured.}
-    \item{Touch the pins that are now free from the jumper with the measuring device's probes, such that the ammeter is connected in series, acting as a replacement for the removed jumper.}
+    \item{Touch the pins that are now free from the jumper with the ammeters's probes, such that the ammeter is connected in series, acting as a replacement for the removed jumper.}
 	\item{Press the \texttt{RESET} button on the STK1000.}
-    \item{Read the measurement from the display of the measurement device.}
+    \item{Read the measurement from the display of the ammeter.}
 \end{enumerate}
 The board can optionally be interacted with while performing the last step of the procedure in order to measure power consumption during certain interactions.
 When the test has been performed, replace the jumper.

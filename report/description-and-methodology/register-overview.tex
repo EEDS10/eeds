@@ -1,56 +1,47 @@
-The STK1000 has 13 general purpose registers named r0-r12. The programmer is free to use these registers for whatever they want.
+The STK1000 has 13 general purpose registers named \texttt{r0-r12}. The programmer is free to use these registers for whatever they want.
 However, several conventions are commonplace to introduce a certain degree of structure.
 
-Conventions:
+Convetions:\\
+\texttt{r0} is a scratch register, used for intermediate calculations and such.
+\texttt{r1} holds the constant 0.
+\texttt{r8-12} are used to hold parameters when calling a routine.
+\texttt{r12} is used to hold the return value when returning from a routine.
 
-r0 is a scratch register, used for intermediate calculations and such.
-r1 holds the constant 0.
-
-...
-
-r8, r9, r10, r11, r12:
-
-used to hold parameters when calling a routine.
-
-r12:
-
-used to hold the return value when returning from a routine.
-
-
-For a list of registers and what they are used for in the paddle move program see table \ref{register-table}.
+On the basis of these conventions, a set of rules has been laid down, governing what each register of the processor is used for.
+For a this list of registers and what they are used for in the paddle move program see table \ref{register-table}.
 
 \begin{table}
     \centering
     \begin{tabular}{|l|l|}
         \hline
-        register  & Usage \\
+        Register  & Usage \\
         \hline
         \hline
-        r0  & Scratch register used to hold intermediate values. \\
+        \texttt{r0}  & Scratch register used to hold intermediate values. \\
         \hline
-        r1  & Constant: 0 \\ 
+        \texttt{r1}  & Constant: \texttt{0} \\ 
         \hline
-        r2  & Constant: base offset to PIOB \\ 
+        \texttt{r2}  & Constant: base offset to \texttt{PIOB} \\ 
         \hline
-        r3  & Constant: base offset to PIOC \\ 
+        \texttt{r3}  & Constant: base offset to \texttt{PIOC} \\ 
         \hline
-        r4  & Variable: holds the position of the paddle \\ 
+        \texttt{r4}  & Variable: holds the position of the paddle \\ 
         \hline
-        r5  & Constant: 5 \\ 
+        \texttt{r5}  & Constant: \texttt{5} \\ 
         \hline
-        r6  & Constant: 0xff \\ 
+        \texttt{r6}  & Constant: \texttt{0xff} \\ 
         \hline
-        r7  & Variable: holds the previous button state \\ 
+        \texttt{r7}  & Variable: holds the previous button state \\ 
         \hline
-        r8  & Constant: pointer to button interrupt routine \\ 
+        \texttt{r8}  & Constant: pointer to button interrupt routine \\ 
         \hline
-        r9  & (not used) \\ 
+        \texttt{r9}  & (not used) \\ 
         \hline
-        r10 & (not used) \\ 
+        \texttt{r10} & (not used) \\ 
         \hline
-        r11 & (not used) \\ 
+        \texttt{r11} & (not used) \\ 
         \hline
-        r12 & Holds return value from routines \\
+        \texttt{r12} & Holds return value from routines \\
         \hline
     \end{tabular}
     \caption{Overview over register use}

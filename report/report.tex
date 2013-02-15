@@ -112,8 +112,13 @@ caption=#3
 % now one can list the authors, \textbf{} makes bold text
 \author{Emil Taylor Bye\\Sigve Sebastian Farstad\\Odd M. Trondrud}
 
+\pagenumbering{roman} 
+
 % make title page
 \maketitle
+
+
+\part*{Abstract}
 
 \input{abstract/abstract.tex}
 
@@ -121,16 +126,12 @@ caption=#3
 
 \tableofcontents
 
-
 \setcounter{secnumdepth}{3}
 
-% use \newpage to get newpage
-% \bigskip to get some space between paragraphs
-% \texttt{TEXTHERE} to get typewriter-like (basically just monospaced) text
-
-
-
 \newpage 
+
+\setcounter{page}{1}
+\pagenumbering{arabic} 
 
 \part{Introduction}
 
