@@ -17,25 +17,42 @@ r12:
 used to hold the return value when returning from a routine.
 
 
-For a list of registers and what they are used for in the paddle move program see \ref{tab:regtable}.
+For a list of registers and what they are used for in the paddle move program see table \ref{register-table}.
 
-\begin{center}
 \begin{table}
+    \centering
     \begin{tabular}{|l|l|}
+        \hline
+        register  & Usage \\
+        \hline
+        \hline
         r0  & Scratch register used to hold intermediate values. \\
+        \hline
         r1  & Constant: 0 \\ 
+        \hline
         r2  & Constant: base offset to PIOB \\ 
+        \hline
         r3  & Constant: base offset to PIOC \\ 
+        \hline
         r4  & Variable: holds the position of the paddle \\ 
+        \hline
         r5  & Constant: 5 \\ 
+        \hline
         r6  & Constant: 0xff \\ 
+        \hline
         r7  & Variable: holds the previous button state \\ 
+        \hline
         r8  & Constant: pointer to button interrupt routine \\ 
+        \hline
         r9  & (not used) \\ 
+        \hline
         r10 & (not used) \\ 
+        \hline
         r11 & (not used) \\ 
+        \hline
         r12 & Holds return value from routines \\
+        \hline
     \end{tabular}
-\label{tab:regtable}
+    \caption{Overview over register use}
+    \label{register-table}
 \end{table}
-\end{center}

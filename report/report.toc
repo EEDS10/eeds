@@ -1,0 +1,28 @@
+\contentsline {part}{I\hspace {1em}Introduction}{3}
+\contentsline {part}{II\hspace {1em}Description and Methodology}{3}
+\contentsline {section}{\numberline {1}Experimental Procedure}{3}
+\contentsline {section}{\numberline {2}Configuration of the STK1000}{4}
+\contentsline {subsection}{\numberline {2.1}Jumpers}{4}
+\contentsline {subsection}{\numberline {2.2}GPIO connections}{4}
+\contentsline {section}{\numberline {3}Programming environment}{5}
+\contentsline {subsection}{\numberline {3.1}JTAGICE}{5}
+\contentsline {subsection}{\numberline {3.2}GNU Debugger}{5}
+\contentsline {subsection}{\numberline {3.3}Make}{5}
+\contentsline {subsection}{\numberline {3.4}Other tools}{5}
+\contentsline {section}{\numberline {4}Development of the program}{5}
+\contentsline {subsection}{\numberline {4.1}Setting up the LEDs}{5}
+\contentsline {subsection}{\numberline {4.2}Setting up the buttons}{6}
+\contentsline {subsection}{\numberline {4.3}Setting up the interrupts}{7}
+\contentsline {subsubsection}{\numberline {4.3.1}Enabling Interrupts}{7}
+\contentsline {subsubsection}{\numberline {4.3.2}Loading the interrupt routine}{7}
+\contentsline {subsection}{\numberline {4.4}Interrupt Routine}{8}
+\contentsline {subsection}{\numberline {4.5}Program flow}{8}
+\contentsline {subsection}{\numberline {4.6}Register Overview}{8}
+\contentsline {part}{III\hspace {1em}Results and Tests}{11}
+\contentsline {subsection}{\numberline {4.7}Energy Efficiency}{11}
+\contentsline {subsection}{\numberline {4.8}Testing}{14}
+\contentsline {subsubsection}{\numberline {4.8.1}Button Functionality Test}{14}
+\contentsline {subsubsection}{\numberline {4.8.2}Measurement of Power Consumption}{14}
+\contentsline {subsection}{\numberline {4.9}Discussion}{15}
+\contentsline {part}{IV\hspace {1em}Evaluation of Assignment}{15}
+\contentsline {part}{V\hspace {1em}Conclusion}{15}
