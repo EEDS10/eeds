@@ -1,5 +1,11 @@
-The objective of this lab assignment is to make a program for the STK1000 which allows the user to control which of the LED diodes on a row of diodes should light up.
-This should be accomplished by changing the selected diode to an adjacent diode, either to the right by pressing button 0 or to the left by pressing button 2, effectively letting the user move a ''paddle'' along the row of LEDs.
+This report presents a solution to assignment \#1 of TDT4258 at NTNU, spring 2013.  
+The objective of this lab assignment is to write a program for the STK1000 development board which allows the user to move an LED ''paddle'' across a rudimentary LED array playing field.
+The paddle is represented by a single lit LED.
+It should be possible to move the paddle to adjacent places in the LED array by pressing button 0 to move right, or by pressing 2 to move left.
 
-In order to solve this task, it is essential to obtain a basic understanding of the STK1000 and microcontrollers in order to correctly set up the hardware for input/output.
-It is also important to acquire basic knowledge of assembly for the AVR32 in order to be able to program, and more specifically how to handle interrupts in assembly in order to achieve high energy efficiency.
+This report details the development of the paddle move program as a solution to the assignment, and presents a discussion around the energy efficiency of the solution.
+
+The STK1000 is a development board from Atmel which offers a complete development environment for Atmel's AT32AP7000 processor. It offers a multitude of different peripheral I/O devices, of which this assignment will be using an array of LEDs and some push buttons. The processor is an ARM32 processor, and will for this assignment only be running the assembled output of hand-coded AVR32 assembly code, with no operating system.
+
+In the spirit of the course's name, \emph{Energy Efficient Computer Systems}, considerable effort is put into making the program as energy efficient as possible.
+

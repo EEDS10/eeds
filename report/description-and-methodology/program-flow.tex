@@ -18,7 +18,7 @@ Figure \ref{fig:init} details the init section of the program.
 \label{fig:init}
 \end{figure}
 
-Figure \ref{main-loop} details the main loop of the program. From this main loop, many sub-routines are called. These sub-routines are detailed in figures \ref{fig:set-leds}, \ref{fig:move-paddle-right}, and \ref{fig:move-paddle-right}.
+Figure \ref{fig:main-loop} details the main loop of the program. From this main loop, many sub-routines are called. These sub-routines are detailed in figures \ref{fig:set-leds}, \ref{fig:move-paddle-right}, and \ref{fig:move-paddle-left}.
 
 \begin{figure}
 \includegraphics[width = \textwidth]{description-and-methodology/program-flow/main-loop.pdf}
@@ -38,7 +38,9 @@ Figure \ref{main-loop} details the main loop of the program. From this main loop
 \label{fig:button-interrupt-routine}
 \end{figure}
 
-At any time, a button interrupt may occur, at which time the button interrupt routine is called. The button interrupt routine is detailed in figure \ref{fig:button-interrupt-routine}. The button interrupt routine calls the subroutines \texttt{read\_buttons} (\ref{fig:read-buttons}), and \texttt{debounce} (\ref{fig:debounce}).
+At any time, a button interrupt may occur, at which time the button interrupt routine is called.
+The button interrupt routine is detailed in figure \ref{fig:button-interrupt-routine}.
+The button interrupt routine calls the subroutines \texttt{read\_buttons} (figure \ref{fig:read-buttons}), and \texttt{debounce} (figure \ref{fig:debounce}).
 
 \begin{figure}
 \includegraphics[width = \textwidth]{description-and-methodology/program-flow/debounce.pdf}
@@ -55,7 +57,7 @@ At any time, a button interrupt may occur, at which time the button interrupt ro
 \begin{figure}
 \includegraphics[width = \textwidth]{description-and-methodology/program-flow/move-paddle-right.pdf}
 \caption{Move paddle right subroutine}
-\label{dif:move-paddle-right}
+\label{fig:move-paddle-right}
 \end{figure}
 
 \begin{figure}

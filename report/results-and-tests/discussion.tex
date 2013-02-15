@@ -1,5 +1,8 @@
-It is likely that our measuring equipment as well as methods could be improved if he had more knowledge about such things or more time with which we could attempt to figure it out.
+For the current consumption tests, it is likely that the measuring equipment, as well as methods of measurement, could be improved.
+It seems somewhat unlikely that the transition from a busy wait-based approach to an interrupt-based approach should result in only near-negligible differences in power efficiency, based on previous experiences.
+One way to measure the current consumption of the entire STK1000 would be to connect a beefier ammeter to the main power supply of the board.
+Unfortunately, further investigation of the currency consumption measurements falls outside of the scope of these authors' resources.
 
-The power consumption could probably be reduced further by reducing the CPU's clock speed (\cite{AT32AP7000-prelim}, pg 933).
+On the topic of energy efficiency, the power consumption could probably be reduced further by reducing the CPU's clock speed (\cite{AT32AP7000-prelim}, pg 933-).
 
 The program's code could be further optimized by rewriting it so that it employs less branches. Branching is expensive in terms of clock cycles, and fewer clock cycles equals lower power consumption.

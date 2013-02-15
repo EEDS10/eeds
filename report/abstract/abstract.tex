@@ -1,10 +1,7 @@
 This report presents a solution to assignment \#1 of TDT4258 at NTNU, spring 2013.
 In the assigment, an Atmel STK1000 development board was programmed to display a moveable LED ''paddle'' using AVR32 assembly and the GNU tool chain.
 Interrupts were used rather than busy-waiting to achieve better energy efficiency.
-The goal of this assignment was to introduce students to programming microcontrollers, as well as introducing students to GNU Makefiles and using GDB as a debugging tool.
+The goal of this assignment was to introduce students to programming microcontrollers, as well as introducing students to the GNU toolchain, and specifically GNU Makefiles and using GDB as a debugging tool.
 
-The board was successfully programmed so that a single LED is lit at a time, representing a paddle, which responds to the appropriate buttons being pushed.
+The board was successfully programmed in an energy-efficient manner so that a single LED is lit at a time, representing a paddle, which responds to the appropriate buttons being pushed.
 
-In the process we learned that the STK1000 development board should not be put in \texttt{sleep 5} and that the computers in the lab should not be rebooted or turned off.
-
-In conclusion, our understanding of and experience with the GNU toolchain, assembly programming, Makefiles, technical manuals and interrupt handling in assembly for the AVR32 has been greatly lifted.
