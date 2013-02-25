@@ -7,6 +7,7 @@
 #include <avr32/ap7000.h>
 #include <sys/interrupts.h>
 #include "oeving2.h"
+#include "leds.h"
 
 volatile avr32_abdac_t *dac = &AVR32_ABDAC;
 volatile avr32_pio_t *piob = &AVR32_PIOB;
@@ -16,16 +17,17 @@ volatile avr32_smc_t *sm = &AVR32_SMC;
 int main(int argc, char *argv[]) {
   init_hardware();
 
-  while(1){
-    pioc->sodr = 0xff;
-  };
+  leds_off(0xff);
+  leds_on(0xaa);
+
+  while(1);
   return 0;
 }
 
 /* funksjon for å initialisere maskinvaren, må utvides */
 void init_hardware(void) {
   init_intc();
-  init_leds();
+  leds_init(pioc, 0xff);
   init_buttons();
   init_audio();
 }
@@ -38,11 +40,6 @@ void init_intc(void) {
 void init_buttons(void) {
   register_interrupt(button_isr, AVR32_PIOB_IRQ / 32, AVR32_PIOB_IRQ % 32, BUTTONS_INT_LEVEL);
   /* (...) */
-}
-
-void init_leds(void) {
-    pioc->per = 0xff;
-    pioc->oer = 0xff;
 }
 
 void init_audio(void) {

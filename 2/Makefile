@@ -11,10 +11,14 @@ AVR32PROGRAM = avr32program
 .PHONY : all
 all: $(TARGET)
 
-oeving2.elf: oeving2.o
+oeving2.elf: oeving2.o leds.o
 	$(CC) $^ -o $@ $(LDFLAGS)
 
 oeving2.o: oeving2.c 
+	$(CC) $(CFLAGS) -c $< -o $@
+
+
+leds.o: leds.c 
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # upload to STK1000 (program flash)
