@@ -50,6 +50,9 @@ void init_hardware(void) {
 
 void init_intc(void) {
     set_interrupts_base((void *)AVR32_INTC_ADDRESS);
+    /* init_interrupts() is contained in something
+     * which apparently the Makefile incorporates into this
+     * without us even having asked for it. Thanks! */
     init_interrupts();
 }
 
