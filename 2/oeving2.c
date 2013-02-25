@@ -64,7 +64,7 @@ void init_intc(void) {
 void button_isr(void) {
     piob->isr;
     leds_off(0xff);
-    leds_on(0xff);
+    leds_on(buttons_read());
 }
 
 
