@@ -20,7 +20,6 @@ volatile avr32_pm_t *pm = &AVR32_PM;
 int main(int argc, char *argv[]) {
     init_hardware();
 
-
     while(1);
 
     return 0;
@@ -42,15 +41,13 @@ void LEDcounting(int countTo) {
     }
 }
 
-
-/* funksjon for å initialisere maskinvaren, må utvides */
+/* sets up the hardware */
 void init_hardware(void) {
     leds_init(pioc, 0xff);
     buttons_init(piob, 0xff, button_isr, AVR32_PIOB_IRQ);
     audio_init(piob, pm, dac, abdac_isr, AVR32_ABDAC_IRQ);
     init_intc();
 }
-
 
 void init_intc(void) {
     /* as specified on page 45 of the compendium,
@@ -67,7 +64,7 @@ void init_intc(void) {
 void button_isr(void) {
     piob->isr;
     leds_off(0xff);
-    leds_on(0xa0);
+    leds_on(0xff);
 }
 
 
