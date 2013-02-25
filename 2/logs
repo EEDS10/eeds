@@ -5,3 +5,5 @@ fine turnOnLed og turnOffLed-funksjoner.
 
 Volatile skal spesifiseres i deklarasjonen av funksjonen, hvis den blir
 gitt volatile variabler/referanser.
+
+compendium code is wrong on page 44, some of the contsant names are different from in ap7000.h
