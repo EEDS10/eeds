@@ -21,22 +21,23 @@ int main(int argc, char *argv[]) {
     leds_on(0xaa);
     leds_off(0xff);
 
-    int derp = 0x00;
     while(1) {
+    LEDcounting(129);
     }
     return 0;
 }
 
 /* function that uses the leds to count to some value */
 void LEDcounting(int countTo) {
+    int derp = 0;
     while(countTo > 0) {
         countTo = countTo - 1;
         /* delay for a bit */
-        int k = 100000;
+        int k = 1000000;
         while(k > 0) {k = k-1;}
         /* turn previous leds off, turn next leds on */
         leds_off(derp);
-        derp = (derp++ % 0xff);
+        derp = (derp++ % countTo);
         leds_on(derp);
     }
 }
@@ -58,7 +59,6 @@ void init_intc(void) {
 
 void init_buttons(void) {
     register_interrupt(button_isr, AVR32_PIOB_IRQ / 32, AVR32_PIOB_IRQ % 32, BUTTONS_INT_LEVEL);
-    /* (...) */
     /* Enable I/O pins for them buttans */
     piob->per = 0xff;
     /* Enable pull-up resistors */
