@@ -40,6 +40,10 @@ void init_intc(void) {
 void init_buttons(void) {
   register_interrupt(button_isr, AVR32_PIOB_IRQ / 32, AVR32_PIOB_IRQ % 32, BUTTONS_INT_LEVEL);
   /* (...) */
+  /* Enable I/O pins for them buttans */
+  piob->per = 0xff;
+  /* Enable pull-up resistors */
+  piob->puer = 0xff;
 }
 
 void init_audio(void) {
