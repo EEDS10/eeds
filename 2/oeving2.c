@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "oeving2.h"
 #include "leds.h"
+#include "buttons.h"
 
 volatile avr32_abdac_t *dac = &AVR32_ABDAC;
 volatile avr32_pio_t *piob = &AVR32_PIOB;
@@ -17,6 +18,8 @@ volatile avr32_pm_t *pm = &AVR32_PM;
 
 int main(int argc, char *argv[]) {
     init_hardware();
+
+    leds_off(0xff);
 
     while(1);
 
@@ -40,7 +43,7 @@ void LEDcounting(int countTo) {
 /* funksjon for å initialisere maskinvaren, må utvides */
 void init_hardware(void) {
     leds_init(pioc, 0xff);
-    init_buttons();
+    buttons_init(piob, 0xff, button_isr, AVR32_PIOB_IRQ);
     init_audio();
     init_intc();
 }
@@ -56,13 +59,6 @@ void init_intc(void) {
     init_interrupts();
 }
 
-void init_buttons(void) {
-    register_interrupt((__int_handler)(int_handler), AVR32_PIOB_IRQ / 32, AVR32_PIOB_IRQ % 32, BUTTONS_INT_LEVEL);
-    /* Enable I/O pins for them buttans */
-    piob->per = 0xff;
-    /* Enable pull-up resistors */
-    piob->puer = 0xff;
-}
 
 void init_audio(void) {
 
@@ -95,12 +91,7 @@ void init_audio(void) {
 
 
 void button_isr(void) {
-    LEDcounting(200);
-}
-
-__int_handler *int_handler(void) {
-    button_isr();
-    return 0;
+    leds_on(0xaf);
 }
 
 void abdac_isr(void) {
