@@ -1,2 +1,4 @@
 
 compendium code is wrong on page 44, some of the contsant names are different from in ap7000.h
+
+the audio code steals some pins from PIOB, so we have to be careful which pins are used for buttons and leds
