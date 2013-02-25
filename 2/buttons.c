@@ -16,9 +16,10 @@ void buttons_init(volatile avr32_pio_t *_pio, int bitmask, void *handler, int IR
     /* Enable pull-up resistors */
     pio->puer = bitmask;
 
+    /* connect the interrupt handler to the interrupt signal */
     register_interrupt((__int_handler)(handler), IRQ / 32, IRQ % 32, BUTTONS_INT_LEVEL);
 }
 
-void buttons_read(){
+int buttons_read(){
     return ~pio->pdsr;
 }

@@ -11,13 +11,16 @@ AVR32PROGRAM = avr32program
 .PHONY : all
 all: $(TARGET)
 
-oeving2.elf: oeving2.o leds.o buttons.o
+oeving2.elf: oeving2.o leds.o buttons.o audio.o
 	$(CC) $^ -o $@ $(LDFLAGS)
 
 oeving2.o: oeving2.c 
 	$(CC) $(CFLAGS) -c $< -o $@
 
 buttons.o: buttons.c 
+	$(CC) $(CFLAGS) -c $< -o $@
+
+audio.o: audio.c 
 	$(CC) $(CFLAGS) -c $< -o $@
 
 leds.o: leds.c 

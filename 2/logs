@@ -10,3 +10,6 @@ compendium code is wrong on page 44, some of the contsant names are different fr
 
 emil hooks up the audio. OSC0 and a div of 226 was selected to get a frequency as close as possible to CD quality.
 the audio code steals some pins from PIOB, so we have to be careful which pins are used for buttons and leds
+
+
+hm, i guess the button isr also neads to read from piob->isr, like in øving 1

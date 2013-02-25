@@ -10,7 +10,6 @@
 #define OEVING_2_H
 
 /* legg andre "includes" her, sammen med "defines" og prototyper */
-#define ABDAC_INT_LEVEL 0
 
 /* prototyper */
 int main(int argc, char *argv[]);
