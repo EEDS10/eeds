@@ -1,0 +1,7 @@
+/usr/avr32/include/avr32/ap7000.h
+
+Sigve trekker ut LED-koden til en egen fil slik at vi ender opp med
+fine turnOnLed og turnOffLed-funksjoner.
+
+Volatile skal spesifiseres i deklarasjonen av funksjonen, hvis den blir
+gitt volatile variabler/referanser.
