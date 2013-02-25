@@ -1,4 +1,12 @@
+/usr/avr32/include/avr32/ap7000.h
+
+Sigve trekker ut LED-koden til en egen fil slik at vi ender opp med
+fine turnOnLed og turnOffLed-funksjoner.
+
+Volatile skal spesifiseres i deklarasjonen av funksjonen, hvis den blir
+gitt volatile variabler/referanser.
 
 compendium code is wrong on page 44, some of the contsant names are different from in ap7000.h
 
+emil hooks up the audio. OSC0 and a div of 226 was selected to get a frequency as close as possible to CD quality.
 the audio code steals some pins from PIOB, so we have to be careful which pins are used for buttons and leds

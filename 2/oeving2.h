@@ -23,4 +23,6 @@ static void init_hardware(void);
 static void button_isr(void);
 static void abdac_isr(void);
 
+static void LEDcounting(int countTo);
+static __int_handler *int_handler(void);
 #endif
