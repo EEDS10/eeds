@@ -19,13 +19,27 @@ int main(int argc, char *argv[]) {
 
     leds_off(0xff);
     leds_on(0xaa);
+    leds_off(0xff);
 
-
+    int derp = 0x00;
     while(1) {
     }
     return 0;
 }
 
+/* function that uses the leds to count to some value */
+void LEDcounting(int countTo) {
+    while(countTo > 0) {
+        countTo = countTo - 1;
+        /* delay for a bit */
+        int k = 100000;
+        while(k > 0) {k = k-1;}
+        /* turn previous leds off, turn next leds on */
+        leds_off(derp);
+        derp = (derp++ % 0xff);
+        leds_on(derp);
+    }
+}
 /* funksjon for å initialisere maskinvaren, må utvides */
 void init_hardware(void) {
     init_intc();
