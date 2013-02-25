@@ -8,16 +8,16 @@
 #include <sys/interrupts.h>
 #include "oeving2.h"
 
-volatile avr32_pio_t *dac = &AVR32_DAC;
+volatile avr32_abdac_t *dac = &AVR32_ABDAC;
 volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
-volatile avr32_pio_t *sm = &AVR32_SM;
+volatile avr32_smc_t *sm = &AVR32_SMC;
 
 int main(int argc, char *argv[]) {
   init_hardware();
 
   while(1){
-    pioc->sodr = 0xff;    
+    pioc->sodr = 0xff;
   };
   return 0;
 }
