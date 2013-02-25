@@ -16,13 +16,12 @@ volatile avr32_smc_t *sm = &AVR32_SMC;
 
 int main(int argc, char *argv[]) {
     init_hardware();
-
+/*
     leds_off(0xff);
     leds_on(0xaa);
     leds_off(0xff);
-
+*/
     while(1) {
-    LEDcounting(129);
     }
     return 0;
 }
@@ -33,7 +32,7 @@ void LEDcounting(int countTo) {
     while(countTo > 0) {
         countTo = countTo - 1;
         /* delay for a bit */
-        int k = 1000000;
+        int k = 100000;
         while(k > 0) {k = k-1;}
         /* turn previous leds off, turn next leds on */
         leds_off(derp);
@@ -43,13 +42,16 @@ void LEDcounting(int countTo) {
 }
 /* funksjon for å initialisere maskinvaren, må utvides */
 void init_hardware(void) {
-    init_intc();
     leds_init(pioc, 0xff);
     init_buttons();
     init_audio();
+    init_intc();
 }
 
 void init_intc(void) {
+    /* as specified on page 45 of the compendium,
+     * the arguments of set_interrupts_base will always be
+     * (void *)AVR32_INTC_ADDRESS */
     set_interrupts_base((void *)AVR32_INTC_ADDRESS);
     /* init_interrupts() is contained in something
      * which apparently the Makefile incorporates into this
@@ -58,7 +60,7 @@ void init_intc(void) {
 }
 
 void init_buttons(void) {
-    register_interrupt(button_isr, AVR32_PIOB_IRQ / 32, AVR32_PIOB_IRQ % 32, BUTTONS_INT_LEVEL);
+    register_interrupt((__int_handler)(int_handler), AVR32_PIOB_IRQ / 32, AVR32_PIOB_IRQ % 32, BUTTONS_INT_LEVEL);
     /* Enable I/O pins for them buttans */
     piob->per = 0xff;
     /* Enable pull-up resistors */
@@ -71,6 +73,12 @@ void init_audio(void) {
 }
 
 void button_isr(void) {
+    LEDcounting(200);
+}
+
+__int_handler *int_handler(void) {
+    button_isr();
+    return 0;
 }
 
 void abdac_isr(void) {
