@@ -4,19 +4,21 @@
 #include <stdio.h>
 #include <stdint.h>
 
+
 typedef struct {
     char name[22];
-    int16_t length; /* in 16bit words */ 
+    uint16_t length; /* in 16bit words */ 
     int8_t finetune;
-    int8_t volume;
-    int16_t repeat_offset;
-    int16_t repeat_length;
-    int8_t* data;
+    uint8_t volume;
+    uint16_t repeat_offset;
+    uint16_t repeat_length;
 } MOD_Sample;
 
 
 MOD_Sample* MOD_Sample_load(const int8_t **data);
-void MOD_Sample_loadData(MOD_Sample* s, const int8_t **data);
-void MOD_Sample_free(MOD_Sample* s);
+
+uint16_t MOD_Sample_get_length(MOD_Sample* sample);
+uint16_t MOD_Sample_get_repeat_length(MOD_Sample* sample);
+uint16_t MOD_Sample_get_length(MOD_Sample* sample);
 
 #endif

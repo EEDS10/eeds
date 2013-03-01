@@ -21,42 +21,29 @@ volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
 
-#define BUFSIZE 4096
-
 MOD* MODS[MODFILES_N];
-MOD* mod;
 MOD_Player* player;
-int counter = 0;
-int16_t buffer[BUFSIZE];
 
 int current_selection = 0;
 
-int16_t out = 0;
 
 int main(int argc, char *argv[]) {
-
-
-    {int i; for(i=0;i<MODFILES_N;i++){
-        MODS[i] = MOD_load(MODFILES[i]);    
-    }}
 
     /*
     MODS[0] = MOD_load(MODFILES[0]);
     */
 
-    mod = MODS[0];
+    {int i; for(i=0;i<MODFILES_N;i++){
+        MODS[i] = MOD_load(MODFILES[i]);    
+    }}
 
     player = MOD_Player_create();
 
-    MOD_Player_set_mod(player, mod);
+    MOD_Player_set_mod(player, MODS[current_selection]);
 
     init_hardware();
 
     leds_off(0xff);
-
-    if(player && player->channels[0] && player->channels[1] && player->channels[2] && player->channels[3]){
-        leds_on(0x80);
-    }
 
     while(1);
 
@@ -106,16 +93,14 @@ void button_isr(void) {
     int buttons = buttons_read();
 
 
-    if(buttons == 0x1){
-        current_selection = (current_selection + 1) % MODFILES_N;
-        mod = MODS[current_selection];
-        MOD_Player_set_mod(player, mod);
+    if(buttons == 0x2){
+        current_selection = (current_selection + MODFILES_N + 1) % MODFILES_N;
+        MOD_Player_set_mod(player, MODS[current_selection]);
     }
 
-    if(buttons == 0x2){
+    if(buttons == 0x4){
         current_selection = (current_selection + MODFILES_N - 1) % MODFILES_N;
-        mod = MODS[current_selection];
-        MOD_Player_set_mod(player, mod);
+        MOD_Player_set_mod(player, MODS[current_selection]);
     }
 
     leds_on(current_selection);
@@ -123,7 +108,8 @@ void button_isr(void) {
 
 
 void abdac_isr(void) {
-    out = MOD_Player_play(player, mod);
+    int16_t out = MOD_Player_play(player);
+
     dac->SDR.channel0 = out;
     dac->SDR.channel1 = out;
 
