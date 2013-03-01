@@ -1,6 +1,6 @@
 CC=avr32-gcc
-CFLAGS=-g -Wall -Iinclude 
-LDFLAGS=-g -Wall -pedantic -Llib -lavr32b-interrupts -lm
+CFLAGS=-Wall -Iinclude -g -O3
+LDFLAGS=-Wall -pedantic -Llib -lavr32b-interrupts -lmodam -lm -g -O3
 TARGET=oeving2.elf
 
 
@@ -32,6 +32,12 @@ upload : $(TARGET)
 	$(AVR32PROGRAM) halt
 	sleep 3
 	$(AVR32PROGRAM) program -e -f0,8Mb $<
+
+debug : 
+	avr32gdbproxy &
+	sleep 3
+	(echo target remote:4711;cat) | avr32-gdb oeving2.elf
+	killall avr32gdbproxy
 
 .PHONY : clean
 clean :

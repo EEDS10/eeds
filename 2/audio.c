@@ -13,11 +13,11 @@ void audio_init(volatile avr32_pio_t* pio, volatile avr32_pm_t* pm, volatile avr
     pio->ASR.p21 = 1;
 
     /* setting up options for the generic clock that will drive the ABDAC */
-    pm->GCCTRL[6].oscsel = 0; /* select oscillator 0 which runs at 20Mhz */
+    pm->GCCTRL[6].oscsel = 1; /* select oscillator 0 which runs at 20Mhz */
     pm->GCCTRL[6].pllsel = 0; /* use oscillators and not PLL */
     pm->GCCTRL[6].cen = 1;    /* enable the clock */
-    pm->GCCTRL[6].diven = 1;  /* enable clock speed division to slow the clock */
-    pm->GCCTRL[6].div = 226;  /* set the slowing of the clock by 2*(div+1). 226 is
+    pm->GCCTRL[6].diven = 0;  /* enable clock speed division to slow the clock */
+    pm->GCCTRL[6].div = 0*226;  /* set the slowing of the clock by 2*(div+1). 226 is
                                  is chosen as a value to give a frequency as close
                                  as possible to 44100Hz */
 

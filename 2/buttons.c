@@ -4,6 +4,8 @@
 
 static volatile avr32_pio_t *pio;
 
+static int previous_button_state = 0;
+
 void buttons_init(volatile avr32_pio_t *_pio, int bitmask, void *handler, int IRQ) {
 
     /* Store a reference to the PIO which has the leds */
@@ -23,5 +25,8 @@ void buttons_init(volatile avr32_pio_t *_pio, int bitmask, void *handler, int IR
 }
 
 int buttons_read(){
-    return ~pio->pdsr;
+    int buttons = pio->pdsr;
+    previous_button_state |= buttons;
+    previous_button_state = ~previous_button_state;
+    return previous_button_state&0xff;
 }

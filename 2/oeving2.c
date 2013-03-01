@@ -7,18 +7,56 @@
 #include <avr32/ap7000.h>
 #include <sys/interrupts.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include "oeving2.h"
 #include "leds.h"
 #include "buttons.h"
 #include "audio.h"
+#include "MOD.h"
+#include "Player.h"
+#include "modfiles.h"
 
 volatile avr32_abdac_t *dac = &AVR32_ABDAC;
 volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
 
+#define BUFSIZE 4096
+
+MOD* MODS[MODFILES_N];
+MOD* mod;
+MOD_Player* player;
+int counter = 0;
+int16_t buffer[BUFSIZE];
+
+int current_selection = 0;
+
+int16_t out = 0;
+
 int main(int argc, char *argv[]) {
+
+
+    {int i; for(i=0;i<MODFILES_N;i++){
+        MODS[i] = MOD_load(MODFILES[i]);    
+    }}
+
+    /*
+    MODS[0] = MOD_load(MODFILES[0]);
+    */
+
+    mod = MODS[0];
+
+    player = MOD_Player_create();
+
+    MOD_Player_set_mod(player, mod);
+
     init_hardware();
+
+    leds_off(0xff);
+
+    if(player && player->channels[0] && player->channels[1] && player->channels[2] && player->channels[3]){
+        leds_on(0x80);
+    }
 
     while(1);
 
@@ -64,11 +102,29 @@ void init_intc(void) {
 void button_isr(void) {
     piob->isr;
     leds_off(0xff);
-    leds_on(buttons_read());
+
+    int buttons = buttons_read();
+
+
+    if(buttons == 0x1){
+        current_selection = (current_selection + 1) % MODFILES_N;
+        mod = MODS[current_selection];
+        MOD_Player_set_mod(player, mod);
+    }
+
+    if(buttons == 0x2){
+        current_selection = (current_selection + MODFILES_N - 1) % MODFILES_N;
+        mod = MODS[current_selection];
+        MOD_Player_set_mod(player, mod);
+    }
+
+    leds_on(current_selection);
 }
 
 
 void abdac_isr(void) {
-    dac->SDR.channel0 = rand();
-    dac->SDR.channel1 = rand();
+    out = MOD_Player_play(player, mod);
+    dac->SDR.channel0 = out;
+    dac->SDR.channel1 = out;
+
 }
