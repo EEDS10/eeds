@@ -29,9 +29,6 @@ int current_selection = 0;
 
 int main(int argc, char *argv[]) {
 
-    /*
-    MODS[0] = MOD_load(MODFILES[0]);
-    */
 
     {int i; for(i=0;i<MODFILES_N;i++){
         MODS[i] = MOD_load(MODFILES[i]);    
