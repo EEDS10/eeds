@@ -6,12 +6,9 @@
  *
  *****************************************************************************/
 
-#ifndef OEVING_2_H /* vanlig måte å unngå headerrekursjon på */
+#ifndef OEVING_2_H
 #define OEVING_2_H
 
-/* legg andre "includes" her, sammen med "defines" og prototyper */
-
-/* prototyper */
 int main(int argc, char *argv[]);
 static void init_intc(void);
 static void init_hardware(void);

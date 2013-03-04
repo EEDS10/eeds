@@ -29,9 +29,15 @@ int current_selection = 0;
 
 int main(int argc, char *argv[]) {
 
-
+    /*
     {int i; for(i=0;i<MODFILES_N;i++){
         MODS[i] = MOD_load(MODFILES[i]);    
+    }}
+    */
+
+    {int i; MOD* mod = MOD_load(MODFILES[0]);
+        for(i=0;i<MODFILES_N;i++){
+        MODS[i] = mod;
     }}
 
     player = MOD_Player_create();
