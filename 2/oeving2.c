@@ -53,22 +53,6 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-
-/* function that uses the leds to count to some value */
-void LEDcounting(int countTo) {
-    int derp = 0;
-    while(countTo > 0) {
-        countTo = countTo - 1;
-        /* delay for a bit */
-        int k = 100000;
-        while(k > 0) {k = k-1;}
-        /* turn previous leds off, turn next leds on */
-        leds_off(derp);
-        derp = (derp++ % countTo);
-        leds_on(derp);
-    }
-}
-
 /* sets up the hardware */
 void init_hardware(void) {
     leds_init(pioc, 0xff);
