@@ -26,6 +26,14 @@ MOD_Player* player;
 
 int current_selection = 0;
 
+int ticks = 0;
+int debticker = 0;
+
+int deb = 0xaf;
+int previous_out = 0;
+
+#define SAMPLE_RATE (46875)
+
 
 int main(int argc, char *argv[]) {
 
@@ -40,7 +48,7 @@ int main(int argc, char *argv[]) {
         MODS[i] = mod;
     }}
 
-    player = MOD_Player_create();
+    player = MOD_Player_create(SAMPLE_RATE/2);
 
     MOD_Player_set_mod(player, MODS[current_selection]);
 
@@ -48,7 +56,12 @@ int main(int argc, char *argv[]) {
 
     leds_off(0xff);
 
-    while(1);
+    while(1){
+        while(ticks){
+            MOD_Player_step(player, 1000000/SAMPLE_RATE + 1);
+            ticks--;
+        }
+    }
 
     return 0;
 }
@@ -95,9 +108,11 @@ void button_isr(void) {
 
 
 void abdac_isr(void) {
+
     int16_t out = MOD_Player_play(player);
 
     dac->SDR.channel0 = out;
     dac->SDR.channel1 = out;
 
+    ticks++;
 }

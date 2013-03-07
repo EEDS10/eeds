@@ -17,7 +17,7 @@ void audio_init(volatile avr32_pio_t* pio, volatile avr32_pm_t* pm, volatile avr
     pm->GCCTRL[6].pllsel = 0; /* use oscillators and not PLL */
     pm->GCCTRL[6].cen = 1;    /* enable the clock */
     pm->GCCTRL[6].diven = 0;  /* enable clock speed division to slow the clock */
-    pm->GCCTRL[6].div = 0*226;  /* set the slowing of the clock by 2*(div+1). 226 is
+    pm->GCCTRL[6].div = 0;  /* set the slowing of the clock by 2*(div+1). 226 is
                                  is chosen as a value to give a frequency as close
                                  as possible to 44100Hz */
 
