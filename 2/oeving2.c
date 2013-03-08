@@ -24,7 +24,7 @@ volatile avr32_pm_t *pm = &AVR32_PM;
 MOD* MODS[MODFILES_N];
 MOD_Player* player;
 
-int current_selection = 0;
+int current_selection = -1;
 
 int ticks = 0;
 int debticker = 0;
@@ -37,20 +37,20 @@ int previous_out = 0;
 
 int main(int argc, char *argv[]) {
 
-    /*
     {int i; for(i=0;i<MODFILES_N;i++){
         MODS[i] = MOD_load(MODFILES[i]);    
     }}
-    */
 
-    {int i; MOD* mod = MOD_load(MODFILES[0]);
+    /*
+    {int i; MOD* mod = MOD_load(MODFILES_BACONGRYTOR_MOD);
         for(i=0;i<MODFILES_N;i++){
         MODS[i] = mod;
     }}
+    */
 
     player = MOD_Player_create(SAMPLE_RATE/2);
 
-    MOD_Player_set_mod(player, MODS[current_selection]);
+    MOD_Player_set_mod(player, MODS[0]);
 
     init_hardware();
 
@@ -58,8 +58,8 @@ int main(int argc, char *argv[]) {
 
     while(1){
         while(ticks){
-            MOD_Player_step(player, 1000000/SAMPLE_RATE + 1);
             ticks--;
+            MOD_Player_step(player, 2000000/SAMPLE_RATE + 1);
         }
     }
 
@@ -88,22 +88,33 @@ void init_intc(void) {
 
 void button_isr(void) {
     piob->isr;
-    leds_off(0xff);
 
     int buttons = buttons_read();
 
+    if(buttons == 0x1){
+        current_selection = 0;
+        MOD_Player_set_mod(player, MODS[current_selection]);
+    }
 
     if(buttons == 0x2){
-        current_selection = (current_selection + MODFILES_N + 1) % MODFILES_N;
+        current_selection = 1;
         MOD_Player_set_mod(player, MODS[current_selection]);
     }
 
     if(buttons == 0x4){
-        current_selection = (current_selection + MODFILES_N - 1) % MODFILES_N;
+        current_selection = 2;
         MOD_Player_set_mod(player, MODS[current_selection]);
     }
 
-    leds_on(current_selection);
+    if(buttons == 0x8){
+        current_selection = 3;
+        MOD_Player_set_mod(player, MODS[current_selection]);
+    }
+
+    leds_off(0xff);
+    if(current_selection != -1){
+        leds_on(1<<current_selection);
+    }
 }
 
 
