@@ -24,7 +24,7 @@ volatile avr32_pm_t *pm = &AVR32_PM;
 MOD* MODS[MODFILES_N];
 MOD_Player* player;
 
-int current_selection = -1;
+int current_selection = 0;
 
 int ticks = 0;
 int debticker = 0;
@@ -32,34 +32,45 @@ int debticker = 0;
 int deb = 0xaf;
 int previous_out = 0;
 
-#define SAMPLE_RATE (46875)
+#define SAMPLE_RATE (46875/2)
 
 
 int main(int argc, char *argv[]) {
 
+    /*
     {int i; for(i=0;i<MODFILES_N;i++){
         MODS[i] = MOD_load(MODFILES[i]);    
     }}
-
-    /*
-    {int i; MOD* mod = MOD_load(MODFILES_BACONGRYTOR_MOD);
-        for(i=0;i<MODFILES_N;i++){
-        MODS[i] = mod;
-    }}
     */
 
-    player = MOD_Player_create(SAMPLE_RATE/2);
+    int i;
+    MOD* mod = MOD_load(MODFILES_BACONGRYTOR_MOD);
+    for(i=0;i<MODFILES_N;i++){
+        MODS[i] = mod;
+    }
 
-    MOD_Player_set_mod(player, MODS[0]);
+    player = MOD_Player_create(SAMPLE_RATE);
+
+    MOD_Player_set_mod(player, MODS[current_selection]);
 
     init_hardware();
 
     leds_off(0xff);
+    leds_on(0xff);
+
+    int spillage = 0;
 
     while(1){
         while(ticks){
             ticks--;
-            MOD_Player_step(player, 2000000/SAMPLE_RATE + 1);
+            spillage = 1000000 % SAMPLE_RATE;
+            spillage = 1000000 - (1000000/SAMPLE_RATE)*SAMPLE_RATE;
+            MOD_Player_step(player, 1000000/SAMPLE_RATE);
+            
+            if(spillage > SAMPLE_RATE){
+                spillage -= SAMPLE_RATE;
+                MOD_Player_step(player, 1);
+            }
         }
     }
 
@@ -120,7 +131,7 @@ void button_isr(void) {
 
 void abdac_isr(void) {
 
-    int16_t out = MOD_Player_play(player);
+    int32_t out = MOD_Player_play(player);
 
     dac->SDR.channel0 = out;
     dac->SDR.channel1 = out;

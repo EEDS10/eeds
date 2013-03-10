@@ -1,6 +1,6 @@
 CC=avr32-gcc
-CFLAGS=-Wall -Iinclude -g -O3
-LDFLAGS=-Wall -pedantic -Llib -lavr32b-interrupts -lmodam -lm -g -O3
+CFLAGS=-Wall -Iinclude -O3
+LDFLAGS=-Wall -pedantic -Llib -lavr32b-interrupts -lmodam -lm -O3
 TARGET=oeving2.elf
 
 
@@ -34,7 +34,7 @@ synth.o: synth.c
 upload : $(TARGET)
 	$(AVR32PROGRAM) halt
 	sleep 3
-	$(AVR32PROGRAM) program -e -f0,8Mb $<
+	$(AVR32PROGRAM) program -v -e -f0,8Mb $<
 
 debug : 
 	avr32gdbproxy &
