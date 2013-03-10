@@ -1,8 +1,23 @@
+
+This section describes how the sound program was developed. Ut covers procedure, setup and configuration, tools and program details.
+
+
+
 need to include a bit about the Makefile here
 
 
-Experimental procedure
+Description parts
 
+General information about sound
+digital vs analog sound
+
+different ways of storing sounds
+samples ('bitmaps')
+constructive instructions ('vectors')
+a combination of the two
+
+
+Development of the program
 
 list of what we did:
 
@@ -30,3 +45,41 @@ the following two groups of bullet points happened in parallel:
 finally:
 
 * the actual main program flow was decided upon and written, hooking button and led behaviour together with sound effects and music
+
+
+
+Configuration
+
+We can reference our previous report here, so that we don't have to write so much.
+
+
+Programming environment
+
+JTAGICE
+We can reference our previous report here, so that we don't have to write so much.
+
+GNU Debugger
+since last time:
+* discovered tui mode: looks nice, breaks the makefile
+
+Make
+we can reference.
+
+Other tools
+* OpenMPT was used to examine MOD files for libmodam
+* vim
+* git
+* github
+* latex
+* avr32 toolchain
+
+Setting up the LEDs
+Setting up the buttons
+Setting up the audio
+
+
+Program flow
+
+* main program
+* synth
+* libmodam
