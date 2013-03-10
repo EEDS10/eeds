@@ -3,8 +3,7 @@
 Sigve trekker ut LED-koden til en egen fil slik at vi ender opp med
 fine turnOnLed og turnOffLed-funksjoner.
 
-Volatile skal spesifiseres i deklarasjonen av funksjonen, hvis den blir
-gitt volatile variabler/referanser.
+Volatile skal spesifiseres i deklarasjonen av funksjonen, hvis den blir gitt volatile variabler/referanser.
 
 compendium code is wrong on page 44, some of the contsant names are different from in ap7000.h
 
@@ -13,3 +12,8 @@ the audio code steals some pins from PIOB, so we have to be careful which pins a
 
 
 hm, i guess the button isr also neads to read from piob->isr, like in øving 1
+
+From the compendium:
+	"Organise the files so that the functions which belong together are placed in the same source file, in about the same way you would organise the code into different classes in Java."
+
+the compendium goes on about linking on page 44. Are we linking already or do we have to link?
