@@ -1,1 +1,32 @@
 need to include a bit about the Makefile here
+
+
+Experimental procedure
+
+
+list of what we did:
+
+* Board was set up w/ jumpers and such
+* Leds and buttons were hooked up in hardware
+* Leds and buttons were hooked up in software
+* Code was split into separate files
+* Audio was hooked up with apropriate settings
+* Sound was tested to work using random noise
+
+
+the following two groups of bullet points happened in parallel:
+
+* a C sound effect synth inspired by sfxr was prototyped on a PC
+* the synth was ported to avr32
+* the synth was developed further on the avr32
+* the synth was used in the stk1000 program to play various sound effects
+
+* a C MOD player library + python tools inspired by amiga trackers were developed on a PC
+* the library was tested on the avr32 and needed a great deal of optimization
+* a great deal of optimization occurred 
+* the library was used in the stk1000 program to play selected mods
+
+
+finally:
+
+* the actual main program flow was decided upon and written, hooking button and led behaviour together with sound effects and music
