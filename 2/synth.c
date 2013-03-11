@@ -35,7 +35,7 @@ playback_t *prepare_playback(sound_t *sound, int16_t sample_frequency, int16_t m
     return playback;
 }
 
-playback_t free_playback(playback_t *playback) {
+void free_playback(playback_t *playback) {
     free(playback);
     /* What, did you expect me to do the same joke twice? */
 }
@@ -58,9 +58,6 @@ int16_t next_sample(playback_t *playback) {
             } else {
                 sample = -playback->ticks_per_period;
             }
-            break;
-        case TRIANGLE:
-            /* TODO */
             break;
         case SAWTOOTH:
             sample = playback->t % (playback->ticks_per_period * 4);
