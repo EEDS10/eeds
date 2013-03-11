@@ -51,6 +51,14 @@ int16_t next_sample(playback_t *playback) {
      */
     int sample;
 
+    /* Milliseconds we are into playing the sound. */
+    int ms;
+
+    /*
+     * Note that we currently use +/- ticks_per_period as the extreme values
+     * while working on the sample to simplify generation of the sawtooth
+     * waves.
+     */
     switch (playback->sound->waveform) {
         case SQUARE:
             if ((playback->t/(playback->ticks_per_period*2)) % 2) {
@@ -64,6 +72,20 @@ int16_t next_sample(playback_t *playback) {
             sample -= (playback->ticks_per_period/2);
             sample *= 2;
             break;
+    }
+
+    ms = (playback->t * 1000) / playback->sample_frequency;
+    if (ms <= playback->sound->attack_time) {
+        /* Ramp up from no volume to full in attack_time ms. */
+        sample = (sample * ms) / playback->sound->attack_time;
+    } else if (ms <= playback->sound->decay_time) {
+        sample = (sample * (100 - (((100 - playback->sound->sustain_level) * (ms - playback->sound->attack_time)) / (playback->sound->decay_time - playback->sound->attack_time)))) / 100;
+    } else if (ms <= playback->sound->sustain_time) {
+        sample = (sample * playback->sound->sustain_level) / 100;
+    } else if (ms <= playback->sound->release_time) {
+        sample = (sample * (playback->sound->sustain_level - (((playback->sound->sustain_level) * (ms - playback->sound->sustain_time)) / (playback->sound->release_time - playback->sound->sustain_time)))) / 100;
+    } else {
+        sample = 0;
     }
 
     playback->t++;
