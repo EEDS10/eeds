@@ -15,6 +15,7 @@
 #include "MOD.h"
 #include "Player.h"
 #include "modfiles.h"
+#include "synth.h"
 
 volatile avr32_abdac_t *dac = &AVR32_ABDAC;
 volatile avr32_pio_t *piob = &AVR32_PIOB;
@@ -32,13 +33,17 @@ int debticker = 0;
 int deb = 0xaf;
 int previous_out = 0;
 
+playback_t *foo, *bar;
+playback_t *current_synth_sound = NULL;
+
 #define SAMPLE_RATE (46875/2)
 
-
 int main(int argc, char *argv[]) {
+    foo = prepare_playback(get_sound(SQUARE, 500, 500, 1250, 0, 250, 20), SAMPLE_RATE, 20000);
+    bar = prepare_playback(get_sound(SAWTOOTH, 2200, 100, 100, 0, 500, 70), SAMPLE_RATE, 20000);
 
     {int i; for(i=0;i<MODFILES_N;i++){
-        MODS[i] = MOD_load(MODFILES[i]);    
+        MODS[i] = MOD_load(MODFILES[i]);
     }}
 
     /*
@@ -66,7 +71,7 @@ int main(int argc, char *argv[]) {
             spillage = 1000000 % SAMPLE_RATE;
             spillage = 1000000 - (1000000/SAMPLE_RATE)*SAMPLE_RATE;
             MOD_Player_step(player, 1000000/SAMPLE_RATE);
-            
+
             if(spillage > SAMPLE_RATE){
                 spillage -= SAMPLE_RATE;
                 MOD_Player_step(player, 1);
@@ -122,6 +127,18 @@ void button_isr(void) {
         MOD_Player_set_mod(player, MODS[current_selection]);
     }
 
+    if(buttons == 0x16){
+        current_selection = 4;
+        current_synth_sound = foo;
+        reset_playback(foo);
+    }
+
+    if(buttons == 0x32){
+        current_selection = 5;
+        current_synth_sound = bar;
+        reset_playback(bar);
+    }
+
     leds_off(0xff);
     if(current_selection != -1){
         leds_on(1<<current_selection);
@@ -130,8 +147,15 @@ void button_isr(void) {
 
 
 void abdac_isr(void) {
-
-    int32_t out = MOD_Player_play(player);
+    int32_t out;
+    if (current_selection >= 0 && current_selection <= 3) {
+        /* Play mod files */
+        out = MOD_Player_play(player);
+    } else if (current_selection >= 4 && current_selection <= 5) {
+        if (!playback_finished(current_synth_sound)) {
+            out = next_sample(current_synth_sound);
+        }
+    }
 
     dac->SDR.channel0 = out;
     dac->SDR.channel1 = out;

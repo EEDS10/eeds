@@ -46,6 +46,7 @@ void free_sound(sound_t *sound);
  * values.
  */
 playback_t *prepare_playback(sound_t *sound, int16_t sample_frequency, int16_t master_volume);
+void reset_playback(playback_t *playback);
 void free_playback(playback_t *playback);
 
 /* Returns whether or not a playback has finished playing. */

@@ -40,6 +40,10 @@ void free_playback(playback_t *playback) {
     /* What, did you expect me to do the same joke twice? */
 }
 
+void reset_playback(playback_t *playback) {
+    playback->t = 0;
+}
+
 int playback_finished(playback_t *playback) {
     return (playback->t / playback->sample_frequency) >= playback->sound->release_time;
 }
@@ -79,12 +83,19 @@ int16_t next_sample(playback_t *playback) {
         /* Ramp up from no volume to full in attack_time ms. */
         sample = (sample * ms) / playback->sound->attack_time;
     } else if (ms <= playback->sound->decay_time) {
+        /* Ramp down from full volume to the sustain volume. */
         sample = (sample * (100 - (((100 - playback->sound->sustain_level) * (ms - playback->sound->attack_time)) / (playback->sound->decay_time - playback->sound->attack_time)))) / 100;
     } else if (ms <= playback->sound->sustain_time) {
+        /* Here we just have to stay at the sutain volume. */
         sample = (sample * playback->sound->sustain_level) / 100;
     } else if (ms <= playback->sound->release_time) {
+        /*
+         * Fade out from sustain volume to "silence" (there's still noise from
+         * the DAC).
+         */
         sample = (sample * (playback->sound->sustain_level - (((playback->sound->sustain_level) * (ms - playback->sound->sustain_time)) / (playback->sound->release_time - playback->sound->sustain_time)))) / 100;
     } else {
+        /* We're finished playing. */
         sample = 0;
     }
 
