@@ -98,3 +98,20 @@ Program flow
 * main program
 * synth
 * libmodam
+
+
+
+About the MOD file format
+
+The MOD file format is an old music tracker file format originally created for the Commodore Amiga, a series of computers from the late eighties.
+The file format is tightly optimized for playback on the Amiga's audio hardware, so to understand the inner workings of the MOD file format, one should first know a little about how the Amiga's audio hardware works.
+
+The Amiga's sound chip, called Paula, is capable of powering four simultaneous DMA-driven 8-bit PCM sample sound channels.
+Each of these channels could be independently set to different sample frequencies many times per second.
+The MOD format exploits this - it supports 4 simultaneous channels of sample playback, using the frequency modulation to change the pitch of the samples played in the different channels.
+Internally, the music is stored as a set of predefined sounds, as well as a large table of note patterns containing information about which sounds should be played at which frequencies and at which time.
+The MOD format also includes a large set of musical effects such as tremolo, vibrato, arpeggio, portamento and so on, a subset of which are implemented in the presented solution program.
+
+TODO: more detailed stuff about mods... how many samples? how many patterns? who invented it? etc.
+
+[Image of a MOD file being edited in a tracker to show what they look like]
