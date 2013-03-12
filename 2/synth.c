@@ -64,17 +64,20 @@ int16_t next_sample(playback_t *playback) {
      * waves.
      */
     switch (playback->sound->waveform) {
+        case NOISE:
+            sample = (rand() % (2 * playback->ticks_per_period)) - playback->ticks_per_period;
+            break;
+        case SAWTOOTH:
+            sample = playback->t % (playback->ticks_per_period * 4);
+            sample -= (playback->ticks_per_period/2);
+            sample *= 2;
+            break;
         case SQUARE:
             if ((playback->t/(playback->ticks_per_period*2)) % 2) {
                 sample = playback->ticks_per_period;
             } else {
                 sample = -playback->ticks_per_period;
             }
-            break;
-        case SAWTOOTH:
-            sample = playback->t % (playback->ticks_per_period * 4);
-            sample -= (playback->ticks_per_period/2);
-            sample *= 2;
             break;
     }
 
