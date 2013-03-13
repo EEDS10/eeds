@@ -13,10 +13,6 @@
 typedef struct {
     int sample_tracker;
     int tick;
-    int vibrato_waveform;
-    double vibrato_amplitude;
-    double vibrato_period;
-    long vibrato_tick;
     int volume_speed;
     int volume;
     MOD_Sample* sample;

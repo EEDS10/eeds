@@ -13,6 +13,8 @@ int main(int argc, char *argv[]);
 static void init_intc(void);
 static void init_hardware(void);
 
+static void select(int selection);
+
 static void button_isr(void);
 static void abdac_isr(void);
 #endif
