@@ -1,4 +1,4 @@
-typedef enum {SQUARE, SAWTOOTH} waveform_t;
+typedef enum {NOISE, SAWTOOTH, SQUARE} waveform_t;
 
 typedef struct sound_struct {
     waveform_t waveform;
