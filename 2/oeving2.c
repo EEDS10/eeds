@@ -33,48 +33,35 @@ int debticker = 0;
 int deb = 0xaf;
 int previous_out = 0;
 
-playback_t *foo, *bar;
+sound_t soundA, soundB;
+playback_t playbackA, playbackB;
 playback_t *current_synth_sound = NULL;
 
 #define SAMPLE_RATE (46875/2)
 
 int main(int argc, char *argv[]) {
-    foo = prepare_playback(get_sound(SQUARE, 500, 500, 1250, 0, 250, 20), SAMPLE_RATE, 20000);
-    bar = prepare_playback(get_sound(SAWTOOTH, 2200, 100, 100, 0, 500, 70), SAMPLE_RATE, 20000);
 
-    {int i; for(i=0;i<MODFILES_N;i++){
-        MODS[i] = MOD_load(MODFILES[i]);
-    }}
+    prepare_playback(&playbackA, get_sound(&soundA, SQUARE, 500, 500, 1250, 0, 250, 20), SAMPLE_RATE, 20000);
+    prepare_playback(&playbackB, get_sound(&soundB, SAWTOOTH, 2200, 100, 100, 0, 500, 70), SAMPLE_RATE, 20000);
 
-    /*
-    int i;
-    MOD* mod = MOD_load(MODFILES_BACONGRYTOR_MOD);
-    for(i=0;i<MODFILES_N;i++){
-        MODS[i] = mod;
-    }
-    */
+    MODS[0] = MOD_load(MODFILES_BACONGRYTOR_MOD);
+    MODS[1] = MOD_load(MODFILES_HOFFMAN___DROP_THE_PANIC__TWEAKED__MOD);
+    MODS[2] = MOD_load(MODFILES_BANANASPLIT_MOD);
+    MODS[3] = MOD_load(MODFILES_TUULENVIRE_MOD);
 
     player = MOD_Player_create(SAMPLE_RATE);
-
-    MOD_Player_set_mod(player, MODS[current_selection]);
 
     init_hardware();
 
     leds_off(0xff);
     leds_on(0xff);
 
-    int spillage = 0;
 
     while(1){
-        while(ticks){
-            ticks--;
-            spillage = 1000000 % SAMPLE_RATE;
-            spillage = 1000000 - (1000000/SAMPLE_RATE)*SAMPLE_RATE;
-            MOD_Player_step(player, 1000000/SAMPLE_RATE);
-
-            if(spillage > SAMPLE_RATE){
-                spillage -= SAMPLE_RATE;
-                MOD_Player_step(player, 1);
+        while(ticks > 0){
+            if(player->mod != NULL){
+                ticks-=16;
+                MOD_Player_step(player, 1000000/SAMPLE_RATE*16);
             }
         }
     }
@@ -110,33 +97,39 @@ void button_isr(void) {
     if(buttons == 0x1){
         current_selection = 0;
         MOD_Player_set_mod(player, MODS[current_selection]);
+        current_synth_sound = NULL;
     }
 
     if(buttons == 0x2){
         current_selection = 1;
         MOD_Player_set_mod(player, MODS[current_selection]);
+        current_synth_sound = NULL;
     }
 
     if(buttons == 0x4){
         current_selection = 2;
         MOD_Player_set_mod(player, MODS[current_selection]);
+        current_synth_sound = NULL;
     }
 
     if(buttons == 0x8){
         current_selection = 3;
         MOD_Player_set_mod(player, MODS[current_selection]);
+        current_synth_sound = NULL;
     }
 
-    if(buttons == 0x16){
+    if(buttons == 0x10){
         current_selection = 4;
-        current_synth_sound = foo;
-        reset_playback(foo);
+        MOD_Player_set_mod(player, NULL);
+        current_synth_sound = &playbackA;
+        reset_playback(&playbackA);
     }
 
-    if(buttons == 0x32){
+    if(buttons == 0x20){
         current_selection = 5;
-        current_synth_sound = bar;
-        reset_playback(bar);
+        MOD_Player_set_mod(player, NULL);
+        current_synth_sound = &playbackB;
+        reset_playback(&playbackB);
     }
 
     leds_off(0xff);
@@ -147,18 +140,18 @@ void button_isr(void) {
 
 
 void abdac_isr(void) {
-    int32_t out;
-    if (current_selection >= 0 && current_selection <= 3) {
-        /* Play mod files */
-        out = MOD_Player_play(player);
-    } else if (current_selection >= 4 && current_selection <= 5) {
-        if (!playback_finished(current_synth_sound)) {
-            out = next_sample(current_synth_sound);
-        }
+    int32_t out = 0;
+
+    /* Play mod files */
+    if(player->mod != NULL){
+        out += MOD_Player_play(player);
+        ticks++;
+    }
+
+    if(current_synth_sound != NULL){
+        out += next_sample(current_synth_sound);
     }
 
     dac->SDR.channel0 = out;
     dac->SDR.channel1 = out;
-
-    ticks++;
 }

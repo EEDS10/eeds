@@ -3,8 +3,7 @@
 
 #include "synth.h"
 
-sound_t *get_sound(waveform_t waveform, int frequency, int attack_duration, int decay_duration, int sustain_duration, int release_duration, int sustain_level) {
-    sound_t *sound = malloc(sizeof(*sound));
+sound_t *get_sound(sound_t* sound, waveform_t waveform, int frequency, int attack_duration, int decay_duration, int sustain_duration, int release_duration, int sustain_level) {
 
     sound->waveform = waveform;
     sound->frequency = frequency;
@@ -22,8 +21,7 @@ void free_sound(sound_t *sound) {
     /* What did you expect? */
 }
 
-playback_t *prepare_playback(sound_t *sound, int16_t sample_frequency, int16_t master_volume) {
-    playback_t *playback = malloc(sizeof(*playback));
+playback_t *prepare_playback(playback_t *playback, sound_t *sound, int16_t sample_frequency, int16_t master_volume) {
 
     playback->sound = sound;
     playback->sample_frequency = sample_frequency;
