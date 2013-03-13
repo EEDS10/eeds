@@ -33,8 +33,8 @@ int debticker = 0;
 int deb = 0xaf;
 int previous_out = 0;
 
-sound_t soundA, soundB;
-playback_t playbackA, playbackB;
+sound_t soundA, soundB, soundC;
+playback_t playbackA, playbackB, playbackC;
 playback_t *current_synth_sound = NULL;
 
 #define SAMPLE_RATE (46875/2)
@@ -43,10 +43,11 @@ int main(int argc, char *argv[]) {
 
     prepare_playback(&playbackA, get_sound(&soundA, SQUARE, 500, 500, 1250, 0, 250, 20), SAMPLE_RATE, 20000);
     prepare_playback(&playbackB, get_sound(&soundB, SAWTOOTH, 2200, 100, 100, 0, 500, 70), SAMPLE_RATE, 20000);
+    prepare_playback(&playbackC, get_sound(&soundC, NOISE, 0, 0, 500, 0, 0, 100), SAMPLE_RATE, 20000);
 
     MODS[0] = MOD_load(MODFILES_BACONGRYTOR_MOD);
     MODS[1] = MOD_load(MODFILES_HOFFMAN___DROP_THE_PANIC__TWEAKED__MOD);
-    MODS[2] = MOD_load(MODFILES_BANANASPLIT_MOD);
+    MODS[2] = MOD_load(MODFILES_BOESENDORFER_P_S_S_MOD);
     MODS[3] = MOD_load(MODFILES_TUULENVIRE_MOD);
 
     player = MOD_Player_create(SAMPLE_RATE);
@@ -130,6 +131,13 @@ void button_isr(void) {
         MOD_Player_set_mod(player, NULL);
         current_synth_sound = &playbackB;
         reset_playback(&playbackB);
+    }
+
+    if(buttons == 0x40){
+        current_selection = 6;
+        MOD_Player_set_mod(player, NULL);
+        current_synth_sound = &playbackC;
+        reset_playback(&playbackC);
     }
 
     leds_off(0xff);
