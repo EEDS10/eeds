@@ -67,7 +67,7 @@ int16_t next_sample(playback_t *playback) {
             break;
         case SAWTOOTH:
             sample = playback->t % (playback->ticks_per_period * 4);
-            sample -= (playback->ticks_per_period/2);
+            sample -= (playback->ticks_per_period*2);
             sample *= 2;
             break;
         case SQUARE:
