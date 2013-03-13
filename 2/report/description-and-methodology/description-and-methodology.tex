@@ -125,3 +125,56 @@ Each column represents one channel, and each row represents one of the 64 divisi
 The currently played division is traditionally kept vertically centered in the middle of the screen, as in this image.
 
 [Image of a MOD file being edited in a tracker to show what they look like]
+
+
+
+
+
+
+Functionality of the program
+
+The solution program plays sound effects and music, and is controlled by the eight buttons on the STK1000.
+The LEDs are used to indicate which sound is playing.
+
+When the program is started, the board is in idle mode, ready to react to button presses.
+Pressing any of the buttons SW0-Sw3 plays a piece of music, which loops until another sound is selected.
+Pressing any of the buttons SW4-Sw6 plays a sound effect, which is not looped.
+Pressing SW7 stops all playback.
+
+The sound effects
+
+The sound effects are generatively composed by wrapping a generator signal in a configurable ADSR volume envelope.
+The available generator signals in the program are NOISE, SAWTOOTH and SQUARE.
+Pressing SW6 triggers the sound effect called 'explosion'.
+It is a NOISE-based sound effect with the following ADSR envelope: XXX.
+Length: XXX.
+
+Pressing SW5 triggers the sound effect called 'air horn'.
+It is a SAWTOOTH-based sound effect with the following ADSR envelope: XXX.
+Length: XXX.
+
+Pressing SW4 triggers the sound effect called 'teleport'.
+It is a SQUARE-based sound effect with the following ADSR envelope: XXX.
+Length: XXX.
+
+
+The peices of music
+
+The pieces of music are played by the MOD player.
+
+Pressing SW3 triggers Dizzy/CNCD's Tuulenvire.
+It is a 2:09 long 808KB composition in the ambient genre, featuring piano and accordion, amongst other instruments.
+It uses 25 samples.
+
+Pressing SW2 triggers Romeo Knight's Boesendorfer P. S. S.
+It is a 3:22 long 211KB solo piano composition.
+It uses 9 samples.
+
+Pressing SW1 triggers a tweaked version of H0ffmann's Drop The Panic.
+It is a 4:05 long 702KB 'glitch-hop' composition.
+It uses 31 samples.
+The composition was tweaked to decrease critical cache misses by the MOD player during playback on the STK1000.
+
+Pressing SW0 trigger Maktone's Bacongrytor.
+It is a 15Kb endless loop chiptune-style composition.
+It uses 7 samples.
