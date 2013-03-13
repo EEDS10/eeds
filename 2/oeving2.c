@@ -22,28 +22,23 @@ volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
 
-MOD* MODS[MODFILES_N];
+MOD* MODS[4];
 MOD_Player* player;
 
-int current_selection = 0;
-
+int current_selection = 7;
 int ticks = 0;
-int debticker = 0;
 
-int deb = 0xaf;
-int previous_out = 0;
-
-sound_t soundA, soundB, soundC;
-playback_t playbackA, playbackB, playbackC;
+sound_t SOUNDS[3];
+playback_t SOUND_PLAYBACKS[3];
 playback_t *current_synth_sound = NULL;
 
 #define SAMPLE_RATE (46875/2)
 
 int main(int argc, char *argv[]) {
 
-    prepare_playback(&playbackA, get_sound(&soundA, SQUARE, 500, 500, 1250, 0, 250, 20), SAMPLE_RATE, 20000);
-    prepare_playback(&playbackB, get_sound(&soundB, SAWTOOTH, 2200, 100, 100, 0, 500, 70), SAMPLE_RATE, 20000);
-    prepare_playback(&playbackC, get_sound(&soundC, NOISE, 0, 0, 500, 0, 0, 100), SAMPLE_RATE, 20000);
+    prepare_playback(&SOUND_PLAYBACKS[0], get_sound(&SOUNDS[0], SQUARE, 500, 500, 1250, 0, 250, 20), SAMPLE_RATE, 20000);
+    prepare_playback(&SOUND_PLAYBACKS[1], get_sound(&SOUNDS[1], SAWTOOTH, 2200, 100, 100, 0, 500, 70), SAMPLE_RATE, 20000);
+    prepare_playback(&SOUND_PLAYBACKS[2], get_sound(&SOUNDS[2], NOISE, 1, 0, 1000, 0, 0, 0), SAMPLE_RATE, 20000);
 
     MODS[0] = MOD_load(MODFILES_BACONGRYTOR_MOD);
     MODS[1] = MOD_load(MODFILES_HOFFMAN___DROP_THE_PANIC__TWEAKED__MOD);
@@ -55,7 +50,6 @@ int main(int argc, char *argv[]) {
     init_hardware();
 
     leds_off(0xff);
-    leds_on(0xff);
 
 
     while(1){
@@ -64,6 +58,9 @@ int main(int argc, char *argv[]) {
                 ticks-=16;
                 MOD_Player_step(player, 1000000/SAMPLE_RATE*16);
             }
+        }
+        if(current_synth_sound != NULL && playback_finished(current_synth_sound)){
+            select(7);
         }
     }
 
@@ -90,60 +87,41 @@ void init_intc(void) {
 }
 
 
+void select(int selection){
+    if(7 == selection){
+        MOD_Player_set_mod(player, NULL);
+        current_synth_sound = NULL;
+    }else if(selection < 4){
+        MOD_Player_set_mod(player, MODS[selection]);
+        current_synth_sound = NULL;
+    }else if(selection < 7){
+        MOD_Player_set_mod(player, NULL);
+        current_synth_sound = &SOUND_PLAYBACKS[selection - 4];
+        reset_playback(current_synth_sound);
+    }
+
+    current_selection = selection;
+
+    leds_off(0xff);
+    if(current_selection != 7){
+        leds_on(1<<current_selection);
+    }
+}
+
+
 void button_isr(void) {
     piob->isr;
 
     int buttons = buttons_read();
 
-    if(buttons == 0x1){
-        current_selection = 0;
-        MOD_Player_set_mod(player, MODS[current_selection]);
-        current_synth_sound = NULL;
+    if(!buttons) return;
+
+    int selected = 0;
+    while(buttons = buttons>>1){
+        selected++;
     }
 
-    if(buttons == 0x2){
-        current_selection = 1;
-        MOD_Player_set_mod(player, MODS[current_selection]);
-        current_synth_sound = NULL;
-    }
-
-    if(buttons == 0x4){
-        current_selection = 2;
-        MOD_Player_set_mod(player, MODS[current_selection]);
-        current_synth_sound = NULL;
-    }
-
-    if(buttons == 0x8){
-        current_selection = 3;
-        MOD_Player_set_mod(player, MODS[current_selection]);
-        current_synth_sound = NULL;
-    }
-
-    if(buttons == 0x10){
-        current_selection = 4;
-        MOD_Player_set_mod(player, NULL);
-        current_synth_sound = &playbackA;
-        reset_playback(&playbackA);
-    }
-
-    if(buttons == 0x20){
-        current_selection = 5;
-        MOD_Player_set_mod(player, NULL);
-        current_synth_sound = &playbackB;
-        reset_playback(&playbackB);
-    }
-
-    if(buttons == 0x40){
-        current_selection = 6;
-        MOD_Player_set_mod(player, NULL);
-        current_synth_sound = &playbackC;
-        reset_playback(&playbackC);
-    }
-
-    leds_off(0xff);
-    if(current_selection != -1){
-        leds_on(1<<current_selection);
-    }
+    select(selected);
 }
 
 
@@ -156,6 +134,7 @@ void abdac_isr(void) {
         ticks++;
     }
 
+    /* Play sound effects */
     if(current_synth_sound != NULL){
         out += next_sample(current_synth_sound);
     }
