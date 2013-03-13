@@ -43,7 +43,7 @@ void reset_playback(playback_t *playback) {
 }
 
 int playback_finished(playback_t *playback) {
-    return (playback->t / playback->sample_frequency) >= playback->sound->release_time;
+    return (1000 * playback->t / playback->sample_frequency) >= playback->sound->release_time;
 }
 
 int16_t next_sample(playback_t *playback) {
@@ -68,7 +68,7 @@ int16_t next_sample(playback_t *playback) {
         case SAWTOOTH:
             sample = playback->t % (playback->ticks_per_period * 4);
             sample -= (playback->ticks_per_period*2);
-            sample *= 2;
+            sample /= 2;
             break;
         case SQUARE:
             if ((playback->t/(playback->ticks_per_period*2)) % 2) {
