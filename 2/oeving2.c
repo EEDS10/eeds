@@ -17,19 +17,23 @@
 #include "modfiles.h"
 #include "synth.h"
 
+#define SELECTION_NONE 7
+#define N_MODS 4
+#define N_SOUNDS 3
+
 volatile avr32_abdac_t *dac = &AVR32_ABDAC;
 volatile avr32_pio_t *piob = &AVR32_PIOB;
 volatile avr32_pio_t *pioc = &AVR32_PIOC;
 volatile avr32_pm_t *pm = &AVR32_PM;
 
-MOD* MODS[4];
+MOD* MODS[N_MODS];
 MOD_Player* player;
 
-int current_selection = 7;
+int current_selection = SELECTION_NONE;
 int ticks = 0;
 
-sound_t SOUNDS[3];
-playback_t SOUND_PLAYBACKS[3];
+sound_t SOUNDS[N_SOUNDS];
+playback_t SOUND_PLAYBACKS[N_SOUNDS];
 playback_t *current_synth_sound = NULL;
 
 #define SAMPLE_RATE (46875/2)
@@ -62,7 +66,7 @@ int main(int argc, char *argv[]) {
             }
         }
         if(current_synth_sound != NULL && playback_finished(current_synth_sound)){
-            select(7);
+            select(SELECTION_NONE);
         }
     }
 
@@ -90,22 +94,22 @@ void init_intc(void) {
 
 
 void select(int selection){
-    if(7 == selection){
+    if(SELECTION_NONE == selection){
         MOD_Player_set_mod(player, NULL);
         current_synth_sound = NULL;
-    }else if(selection < 4){
+    }else if(selection < N_MODS){
         MOD_Player_set_mod(player, MODS[selection]);
         current_synth_sound = NULL;
-    }else if(selection < 7){
+    }else {
         MOD_Player_set_mod(player, NULL);
-        current_synth_sound = &SOUND_PLAYBACKS[selection - 4];
+        current_synth_sound = &SOUND_PLAYBACKS[selection - N_MODS];
         reset_playback(current_synth_sound);
     }
 
     current_selection = selection;
 
     leds_off(0xff);
-    if(current_selection != 7){
+    if(current_selection != SELECTION_NONE){
         leds_on(1<<current_selection);
     }
 }
