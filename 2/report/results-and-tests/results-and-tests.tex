@@ -12,15 +12,80 @@ This popping noise is detrimental to the user experience, and ruins the function
 Further, the clock rate of the CPU can be lowered to save energy, but this probably requires further optimization of the solution program.
 
 \section{Testing}
-We loaded up the code and pushed a button and omg it worked because it played sounds.
-Also that one test where we just loaded the code to play a sound and it also worked.
-The test where we recorded sound effects to see if the ADSR worked as expected.
-The test where we triggered led changes from the abdac\_isr to measure oscillator speed (learned that div wasn't working how we thought it did, led to a hack, then finally figuring out a solution).
 
+The basic test requirements are the same as on page 15 of \cite{tdt4258-1}.
+
+\subsection{Basic functionality test}
+
+This test aims to uncover whether we have managed to set up the hardware properly and managed to get the sounds and music to play.
+
+Prerequisites:
+\begin{itemize}
+    \item{One (1) finger}
+    \item{Functional eyesight}
+    \item{Auditory perception}
+\end{itemize}
+
+Procedure:
+\begin{enumerate}
+    \item{Upload the code to the STK1000 (e.g using \texttt{make upload}).}
+    \item{Push the board's \texttt{RESET} button.}
+    \item{Push the various buttons and verify that the expected piece of music or sound effects play, and that the LED above the button lights up.}
+\end{enumerate}
+
+This is about as basic as it gets for simple functionality tests. Everything worked as expected, so it was probably mostly fine.
+
+\subsection{Testing of generated waveforms}
+
+In this test we want to see whether we actually generate the waveforms we expect to with the sound effects.
+
+Prerequisites:
+\begin{itemize}
+    \item{One (1) finger}
+    \item{Functional eyesight}
+    \item{Auditory perception}
+    \item{A way of recording the sound signal}
+\end{itemize}
+
+Procedure:
+\begin{enumerate}
+    \item{Upload the code to the STK1000 (e.g using \texttt{make upload}).}
+    \item{Push the board's \texttt{RESET} button.}
+    \item{Record the sound played when \texttt{SW4} is pressed and compare the generated sound waves with a square wave.}
+    \item{Record the sound played when \texttt{SW5} is pressed and compare the generated sound waves with a sawtooth wave.}
+    \item{Record the sound played when \texttt{SW6} is pressed and see whether it looks like noise.}
+\end{enumerate}
+
+The generated sounds were generated more or less as we expected, \texttt{SW4}'s sound wave can be seen in figure \ref{img-sw4zoom}, \texttt{SW5}'s in \ref{img-sw5zoom} and \texttt{SW6}'s in \ref{img-sw6zoom}.
+
+\subsection{Testing the ABDAC interrupt frequency}
+
+When first playing sound, we could not quite figure out how often our interrupt routine got called, and therefore had difficulty setting the sample frequency.
+
+Prerequisites:
+\begin{itemize}
+    \item{One (1) finger}
+    \item{Functional eyesight}
+    \item{A clock to keep track of how long the procedure takes}
+    \item{A simple program to count up every time the interrupt routine is called and changes the LEDs when the counter has increased by a number.}
+\end{itemize}
+
+Procedure:
+\begin{enumerate}
+    \item{Upload the code to the STK1000 (e.g using \texttt{make upload}).}
+    \item{Push the board's \texttt{RESET} button.}
+    \item{Take the time it takes for the LEDs to change 10 times.}
+\end{enumerate}
+
+The point is that when it takes exactly 10 seconds for the LEDs to change 10 times, you know how many times the interrupt routine gets called every second.
+This test made us realise that we did not manage to control the frequency of the interrupt routine, and we had to implement a little hack to get it to work as we wanted to.
+We did end up finding how to change the frequency though, and this test allowed us to verify that.
 
 \section{Discussion}
 
-
+We managed to play mod-files successfully and generate different sound waves as expected.
+There was more noise on the internal ABDAC than we expected, and sometimes while developing it was hard to hear whether we had made an error because of all the noise.
+We did not find any ways to counteract the noise other than turning up the volume, and hoping that the noise was relatively too weak to make much of an impact on the sound waves.
 
 \subsection{Ideas for improvement}
 
