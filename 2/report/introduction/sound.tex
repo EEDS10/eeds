@@ -10,7 +10,7 @@ There are different strategies available for preparing the stream of integers th
 One strategy is simply to store the prepared list of integers somewhere in memory, and then copy it over to the DAC integer by integer as they are consumed.
 This strategy is analogous to rasterized bit maps in the image processing world.
 While being easy to implement and capable of representing all kinds of sounds, this strategy requires a great deal of memory (integer size $\times$ sample rate of bytes per second).
-As an example, a three minute long song stored at 16 bits per sample at a sample rate of 22050Hz, requires $16$\frac{bits}{sample}$\times 180$ seconds $\times 22050$ \frac{sample}{second} $\approx 7.57$ MiB.
+As an example, a three minute long song stored at 16 bits per sample at a sample rate of 22050Hz, requires $16$ bits/sample $\times 180$ seconds $\times 180$ seconds $\times 22050$ samples/second $\approx 7.57$ MiB.
 This is not a viable strategy when working with low memory platforms like the STK1000 (the AP7000's flash memory can store 8 MiB).
 
 Another strategy is the \emph{generative approach}.
