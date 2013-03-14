@@ -50,13 +50,13 @@ Some wrapper logic, as well as user interface code was hooked up, and hey presto
 	
 \subsubsection{Setting up the buttons}
 
-The button setup for this assignment is almost exactly the same as the setup from assignment 1.\cite{tdt4258-1}
+The button setup for this assignment is almost exactly the same as the setup from assignment 1\cite{tdt4258-1}.
 The only difference is that the setup code is written in C, rather than assembly, which allows for higher lever abstractions.
 The button code leverages the inversion of control principle, with dependency injection through the argument list of the setup function.
 
 \subsubsection{Setting up the audio}
 
-The audio setup code is organized in the same way as the LED and button setup code - an injectable setup function in a separate file.
+The audio setup code is organized in the same way as the LED and button setup code -- an injectable setup function in a separate file.
 The internal DAC, which is used for audio output, uses pin 20 and 21 of PIOB as output pins.
 These pins must be disabled, because for some reason. What was it again?
 The pins are instead given to peripheral A, which is the ABDAC.
