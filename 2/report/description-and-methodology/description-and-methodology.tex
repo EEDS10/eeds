@@ -22,20 +22,20 @@ The available generator signals in the program are NOISE, SAWTOOTH and SQUARE.
 
 TODO: talk about NISE, SAWTOOTH and SQUARE, with photos.
 
-\subsubsection{Sound effect: Explosion}
+\subsubsection{Explosion}
 
 'Explosion' is a NOISE-based sound effect with the following ADSR envelope: XXX.
 Length: XXX.
 'Explosion' can be triggered by pressing SW6.
 TODO: add photo
 
-\subsubsection{Sound effect: Air horn}
+\subsubsection{Air horn}
 'Air horn' is a SAWTOOTH-based sound effect with the following ADSR envelope: XXX.
 Length: XXX.
 'Air horn' can be triggered by pressing SW5.
 TODO: add photo
 
-\subsubsection{Sound effect: Teleport}
+\subsubsection{Teleport}
 'Teleport' is a SQUARE-based sound effect with the following ADSR envelope: XXX.
 Length: XXX.
 'Teleport' can be triggered by pressing SW4.
@@ -44,25 +44,29 @@ TODO: add photo
 
 \subsection{Music}
 
-The pieces of music are played by the MOD player.
+The music pieces in the solution program are played by the MOD player.
 
-Pressing SW3 triggers Dizzy/CNCD's Tuulenvire.
-It is a 2:09 long 808KB composition in the ambient genre, featuring piano and accordion, amongst other instruments.
+\subsubsection{Music: Tuulenvire by Dizzy/CNCD}
+Tuulenvire is a 2:09 long 808KB composition in the ambient genre, featuring piano and accordion, amongst other instruments.
 This composition was chosen to demonstrate how careful composing can render realistic compositions with a relatively small memory footprint.
-It uses 25 samples.
+It uses 25 different PCM-coded sounds.
+Tuulenvire can be triggered by pressing SW3.
 
-Pressing SW2 triggers Romeo Knight's Boesendorfer P. S. S.
-It is a 3:22 long 211KB solo piano composition, chosen to illustrate the possibilities enabled by a hybrid generative/recorded approach.
-It uses 9 samples.
+\subsubsection{Boesendorfer P. S. S. by Romeo Knight}
+Boesendorfer P. S. S. is a 3:22 long 211KB solo piano composition, chosen to illustrate the possibilities enabled by a hybrid generative/recorded approach.
+It uses 9 different PCM-coded sounds.
+Boesendorfer P. S. S. can be triggered by pressing SW2.
 
-Pressing SW1 triggers a tweaked version of H0ffmann's Drop The Panic, chosen because it sounds cool.
-It is a 4:05 long 702KB ``glitch-hop'' composition.
-It uses 31 samples.
-The composition was tweaked to decrease critical cache misses by the MOD player during playback on the STK1000.
+\subsubsection{Drop The Panic by H0ffmann}
+Drop The Panic is a 4:05 long 702KB ``glitch-hop'' composition.
+It was chosen to show how MOD files can support embedded vocals.
+It uses 31 different PCM-coded sounds.
+The composition was tweaked by adding some extra inaudible notes in the beginning of the song to decrease critical cache misses by the MOD player during playback on the STK1000.
+Drop The Panic can be triggered by pressing SW1.
 
-Pressing SW0 triggers Maktone's Bacongrytor.
-It is a 15Kb endless loop chiptune-style composition, chosen to demonstrate the compactness of the MOD format, and therefore its aptfulness for use on microcontrollers.
-It uses 7 samples.
+\subsubsection{Bacongrytor by Maktone}
+Bacongrytor is a 15Kb endless loop chiptune-style composition, chosen to demonstrate the compactness of the MOD format, and therefore its aptfulness for use on microcontrollers.
+It uses 7 different PCM-coded sounds.
 
 
 Development of the program
