@@ -6,7 +6,7 @@ Sawtooth and square waves were chosen as they are relatively easy to implement.
 A noise signal was added as it required no extra logic, and it is needed to make the explosion sound.
 
 After the oscillator was capable of producing waves with arbitrary frequencies, development began on the ADSR envelope.
-Code for the sustain part of the sound was the easiest to write, as it just required the amplitude to be scaled down so that the highest possible amplitude was a given fraction of the highest possible amplitude.
+Code for the sustain part of the sound was the easiest to write, as it just required the output amplitude to be limited by a constant fraction of the highest possible amplitude.
 Scaling for the attack, decay and release part was a bit worse however, as floating point divisions should be avoided at all costs.
 In the end an acceptable result was reached with a smart ordering of integer multiplications and divisions.
 
