@@ -4,7 +4,7 @@ This section describes the sound program, and details how it was developed. This
 need to include a bit about the Makefile here
 
 
-\section{Description}
+\section{Functional description}
 
 The solution program plays sound effects and music, and is controlled by the eight buttons on the STK1000.
 The LEDs are used to indicate which sound is playing.
@@ -24,20 +24,38 @@ TODO: talk about NISE, SAWTOOTH and SQUARE, with photos.
 
 \subsubsection{Explosion}
 
-'Explosion' is a NOISE-based sound effect with the following ADSR envelope: XXX.
-Length: XXX.
+'Explosion' is a NOISE-based sound effect with the following ADSR envelope:
+Attack: 0 ms
+Decay:  1000 ms
+Sustain: 0\%
+Release: 0 ms
+The effect is held for 0 ms.
+
+Total length: 0 ms + 1000 ms + 0 ms + 0 ms = 1000 ms
 'Explosion' can be triggered by pressing SW6.
 TODO: add photo
 
 \subsubsection{Air horn}
-'Air horn' is a SAWTOOTH-based sound effect with the following ADSR envelope: XXX.
-Length: XXX.
+'Air horn' is a SAWTOOTH-based sound effect with the following ADSR envelope:
+Attack: 100 ms
+Decay:  100 ms
+Sustain: 70\%
+Release: 500 ms
+The effect is held for 0 ms.
+
+Total length: 100 ms + 100 ms + 500 ms + 0 ms = 700 ms
 'Air horn' can be triggered by pressing SW5.
 TODO: add photo
 
 \subsubsection{Teleport}
-'Teleport' is a SQUARE-based sound effect with the following ADSR envelope: XXX.
-Length: XXX.
+'Teleport' is a SQUARE-based sound effect with the following ADSR envelope:
+Attack: 500 ms
+Decay:  1250 ms
+Sustain: 20\%
+Release: 250 ms
+The effect is held for 0 ms.
+
+Length: 500 ms + 1250 ms + 250 ms + 0 ms = 2000 ms
 'Teleport' can be triggered by pressing SW4.
 TODO: add photo
 
@@ -67,6 +85,11 @@ Drop The Panic can be triggered by pressing SW1.
 \subsubsection{Bacongrytor by Maktone}
 Bacongrytor is a 15Kb endless loop chiptune-style composition, chosen to demonstrate the compactness of the MOD format, and therefore its aptfulness for use on microcontrollers.
 It uses 7 different PCM-coded sounds.
+
+
+\section{Configuration}
+
+We can reference our previous report here, so that we don't have to write so much.
 
 
 \section{Development of the program}
@@ -104,9 +127,6 @@ finally:
 
 
 
-\section{Configuration}
-
-We can reference our previous report here, so that we don't have to write so much.
 
 
 \section{Programming environment}
