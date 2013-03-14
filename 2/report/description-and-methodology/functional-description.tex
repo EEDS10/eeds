@@ -9,13 +9,15 @@ Pressing \texttt{SW7} stops all playback.
 \subsection{Sound effects}
 
 The sound effects are generatively composed by wrapping a generator signal in a configurable ADSR volume envelope.
+Because the internal DAC of the STK1000 is rather noisy because of signal bleeding and poorly implemented hardware filters, the sound from the generators can sound rather dirty.
+
 The available generator signals in the program are NOISE, SAWTOOTH and SQUARE.
 
 A sawtooth wave is a wave that increases linearly, until it cuts off, as seen in \ref{img-sw5zoom}.
 The sawtooth wave includes all the integer harmonics for the given frequencies.
 \begin{figure}[H]
 	\includegraphics[width = \textwidth]{images/SW5zoom.png}
-	\caption{A sawtooth wave}
+	\caption{A noisy sawtooth wave recorded from the STK1000.}
 	\label{img-sw5zoom}
 \end{figure}
 
@@ -23,7 +25,7 @@ An ideal square wave is either at a maximum or minimum amplitude as seen in \ref
 Unlike a sawtooth wave, the square wave only contains odd-numbered integer harmonics.
 \begin{figure}[H]
 	\includegraphics[width = \textwidth]{images/SW4zoom.png}
-	\caption{A square wave}
+	\caption{A noisy square wave recorded from the STK1000.}
 	\label{img-sw4zoom}
 \end{figure}
 
@@ -31,7 +33,7 @@ A noise is rather the lack of a waveform, with randomly chosen samples, as depic
 Noise can be described as the sound your tv makes when you tune into frequencies that there is no broadcasting on.
 \begin{figure}[H]
 	\includegraphics[width = \textwidth]{images/SW6zoom.png}
-	\caption{A noise signal}
+	\caption{A noise signal recorded from the STK1000}
 	\label{img-sw6zoom}
 \end{figure}
 

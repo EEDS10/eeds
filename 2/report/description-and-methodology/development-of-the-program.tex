@@ -27,7 +27,16 @@ Further optimizations were iteratively applied after this, until the code reache
 
 \subsection{The main program}
 
-How everything was assembled in the main program.
+The main programmed was developed in the lab, room XXX, 4th floor ITV-building, NTNU.
+First, the board was configured as in the configuration section of this report.
+Then, LEDs and and buttons were hooked up in the program, as detailed in their respective sections of this report.
+After this, code was refactored and split into several files, and the ABDAC was hooked up in the program, as detailed in the setting up the audio section.
+
+Once the ABDAC was hooked up, random noise was sent to the ABDAC output register, to see if everything was set up correctly.
+
+At this point, development of libmodam and the synth started. This is detailed in other sections of this report. Once they were finished, they were integrated into the main program.
+Some wrapper logic, as well as user interface code was hooked up, and hey presto, the program was done.
+
 
 \subsubsection{Setting up the LEDs}
 	On initialization, the address of the \texttt{PIO} which the LEDs are connected to is stored as a pointer.
@@ -61,30 +70,3 @@ Luckily, the clock speed can be divided using the divide feature.
 By enabling the divide feature, and setting the \texttt{div} to 0, the clock signal is divided by two.
 This is because the clock speed is divided by $2\times($\texttt{div}$+1)$.
 
-
-list of what we did:
-
-* Board was set up w/ jumpers and such
-* Leds and buttons were hooked up in hardware
-* Leds and buttons were hooked up in software
-* Code was split into separate files
-* Audio was hooked up with apropriate settings
-* Sound was tested to work using random noise
-
-
-the following two groups of bullet points happened in parallel:
-
-* a C sound effect synth inspired by sfxr was prototyped on a PC
-* the synth was ported to avr32
-* the synth was developed further on the avr32
-* the synth was used in the stk1000 program to play various sound effects
-
-* a C MOD player library + python tools inspired by amiga trackers were developed on a PC
-* the library was tested on the avr32 and needed a great deal of optimization
-* a great deal of optimization occurred 
-* the library was used in the stk1000 program to play selected mods
-
-
-finally:
-
-* the actual main program flow was decided upon and written, hooking button and led behaviour together with sound effects and music
