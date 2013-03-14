@@ -40,4 +40,84 @@ These two driving functions are split up like this to minimize and keep constant
 Libmodam implements support for \texttt{M.K.} type MODs.
 A subset of the playback effects from \texttt{M.K.} have been implemented.
 Which effects to implement was chosen so that the most popular and often used effects were prioritized.
-A list of the effects in \texttt{M.K.}, and their implementation status in libmodam can be found in table XXX.
+A list of the effects in \texttt{M.K.}, and their implementation status in libmodam can be found in \ref{libmodam-feats}.
+
+\begin{table}[H]
+	\centering
+    \begin{tabular}{|l|l|}
+        \hline
+        Effect & Implemented? \\
+        \hline
+        \hline
+        Arpeggio & implemented \\
+        \hline
+        Slide up & implemented \\
+        \hline
+        Slide down & implemented \\
+        \hline
+        Slide to note & implemented \\
+        \hline
+        Vibrato & not implemented* \\
+        \hline
+        Continue slide to note and volume slide & implemented \\
+        \hline
+        Tremolo & not implemented \\
+        \hline
+        Unused & implemented \\
+        \hline
+        Set sample offset & not implemented \\
+        \hline
+        Volume slide & implemented \\
+        \hline
+        Position jump & implemented \\
+        \hline
+        Set volume & implemented \\
+        \hline
+        Pattern break & implemented \\
+        \hline
+        Set filter on/off & not implemented \\
+        \hline
+        Fineslide up & not implemented \\
+        \hline
+        Fineslide down & not implemented \\
+        \hline
+        Set glissando on/off & not implemented \\
+        \hline
+        Set vibrato waveform & not implemented \\
+        \hline
+        Set finetune value & not implemented \\
+        \hline
+        Loop pattern & implemented \\
+        \hline
+        Set tremolo waveform & not implemented \\
+        \hline
+        Extended unused & implemented \\
+        \hline
+        Retrigger sample & not implemented \\
+        \hline
+        Fine volume slide up & implemented \\
+        \hline
+        Fine volume slide down & implemented \\
+        \hline
+        Cut sample & implemented \\
+        \hline
+        Delay sample & not implemented \\
+        \hline
+        Delay pattern & not implemented \\
+        \hline
+        Invert loop & not implemented \\
+        \hline
+        Set speed & implemented
+    \end{tabular}
+    \label{libmodam-feats}
+\end{table}
+*was implemented at one point, but was later removed for performance reasons
+
+
+For more details about what these effects do, refer to the list below.
+\begin{itemize}
+    \item{\url{http://www.mediatel.lu/workshop/audio/fileformat/h_mod.html}}
+    \item{\url{http://archive.cs.uu.nl/pub/MIDI/DOC/MOD-info}}
+    \item{\url{https://bel.fi/alankila/modguide/}}
+    \item{\url{http://16-bits.org/mod/}}
+\end{itemize}
