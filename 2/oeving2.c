@@ -41,6 +41,7 @@ playback_t *current_synth_sound = NULL;
 
 /* variables used for keeping track of the user interface state */
 int current_selection = SELECTION_NONE;
+int sleep = 0;
 
 
 int main(int argc, char *argv[]) {
@@ -61,7 +62,8 @@ int main(int argc, char *argv[]) {
      * possible in the setup phase to avoid premature interrupts. */
     init_hardware();
 
-    leds_off(0xff);
+    /* begin in idle mode */
+    select(SELECTION_NONE);
 
     /* main loop */
     while(1){
@@ -77,6 +79,11 @@ int main(int argc, char *argv[]) {
         /* if we are done playing a sound effect, mark it as done */
         if(current_synth_sound != NULL && playback_finished(current_synth_sound)){
             select(SELECTION_NONE);
+        }
+
+        if(sleep){
+            asm volatile("sleep 1");
+            sleep = 0;
         }
     }
 
@@ -131,6 +138,8 @@ void select(int selection){
     leds_off(0xff);
     if(current_selection != SELECTION_NONE){
         leds_on(1<<current_selection);
+    }else{
+        sleep = 1;
     }
 }
 
@@ -168,13 +177,6 @@ void abdac_isr(void) {
         out = next_sample(current_synth_sound);
     }
 
-    /* Force underrun. This is a HACK because setting
-     * the ABDAC clock speed using div does not work. */
-    volatile int slowalizer = 0;
-    while(!dac->ISR.underrun){
-        slowalizer += rand();
-    }
-    dac->ICR.underrun = 1;
 
     /* give the output to the hardware */
     dac->SDR.channel0 = out;

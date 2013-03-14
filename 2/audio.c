@@ -14,8 +14,10 @@ void audio_init(volatile avr32_pio_t* pio, volatile avr32_pm_t* pm, volatile avr
 
     /* setting up options for the generic clock that will drive the ABDAC */
     pm->GCCTRL[6].oscsel = 1; /* select oscillator 1 which runs at 12Mhz */
-    pm->GCCTRL[6].pllsel = 0; 
+    //pm->GCCTRL[6].pllsel = 0; 
     pm->GCCTRL[6].cen = 1;    /* enable the clock */
+    pm->GCCTRL[6].div  = 0;
+    pm->GCCTRL[6].diven  = 1; 
 
     /* actually activate the ABDAC */
     dac->CR.en = 1;
