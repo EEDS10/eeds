@@ -1,7 +1,3 @@
-
-
-Remember to bring an oscilloscope to have a look at different waveforms! Also, we could have a look at the random noise from the stk1000.
-
 \section{Energy Efficiency}
 
 Energy efficiency in computing is ever-important.
@@ -20,8 +16,23 @@ The test where we triggered led changes from the abdac\_isr to measure oscillato
 
 \section{Discussion}
 
+
+
 \subsection{Ideas for improvement}
 
-* external dac
-* DMA for the ABDAC
+There are a number of measures that can be undertaken to improve the presented solution program.
+The energy efficiency can be improved, as noted in the Energy Efficiency section of this report.
+CPU sleeping and clock disabling are the most obvious measures, but they need to be done in a way that does not create nasty popping noises. 
+Further, the clock rate of the CPU can be lowered to save energy, but this probably requires further optimization of the solution program.
 
+To reduce the amount of noise from the board, the external DAC can be used.
+
+To offload the CPU, the ABDAC can be set up to get samples using DMA.
+
+To improve MOD compatability, more MOD effects can be implemented.
+
+To increase the diversity and range of the sound effect synth, more controllable features can be implemented, such as volume slides and filters.
+Additionally, more generator primitives (sine wave, triangle wave, pulse wave etc) can be implemented.
+Finally, polyphony in the sound effect synth can greatly increase the number of possibilities.
+
+Performance-wise, the samples from the sound effect synth can be pregenerated and stored in memory, to reduce CPU load.

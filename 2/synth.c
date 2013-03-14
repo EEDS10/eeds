@@ -16,11 +16,6 @@ sound_t *get_sound(sound_t* sound, waveform_t waveform, int frequency, int attac
     return sound;
 }
 
-void free_sound(sound_t *sound) {
-    free(sound);
-    /* What did you expect? */
-}
-
 playback_t *prepare_playback(playback_t *playback, sound_t *sound, int16_t sample_frequency, int16_t master_volume) {
 
     playback->sound = sound;
@@ -31,11 +26,6 @@ playback_t *prepare_playback(playback_t *playback, sound_t *sound, int16_t sampl
     playback->ticks_per_period = sample_frequency / sound->frequency;
 
     return playback;
-}
-
-void free_playback(playback_t *playback) {
-    free(playback);
-    /* What, did you expect me to do the same joke twice? */
 }
 
 void reset_playback(playback_t *playback) {
