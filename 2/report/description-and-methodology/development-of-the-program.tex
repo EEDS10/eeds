@@ -1,0 +1,54 @@
+
+\subsection{Sound effect synth}
+
+\subsection{Libmodam}
+
+Libmodam was initially developed in a linux environment on an x86 PC, and later ported to avr32 and the STK1000.
+This was done for comfort reasons: there was no need to be in the lab to develop; testing and iterating went a lot faster when code and data didn't need to be uploaded after each modification; and there was no need to focus on performance until features were confirmed to be working properly.
+As an added bonus, this also ensured a certain degree of portability, which is a nice property for a library to have.
+The python file conversion tool was developed alongside libmodam.
+
+When the code was run on the STK1000 for the first time, the performance difference between the Intel i7 multi-GHz linux laptop and the STK1000 became immediately apparent.
+The sound produced by libmodam on the STK1000 at this point did not even remotely sound like music.
+In fact, it was more akin to a bowl of half-eaten oatmeal porridge left overnight, were porridge as audibly dull as it is bland in taste.
+One of the main reasons for the abysmal performance on the STK1000 was the lack of a floating point unit in the AP7000.
+Libmodam used floating point numbers heavily.
+The library was rewritten to use integer arithmetic, which helped immensely.
+Further optimizations were iteratively applied after this, until the code reached a point of acceptable performance.
+
+\subsection{The main program}
+
+How everything was assembled in the main program.
+
+\subsubsection{Setting up the LEDs}
+\subsubsection{Setting up the buttons}
+\subsubsection{Setting up the audio}
+rant about sample rates, div, diven
+
+
+list of what we did:
+
+* Board was set up w/ jumpers and such
+* Leds and buttons were hooked up in hardware
+* Leds and buttons were hooked up in software
+* Code was split into separate files
+* Audio was hooked up with apropriate settings
+* Sound was tested to work using random noise
+
+
+the following two groups of bullet points happened in parallel:
+
+* a C sound effect synth inspired by sfxr was prototyped on a PC
+* the synth was ported to avr32
+* the synth was developed further on the avr32
+* the synth was used in the stk1000 program to play various sound effects
+
+* a C MOD player library + python tools inspired by amiga trackers were developed on a PC
+* the library was tested on the avr32 and needed a great deal of optimization
+* a great deal of optimization occurred 
+* the library was used in the stk1000 program to play selected mods
+
+
+finally:
+
+* the actual main program flow was decided upon and written, hooking button and led behaviour together with sound effects and music
