@@ -69,7 +69,11 @@ Bacongrytor is a 15Kb endless loop chiptune-style composition, chosen to demonst
 It uses 7 different PCM-coded sounds.
 
 
-Development of the program
+\section{Development of the program}
+
+Setting up the LEDs
+Setting up the buttons
+Setting up the audio
 
 list of what we did:
 
@@ -100,24 +104,25 @@ finally:
 
 
 
-Configuration
+\section{Configuration}
 
 We can reference our previous report here, so that we don't have to write so much.
 
 
-Programming environment
+\section{Programming environment}
 
-JTAGICE
+\subsection{JTAGICE}
 We can reference our previous report here, so that we don't have to write so much.
 
-GNU Debugger
+\subsection{GNU Debugger}
 since last time:
 * discovered tui mode: looks nice, breaks the makefile
+* avr32gdbproxy -f0.8Mb -a 0.0.0.0:1024 and target extended-remote:1024
 
-Make
+\subsection{Make}
 we can reference.
 
-Other tools
+\subsection{Other tools}
 * OpenMPT was used to examine MOD files for libmodam
 * vim
 * git
@@ -125,12 +130,8 @@ Other tools
 * latex
 * avr32 toolchain
 
-Setting up the LEDs
-Setting up the buttons
-Setting up the audio
 
-
-Program flow
+\section{Program flow}
 
 * main program
 * synth
