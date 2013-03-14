@@ -109,9 +109,29 @@ Jack etc
 
 \section{Development of the program}
 
-Setting up the LEDs
-Setting up the buttons
-Setting up the audio
+
+\subsection{Setting up the LEDs}
+\subsection{Setting up the buttons}
+\subsection{Setting up the audio}
+rant about sample rates, div, diven
+
+\subsection{Sound effect synth}
+
+\subsection{Libmodam}
+
+Libmodam was initially developed in a linux environment on an x86 PC, and later ported to avr32 and the STK1000.
+This was done for comfort reasons: there was no need to be in the lab to develop, testing and iterating went a lot faster when code and data didn't need to be uploaded after each modification, and there was no need to focus on performance until features were confirmed to be working properly.
+As an added bonus, this also ensured a certain degree of portability, which is a nice property for a library to have.
+
+When the code was run on the STK1000 for the first time, the performance difference between the Intel i7 multi GHz linux laptop and the STK1000 became immediately apparent.
+The sound produced by libmodam on the STK1000 at this point did not even remotely sound like music.
+In fact, it was more akin to a bowl of half-eaten oatmeal porridge left overnight, were porridge as audibly dull as it is bland in taste.
+One of the main reasons for the abysmal performance on the STK1000 was the lack of a floating point unit in the AP7000.
+Libmodam used floating point numbers heavily.
+The library was rewritten to use integer arithmetic, which helped immensely.
+Further optimizations were iteratively applied after this, until the code reached a point of acceptable performance.
+
+
 
 list of what we did:
 
