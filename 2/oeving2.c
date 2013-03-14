@@ -177,7 +177,6 @@ void abdac_isr(void) {
         out = next_sample(current_synth_sound);
     }
 
-
     /* give the output to the hardware */
     dac->SDR.channel0 = out;
     dac->SDR.channel1 = out;
