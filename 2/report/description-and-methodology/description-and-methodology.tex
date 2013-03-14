@@ -98,14 +98,14 @@ The solution consists of three separate components. This section describes each 
 \subsection{libmodam}
 
 Libmodam is the name of the MOD file parser and player written for this assignment.
-It is a portable, cross-platform c library.
+It is written as a portable, cross-platform C library.
 It has been tested on avr32 and on x86.
 
 Libmodam is statically linked in the main solution program.
 
 Libmodam includes a python utility script for platforms without filesystems.
 Normally, to use libmodam, a programmer must read a MOD file to to a byte buffer, and pass the buffer to libmodam, as it is done in the sample usage program test.c.
-This is sadly impossible in environments without a file concept.
+This is sadly impossible in environments without a file system.
 The python script solves this by reading arbitrary files and converting them to C-code declaring large static const char* arrays representing those files.
 For most platforms, this means that the files will be bundled with the executable in the .text section, making them read only.
 
