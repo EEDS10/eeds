@@ -58,8 +58,7 @@ The button code leverages the inversion of control principle, with dependency in
 
 The audio setup code is organized in the same way as the LED and button setup code -- an injectable setup function in a separate file.
 The internal DAC, which is used for audio output, uses pin 20 and 21 of PIOB as output pins.
-These pins must be disabled, because for some reason. What was it again?
-The pins are instead given to peripheral A, which is the ABDAC.
+These pins must be disabled so that the ABDAC can attain full control of them.
 
 In order to drive the ABDAC, a clock must be set up.
 Generic clock 6 is the clock that powers the ABDAC.
