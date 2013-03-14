@@ -40,7 +40,17 @@ The button code leverages the inversion of control principle, with dependency in
 
 The audio setup code is organized in the same way as the LED and button setup code - an injectable setup function in a separate file.
 The internal DAC, which is used for audio output, uses pin 20 and 21 of PIOB as output pins.
-These pins are already 
+These pins must be disabled, because for some reason. What was it again?
+The pins are instead given to peripheral A, which is the ABDAC.
+
+In order to drive the ABDAC, a clock must be set up.
+Generic clock 6 is the clock that powers the ABDAC.
+The generic clock 6 is in the assignment set up to be driven by oscillator 1, which runs at 12Mhz.
+Because the clock fires an ABDAC interrupt for every 256th clock tick, this means that the sample rate will be 46875.
+This is a little high.
+Luckily, the clock speed can be divided using the divide feature.
+By enabling the divide feature, and setting the \texttt{div} to 0, the clock signal is divided by two.
+This is because the clock speed is divided by $2\times($\texttt{div}$+1)$.
 
 
 list of what we did:
