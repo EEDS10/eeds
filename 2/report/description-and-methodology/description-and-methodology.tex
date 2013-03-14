@@ -131,8 +131,31 @@ we can reference.
 * avr32 toolchain
 
 
-\section{Program flow}
+\section{Solution components}
 
-* main program
-* synth
-* libmodam
+\subsection{main program}
+\subsection{synth}
+
+\subsection{libmodam}
+
+Libmodam is the name of the MOD file parser and player written for this assignment.
+It is a portable, cross-platform c library.
+It has been tested on avr32 and on x86.
+
+Libmodam is statically linked in the main solution program.
+
+Libmodam also includes a python utility script for platforms without filesystems.
+Normally, to use libmodam, a programmer must read a MOD file to to a byte buffer, and pass the buffer to libmodam, as it is done in the sample usage program test.c.
+This is sadly impossible in environments without a file concept.
+The python script solves this by reading arbitrary files and converting them to C-code declaring large static const char* arrays representing those files.
+For most platforms, this means that the files will be bundled with the executable in the .text section, making it read only.
+For this reason, libmodam supports being passed read only buffers.
+
+
+To the programmer using libmodam, two main functions must be called repeatedly to generate output.
+One of these functions is MOD_Player_play(...).
+This function returns a single sample of output, and must be called SAMPLE_RATE times per second for real time playback.
+The other function is MOD_Player_step(...), and advances logical state, such as which notes should be playing and what effect should be applied.
+This function should be called no less that 50 times per second for real time playback.
+
+These two driving functions are split up like this to minimize and constantivize the time spent generating the next output sample, to make libmodam more real-time-friendly.
