@@ -2,7 +2,7 @@ This report presents a solution to assignment \#2 of TDT4258 at NTNU during the 
 The objective of this lab assignment is to write a program in C for the STK1000 development board which causes different sounds to play when different buttons on the board are pressed.
 An interrupt routine should be used to pass audio samples to the board's ABDAC (Audio Bitstream Digital to Analog Converter).
 The program is to run directly on the board, without an operating system.
-A minimum of three different sound effects should be made, as well as a ``start up melody'' (\cite{compendium}, page 48).
+A minimum of three different sound effects should be made, as well as a ``start up melody'' (\cite{lab-compendium}, page 48).
 
 The goal of this assigment is to introduce students to programming in C, I/O control for AVR32 in C, use of the microcontroller's ABDAC for sound generation and Interrupt handling in C for AVR32.
 
@@ -11,7 +11,7 @@ The goal of this assigment is to introduce students to programming in C, I/O con
 	It offers a multitude of different peripheral I/O devices, of which this assignment will be using an array of LEDs and some push buttons, as well as the Audio Bitstream Digital-to-Analog Converter.
 	The processor is an ARM32 processor, and will for this assignment be only running the assembled output of a mix of hand-coded and tool-generated C code, without the support of an operating system.
 
-\subsection{The ABDAC}
+\subsection{ABDAC (Audio Bitstream Digital-to-Analog Converter)}
 	\input{introduction/abdac.tex}
 
 \section{The Physics and Digitalization of Sound}
