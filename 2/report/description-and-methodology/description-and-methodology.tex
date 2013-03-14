@@ -85,12 +85,27 @@ Drop The Panic can be triggered by pressing SW1.
 \subsubsection{Bacongrytor by Maktone}
 Bacongrytor is a 15Kb endless loop chiptune-style composition, chosen to demonstrate the compactness of the MOD format, and therefore its aptfulness for use on microcontrollers.
 It uses 7 different PCM-coded sounds.
+Bacongrytor can be triggered by pressing SW0.
+
+
+\section{Experimental Procedure}
 
 
 \section{Configuration}
 
 We can reference our previous report here, so that we don't have to write so much.
 
+\section{Jumpers}
+
+As before.
+
+\section{GPIO connections}
+
+As before, + maybe mention audio.
+
+\section{Audio}
+
+Jack etc
 
 \section{Development of the program}
 
@@ -171,17 +186,17 @@ The python script solves this by reading arbitrary files and converting them to 
 For most platforms, this means that the files will be bundled with the executable in the .text section, making them read only.
 
 By the programmer using libmodam, two main functions must be called repeatedly to generate output.
-One of these functions is MOD_Player_play(...).
-This function returns a single sample of output, and must be called SAMPLE_RATE times per second for real time playback.
-The other function is MOD_Player_step(...), and advances logical state, such as which notes should be playing and what effect should be applied.
+One of these functions is \texttt{MOD\_Player\_play(...)}.
+This function returns a single sample of output, and must be called \texttt{sample rate} times per second for real time playback.
+The other function is \texttt{MOD\_Player\_step(...)}, and advances logical state, such as which notes should be playing and what effect should be applied.
 This function should be called no less that 50 times per second for real time playback.
 
 These two driving functions are split up like this to minimize and constantivize the time spent generating the next output sample, to make libmodam more real-time-friendly.
 
-Libmodam implements support for 'M.K' type MODs.
-A subset of the playback effects from M.K. have been implemented.
+Libmodam implements support for \texttt{M.K.} type MODs.
+A subset of the playback effects from \texttt{M.K.} have been implemented.
 Which effects to implement was chosen so that the most popular and often used effects were prioritized.
-A list of the effects in M.K., and their implementation status in libmodam can be found in table XXX.
+A list of the effects in \texttt{M.K.}, and their implementation status in libmodam can be found in table XXX.
 
 table XXX:
 Arpeggio: implemented
@@ -219,9 +234,3 @@ Set speed: implemented
 
 
 For more details about what these effects do, refer to XXX.
-
-
-
-
-
-
