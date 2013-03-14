@@ -64,7 +64,7 @@ TODO: add photo
 
 The music pieces in the solution program are played by the MOD player.
 
-\subsubsection{Music: Tuulenvire by Dizzy/CNCD}
+\subsubsection{Tuulenvire by Dizzy/CNCD}
 Tuulenvire is a 2:09 long 808KB composition in the ambient genre, featuring piano and accordion, amongst other instruments.
 This composition was chosen to demonstrate how careful composing can render realistic compositions with a relatively small memory footprint.
 It uses 25 different PCM-coded sounds.
@@ -85,18 +85,93 @@ Drop The Panic can be triggered by pressing SW1.
 \subsubsection{Bacongrytor by Maktone}
 Bacongrytor is a 15Kb endless loop chiptune-style composition, chosen to demonstrate the compactness of the MOD format, and therefore its aptfulness for use on microcontrollers.
 It uses 7 different PCM-coded sounds.
+Bacongrytor can be triggered by pressing SW0.
+
+
+\section{Solution components}
+
+The solution consists of three separate components. This section describes each of the three.
+
+\subsection{main program}
+\subsection{synth}
+
+\subsection{libmodam}
+
+Libmodam is the name of the MOD file parser and player written for this assignment.
+It is written as a portable, cross-platform C library.
+It has been tested on avr32 and on x86.
+
+Libmodam is statically linked in the main solution program.
+
+Libmodam includes a python utility script for platforms without filesystems.
+Normally, to use libmodam, a programmer must read a MOD file to to a byte buffer, and pass the buffer to libmodam, as it is done in the sample usage program test.c.
+This is sadly impossible in environments without a file system.
+The python script solves this by reading arbitrary files and converting them to C-code declaring large static const char* arrays representing those files.
+For most platforms, this means that the files will be bundled with the executable in the .text section, making them read only.
+
+By the programmer using libmodam, two main functions must be called repeatedly to generate output.
+One of these functions is \texttt{MOD\_Player\_play(...)}.
+This function returns a single sample of output, and must be called \texttt{sample rate} times per second for real time playback.
+The other function is \texttt{MOD\_Player\_step(...)}, and advances logical state, such as which notes should be playing and what effect should be applied.
+This function should be called no less that 50 times per second for real time playback.
+
+These two driving functions are split up like this to minimize and constantivize the time spent generating the next output sample, to make libmodam more real-time-friendly.
+
+Libmodam implements support for \texttt{M.K.} type MODs.
+A subset of the playback effects from \texttt{M.K.} have been implemented.
+Which effects to implement was chosen so that the most popular and often used effects were prioritized.
+A list of the effects in \texttt{M.K.}, and their implementation status in libmodam can be found in table XXX.
+
+
+\section{Experimental Procedure}
 
 
 \section{Configuration}
 
 We can reference our previous report here, so that we don't have to write so much.
 
+\subsection{Jumpers}
+
+As before.
+
+\subsection{GPIO connections}
+
+As before, + maybe mention audio.
+
+\subsection{Audio}
+
+Jack etc
 
 \section{Development of the program}
 
-Setting up the LEDs
-Setting up the buttons
-Setting up the audio
+
+
+\subsection{Sound effect synth}
+
+\subsection{Libmodam}
+
+Libmodam was initially developed in a linux environment on an x86 PC, and later ported to avr32 and the STK1000.
+This was done for comfort reasons: there was no need to be in the lab to develop, testing and iterating went a lot faster when code and data didn't need to be uploaded after each modification, and there was no need to focus on performance until features were confirmed to be working properly.
+As an added bonus, this also ensured a certain degree of portability, which is a nice property for a library to have.
+The python file conversion tool was developed alongside libmodam.
+
+When the code was run on the STK1000 for the first time, the performance difference between the Intel i7 multi-GHz linux laptop and the STK1000 became immediately apparent.
+The sound produced by libmodam on the STK1000 at this point did not even remotely sound like music.
+In fact, it was more akin to a bowl of half-eaten oatmeal porridge left overnight, were porridge as audibly dull as it is bland in taste.
+One of the main reasons for the abysmal performance on the STK1000 was the lack of a floating point unit in the AP7000.
+Libmodam used floating point numbers heavily.
+The library was rewritten to use integer arithmetic, which helped immensely.
+Further optimizations were iteratively applied after this, until the code reached a point of acceptable performance.
+
+\subsection{The main program}
+
+How we assembled everything in the main program.
+
+\subsubsection{Setting up the LEDs}
+\subsubsection{Setting up the buttons}
+\subsubsection{Setting up the audio}
+rant about sample rates, div, diven
+
 
 list of what we did:
 
@@ -151,37 +226,6 @@ we can reference.
 * avr32 toolchain
 
 
-\section{Solution components}
-
-\subsection{main program}
-\subsection{synth}
-
-\subsection{libmodam}
-
-Libmodam is the name of the MOD file parser and player written for this assignment.
-It is a portable, cross-platform c library.
-It has been tested on avr32 and on x86.
-
-Libmodam is statically linked in the main solution program.
-
-Libmodam includes a python utility script for platforms without filesystems.
-Normally, to use libmodam, a programmer must read a MOD file to to a byte buffer, and pass the buffer to libmodam, as it is done in the sample usage program test.c.
-This is sadly impossible in environments without a file concept.
-The python script solves this by reading arbitrary files and converting them to C-code declaring large static const char* arrays representing those files.
-For most platforms, this means that the files will be bundled with the executable in the .text section, making them read only.
-
-By the programmer using libmodam, two main functions must be called repeatedly to generate output.
-One of these functions is MOD_Player_play(...).
-This function returns a single sample of output, and must be called SAMPLE_RATE times per second for real time playback.
-The other function is MOD_Player_step(...), and advances logical state, such as which notes should be playing and what effect should be applied.
-This function should be called no less that 50 times per second for real time playback.
-
-These two driving functions are split up like this to minimize and constantivize the time spent generating the next output sample, to make libmodam more real-time-friendly.
-
-Libmodam implements support for 'M.K' type MODs.
-A subset of the playback effects from M.K. have been implemented.
-Which effects to implement was chosen so that the most popular and often used effects were prioritized.
-A list of the effects in M.K., and their implementation status in libmodam can be found in table XXX.
 
 table XXX:
 Arpeggio: implemented
@@ -219,9 +263,3 @@ Set speed: implemented
 
 
 For more details about what these effects do, refer to XXX.
-
-
-
-
-
-
