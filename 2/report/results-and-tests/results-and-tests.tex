@@ -4,15 +4,18 @@ Remember to bring an oscilloscope to have a look at different waveforms! Also, w
 
 \section{Energy Efficiency}
 
-(we threw this out the window :3 )
-because of reasons. don't forget the reasons.
-
-Some talk about how we chose to not turn off the abdac, even though it would be more efficient.
-
+Energy efficiency in computing is ever-important.
+The presented solution program undertakes several measures to stay as energy efficient as possible.
+When the program is in idle mode, i.e. is not playing a sound, the CPU and HSB are turned off.
+They are turned on again by button interrupts as soon as they are needed again.
+The ABDAC is not switched off, however, as it makes a loud and ugly popping noise when it is switched on or off.
+This popping noise is detrimental to the user experience, and ruins the functionality of the program.
 
 \section{Testing}
 We loaded up the code and pushed a button and omg it worked because it played sounds.
 Also that one test where we just loaded the code to play a sound and it also worked.
+The test where we recorded sound effects to see if the ADSR worked as expected.
+The test where we triggered led changes from the abdac_isr to measure oscillator speed (learned that div wasn't working how we thought it did, led to a hack, then finally figuring out a solution).
 
 
 \section{Discussion}
@@ -20,7 +23,5 @@ Also that one test where we just loaded the code to play a sound and it also wor
 \subsection{Ideas for improvement}
 
 * external dac
-* sleeping to save power? ( hah, like we have time for that )
-* actually setting the proper sample rate instead of hacking it
 * DMA for the ABDAC
 
