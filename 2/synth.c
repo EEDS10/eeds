@@ -51,7 +51,7 @@ int16_t next_sample(playback_t *playback) {
      * Yes, we're supposed to return a int16_t. However, we want some more bits
      * to play with while generating the sample.
      */
-    int sample;
+    int32_t sample;
 
     /* Milliseconds we are into playing the sound. */
     int ms;

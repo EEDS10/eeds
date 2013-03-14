@@ -52,11 +52,9 @@ int main(int argc, char *argv[]) {
 
     /* prepare MOD files for playback */
     MODS[0] = MOD_load(MODFILES_BACONGRYTOR_MOD);
-    /*
     MODS[1] = MOD_load(MODFILES_HOFFMAN___DROP_THE_PANIC__TWEAKED__MOD);
     MODS[2] = MOD_load(MODFILES_BOESENDORFER_P_S_S_MOD);
     MODS[3] = MOD_load(MODFILES_TUULENVIRE_MOD);
-    */
     player = MOD_Player_create(SAMPLE_RATE);
 
     /* Activate leds, buttons, audio. This is done as late as
@@ -71,8 +69,8 @@ int main(int argc, char *argv[]) {
         /* if we need to logical advance the mod player, do so */
         while(mod_ticks > 0){
             if(player->mod != NULL){
-                mod_ticks-=16;
-                MOD_Player_step(player, 1000000/SAMPLE_RATE*16);
+                mod_ticks-=32;
+                MOD_Player_step(player, 32*1000000/SAMPLE_RATE);
             }
         }
 
@@ -161,14 +159,22 @@ void abdac_isr(void) {
 
     /* Play mod files */
     if(player->mod != NULL){
-        out += MOD_Player_play(player);
+        out = MOD_Player_play(player);
         mod_ticks++;
     }
 
     /* Play sound effects */
     if(current_synth_sound != NULL){
-        out += next_sample(current_synth_sound);
+        out = next_sample(current_synth_sound);
     }
+
+    /* Force underrun. This is a HACK because setting
+     * the ABDAC clock speed using div does not work. */
+    volatile int slowalizer = 0;
+    while(!dac->ISR.underrun){
+        slowalizer += rand();
+    }
+    dac->ICR.underrun = 1;
 
     /* give the output to the hardware */
     dac->SDR.channel0 = out;
