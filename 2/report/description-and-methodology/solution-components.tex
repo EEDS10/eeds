@@ -7,6 +7,14 @@ It interfaces with the hardware, and administers the user interface and main pro
 
 \subsection{synth}
 
+The synthesizer consists of two parts, a wave generator and an ADSR (attack-decay-sustain-release) envelope.
+The wave generator can generate sawtooth and square waves with arbitrary frequencies, as well as random noise.
+The ADSR envelope modifies the output volume of the generated signal depending on which part of the sound we're in attack, decay, sustain or release.
+
+At the start of the sound, during the attack, the volume is gradually increased from complete silence to full volume.
+The decay part decreases the volume gradually to a given sustain level, which will be kept constant for the sustain part of the sound.
+Finally, the sounds fade out from the sustain level to complete silence in the release part.
+
 \subsection{libmodam}
 
 Libmodam is the name of the MOD file parser and player written for this assignment.
