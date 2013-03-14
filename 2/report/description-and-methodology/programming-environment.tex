@@ -1,30 +1,23 @@
-
 \subsection{JTAGICE}
-We can reference our previous report here, so that we don't have to write so much.
+    See \cite{tdt4258-1}, page 2-3. 
 
 \subsection{GNU Debugger}
-since last time:
-* discovered tui mode: looks nice, breaks the makefile
-* avr32gdbproxy -f0.8Mb -a 0.0.0.0:1024 and target extended-remote:1024
+    Picking up where \cite{tdt4258-1} left off, our heroes have since then discovered \texttt{tui} mode (text user interface mode), which while looking awfully nice breaks the Makefile. Likely due to \texttt{-tui} causing gdb to capture input differently, and the Makefile relies on a hack using cat and pipes.
+
+    \texttt{avr32gdbproxy -f0,8Mb -a 0.0.0.0:1024} and \texttt{target extended-remote:1024}. While not 100 \% sure of what this does, it allows the program being debugged to be run again without starting gdb anew.
+
 
 \subsection{Make}
-we can reference.
+    See \cite{tdt4258-1}, page 3.
 
 \subsection{Other tools}
-
-\begin{itemize}
-\item OpenMPT, a MOD tracker, was used to examine MOD files during the development of libmodam.
-\item \texttt{vim} was employed as the authors' text editor of choice.
-\item \texttt{git} was used for version control.
-\item The project was hosted in a private GitHub repository.
-\item The report was written with \LaTeX.
-\item AVR32-specific flavors of GNU's \texttt{as} and \texttt{ld} were used to assemble and link executables.
-\item \texttt{avr32program} was used to program the STK1000 with the JTAGICE.
-\item The sound effects were recorded using Audacity on an ASUS UL30JT laptop.
-\end{itemize}
-
-table XXX:
-
-
-
-For more details about what these effects do, refer to XXX.
+    \begin{itemize}
+        \item OpenMPT, a MOD tracker, was used to examine MOD files during the development of libmodam.
+        \item \texttt{vim} was employed as the authors' text editor of choice.
+        \item \texttt{git} was used for version control.
+        \item The project was hosted in a private GitHub repository.
+        \item The report was written with \LaTeX.
+        \item AVR32-specific flavors of GNU's \texttt{as} and \texttt{ld} were used to assemble and link executables.
+        \item \texttt{avr32program} was used to program the STK1000 with the JTAGICE.
+        \item The sound effects were recorded using Audacity on an ASUS UL30JT laptop.
+    \end{itemize}
