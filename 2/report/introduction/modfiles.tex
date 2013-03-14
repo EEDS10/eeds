@@ -10,7 +10,7 @@ The file format is tightly optimized for playback on the Amiga's audio hardware,
 
 The Amiga's sound chip, called Paula, is capable of powering four simultaneous DMA-driven 8-bit PCM sample sound channels.
 Each of these channels can be independently set to different sample frequencies many times per second.
-The MOD format exploits this -- it supports 4 simultaneous channels of sample playback, using the frequency modulation to change the pitch of the samples played in the different channels.
+The MOD format exploits this: it supports 4 simultaneous channels of sample playback, using the frequency modulation to change the pitch of the samples played in the different channels.
 
 Internally, the music in a MOD file is stored as a set of PCM-coded predefined sounds, as well as a large table of note patterns containing information about which sounds should be played at which frequencies and at which time.
 The MOD format also includes a large set of musical effects such as tremolo, vibrato, arpeggio, portamento and so on, a subset of which are implemented in the presented solution program.
@@ -24,7 +24,7 @@ This is one of the most popular MOD formats, and has become a sort informal stan
 \texttt{M.K.} MODs can have a maximum of 31 bundled PCM-coded sounds, 128 patterns, each with 64 note divisions for each of the four channels, and a a 128 item long list of which patterns should be played in what order.
 
 Figure \ref{img-protracker} shows an image of a MOD file being edited in a tracker program.
-Each column represents one channel (called track in ProTracker), and each row represents one of the 64 divisions of a pattern.
+Each column represents one channel (called \emph{track} in ProTracker), and each row represents one of the 64 divisions of a pattern.
 The currently played division is traditionally kept vertically centered in the middle of the screen.
 
 
