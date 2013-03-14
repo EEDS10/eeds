@@ -1,16 +1,20 @@
-This report presents a solution to assignment \#2 of TDT4258 at NTNU, during the spring of 2013.
-The objective of this lab assignment is to write a program in C for the STK1000 development board which causes different sounds to play when different buttons on the board are pressed, using an interrupt routine to pass the audio samples to the board's ABDAC (Audio Bitstream Digital to Analog Converter).
+This report presents a solution to assignment \#2 of TDT4258 at NTNU during the spring of 2013.
+The objective of this lab assignment is to write a program in C for the STK1000 development board which causes different sounds to play when different buttons on the board are pressed.
+An interrupt routine should be used to pass audio samples to the board's ABDAC (Audio Bitstream Digital to Analog Converter).
+The program is to run directly on the board, without an operating system.
 A minimum of three different sound effects should be made, as well as a ``start up melody''.
 
 This report details the development of the sound-generating program as a solution to the assignment.
+
 \section{The STK1000}
 	The STK1000 is a development board from Atmel which offers a complete development environment for Atmel's AT32AP7000 processor.
-	It offers a multitude of different peripheral I/O devices, of which this assignment will be using an array of LEDs and some push buttons.
-	The processor is an ARM32 processor, and will for this assignment be only running the assembled output of hand-coded C code, without the support of an operating system.
+	It offers a multitude of different peripheral I/O devices, of which this assignment will be using an array of LEDs and some push buttons, as well as the Audio Bitstream Digital-to-Analog Converter.
+	The processor is an ARM32 processor, and will for this assignment be only running the assembled output of a mix of hand-coded and tool-generated C code, without the support of an operating system.
+    Additional information about the STK1000 can be found in the report for the previous assigment of this course.\cite{tdt4258-1}
 
-\section{A note on sound}
-	\input{sound.tex}
+\section{The Physics and digitalization of sound}
+	\input{introduction/sound.tex}
 
 
 \section{About the MOD file format}
-	\input{modfiles.tex}
+	\input{introduction/modfiles.tex}
