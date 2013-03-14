@@ -9,7 +9,7 @@ It interfaces with the hardware, and administers the user interface and main pro
 
 The synthesizer consists of two parts, a wave generator and an ADSR (attack-decay-sustain-release) envelope.
 The wave generator can generate sawtooth and square waves with arbitrary frequencies, as well as random noise.
-The ADSR envelope modifies the output volume of the generated signal depending on which part of the sound we're in attack, decay, sustain or release.
+The ADSR envelope modifies the output volume of the generated signal depending on which part of the sound we're in - attack, decay, sustain or release.
 
 At the start of the sound, during the attack, the volume is gradually increased from complete silence to full volume.
 The decay part decreases the volume gradually to a given sustain level, which will be kept constant for the sustain part of the sound.
@@ -24,7 +24,7 @@ It has been tested on avr32 and on x86.
 Libmodam is statically linked in the main solution program.
 
 Libmodam includes a python utility script for platforms without filesystems.
-Normally, to use libmodam, a programmer must read a MOD file to to a byte buffer, and pass the buffer to libmodam, as it is done in the sample usage program test.c.
+Normally, to use libmodam, a programmer must read a MOD file to a byte buffer, and pass the buffer to libmodam, as it is done in the sample usage program test.c.
 This is sadly impossible in environments without a file system.
 The python script solves this by reading arbitrary files and converting them to C-code declaring large static const char* arrays representing those files.
 For most platforms, this means that the files will be bundled with the executable in the .text section, making them read only.
@@ -35,7 +35,7 @@ This function returns a single sample of output, and must be called \texttt{samp
 The other function is \texttt{MOD\_Player\_step(...)}, and advances logical state, such as which notes should be playing and what effect should be applied.
 This function should be called no less that 50 times per second for real time playback.
 
-These two driving functions are split up like this to minimize and constantivize (holde konstant; ikke variabel) the time spent generating the next output sample, to make libmodam more real-time-friendly.
+These two driving functions are split up like this to minimize and keep constant the time spent generating the next output sample, to make libmodam more real-time-friendly.
 
 Libmodam implements support for \texttt{M.K.} type MODs.
 A subset of the playback effects from \texttt{M.K.} have been implemented.
