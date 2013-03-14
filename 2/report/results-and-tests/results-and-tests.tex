@@ -13,6 +13,8 @@ Some talk about how we chose to not turn off the abdac, even though it would be 
 \section{Testing}
 We loaded up the code and pushed a button and omg it worked because it played sounds.
 Also that one test where we just loaded the code to play a sound and it also worked.
+The test where we recorded sound effects to see if the ADSR worked as expected.
+The test where we triggered led changes from the abdac_isr to measure oscillator speed (learned that div wasn't working how we thought it did, led to a hack, then finally figuring out a solution).
 
 
 \section{Discussion}
@@ -21,6 +23,5 @@ Also that one test where we just loaded the code to play a sound and it also wor
 
 * external dac
 * sleeping to save power? ( hah, like we have time for that )
-* actually setting the proper sample rate instead of hacking it
 * DMA for the ABDAC
 
