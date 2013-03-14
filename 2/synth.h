@@ -39,7 +39,6 @@ typedef struct playback_stuct {
  * The function returns a pointer to the allocated sound struct.
  */
 sound_t *get_sound(sound_t* sound, waveform_t waveform, int frequency, int attack_duration, int decay_duration, int sustain_duration, int release_duration, int sustain_level);
-void free_sound(sound_t *sound);
 
 /*
  * Malloc space for a new playback_struct and populate it with appropriate
@@ -47,7 +46,6 @@ void free_sound(sound_t *sound);
  */
 playback_t *prepare_playback(playback_t* playback, sound_t *sound, int16_t sample_frequency, int16_t master_volume);
 void reset_playback(playback_t *playback);
-void free_playback(playback_t *playback);
 
 /* Returns whether or not a playback has finished playing. */
 int playback_finished(playback_t *playback);
