@@ -2,9 +2,9 @@ The solution program plays sound effects and music, and is controlled by the eig
 The LEDs are used to indicate which sound is playing.
 
 When the program is started, the board is in idle mode, ready to react to button presses.
-Pressing any of the buttons SW0-SW3 plays a piece of music, which loops until another sound is selected.
-Pressing any of the buttons SW4-SW6 plays a sound effect, which is not looped.
-Pressing SW7 stops all playback.
+Pressing any of the buttons \texttt{SW0}-\texttt{SW3} plays a piece of music, which loops until another sound is selected.
+Pressing any of the buttons \texttt{SW4}-\texttt{SW6} plays a sound effect, which is not looped.
+Pressing \texttt{SW7} stops all playback.
 
 \subsection{Sound effects}
 
@@ -33,7 +33,7 @@ TODO: talk about NISE, SAWTOOTH and SQUARE, with photos.
 
 \subsubsection{Explosion}
 
-'Explosion' is a NOISE-based sound effect with the following ADSR envelope:
+`Explosion' is a NOISE-based sound effect with the following ADSR envelope:
 \begin{itemize}
 	\item{Attack: 0 ms}
 	\item{Decay: 1000 ms}
@@ -42,8 +42,8 @@ TODO: talk about NISE, SAWTOOTH and SQUARE, with photos.
 \end{itemize}
 The effect is held for 0 ms.
 The total length of the effect is $0 ms + 1000 ms + 0 ms + 0 ms = 1000 ms$.
-'Explosion' can be triggered by pressing \texttt{SW6}.
-TODO ref image
+`Explosion' can be triggered by pressing \texttt{SW6}.
+The sound effect is depicted in \ref{img-sw6}.
 
 \begin{figure}[H]
 	\includegraphics[width = \textwidth]{images/SW6.png}
@@ -53,7 +53,7 @@ TODO ref image
 
 
 \subsubsection{Air horn}
-'Air horn' is a SAWTOOTH-based sound effect with the following ADSR envelope:
+`Air horn' is a SAWTOOTH-based sound effect with the following ADSR envelope:
 \begin{itemize}
 	\item{Attack: 100 ms}
 	\item{Decay: 100 ms}
@@ -62,8 +62,8 @@ TODO ref image
 \end{itemize}
 The effect is held for 0 ms.
 The total length of the effect is $100 ms + 100 ms + 500 ms + 0 ms = 700 ms$.
-'Air horn' can be triggered by pressing \texttt{SW5}.
-TODO ref image
+`Air horn' can be triggered by pressing \texttt{SW5}.
+See \ref{img-sw5} for a visualization of `Air horn'.
 
 \begin{figure}[H]
 	\includegraphics[width = \textwidth]{images/SW5.png}
@@ -72,7 +72,7 @@ TODO ref image
 \end{figure}
 
 \subsubsection{Teleport}
-'Teleport' is a SQUARE-based sound effect with the following ADSR envelope:
+`Teleport' is a SQUARE-based sound effect with the following ADSR envelope:
 \begin{itemize}
 	\item{Attack: 500 ms}
 	\item{Decay: 1250 ms}
@@ -81,8 +81,8 @@ TODO ref image
 \end{itemize}
 The effect is held for 0 ms.
 The total length of the effect is $500 ms + 1250 ms + 250 ms + 0 ms = 2000 ms$.
-'Teleport' can be triggered by pressing \texttt{SW4}.
-TODO ref image
+`Teleport' can be triggered by pressing \texttt{SW4}.
+A picture of the recorded sound can be seen in \ref{img-sw4}.
 
 \begin{figure}[H]
 	\includegraphics[width = \textwidth]{images/SW4.png}
@@ -96,24 +96,24 @@ TODO ref image
 The music pieces in the solution program are played by the MOD player.
 
 \subsubsection{Tuulenvire by Dizzy/CNCD}
-Tuulenvire is a 2:09 long 808KB composition in the ambient genre, featuring piano and accordion, amongst other instruments.
+\emph{Tuulenvire} is a 2:09 long 808KB composition in the ambient genre, featuring piano and accordion, amongst other instruments.
 This composition was chosen to demonstrate how careful composing can render realistic compositions with a relatively small memory footprint.
 It uses 25 different PCM-coded sounds.
-Tuulenvire can be triggered by pressing SW3.
+Tuulenvire can be triggered by pressing \texttt{SW3}.
 
 \subsubsection{Boesendorfer P. S. S. by Romeo Knight}
-Boesendorfer P. S. S. is a 3:22 long 211KB solo piano composition, chosen to illustrate the possibilities enabled by a hybrid generative/recorded approach.
+\emph{Boesendorfer P. S. S.} is a 3:22 long 211KB solo piano composition, chosen to illustrate the possibilities enabled by a hybrid generative/recorded approach.
 It uses 9 different PCM-coded sounds.
-Boesendorfer P. S. S. can be triggered by pressing SW2.
+Boesendorfer P. S. S. can be triggered by pressing \texttt{SW2}.
 
 \subsubsection{Drop The Panic by H0ffmann}
-Drop The Panic is a 4:05 long 702KB ``glitch-hop'' composition.
+\emph{Drop The Panic} is a 4:05 long 702KB ``glitch-hop'' composition.
 It was chosen to show how MOD files can support embedded vocals.
 It uses 31 different PCM-coded sounds.
 The composition was tweaked by adding some extra inaudible notes in the beginning of the song to decrease critical cache misses by the MOD player during playback on the STK1000.
-Drop The Panic can be triggered by pressing SW1.
+Drop The Panic can be triggered by pressing \texttt{SW1}.
 
 \subsubsection{Bacongrytor by Maktone}
-Bacongrytor is a 15Kb endless loop chiptune-style composition, chosen to demonstrate the compactness of the MOD format, and therefore its aptfulness for use on microcontrollers.
+\emph{Bacongrytor} is a 15Kb endless loop chiptune-style composition, chosen to demonstrate the compactness of the MOD format, and therefore its aptfulness for use on microcontrollers.
 It uses 7 different PCM-coded sounds.
-Bacongrytor can be triggered by pressing SW0.
+Bacongrytor can be triggered by pressing \texttt{SW0}.
