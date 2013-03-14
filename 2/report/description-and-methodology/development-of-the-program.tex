@@ -30,6 +30,15 @@ Further optimizations were iteratively applied after this, until the code reache
 How everything was assembled in the main program.
 
 \subsubsection{Setting up the LEDs}
+	On initialization, the address of the \texttt{PIO} which the LEDs are connected to is stored as a pointer.
+	A bitfield, represented as an integer, is used to indicate which LEDs to enable.
+	This value is written to the \texttt{PER} and \texttt{OER} registers of the \texttt{PIO} to enable the indicated LEDs.
+	In C, the syntax for this is \texttt{pio->reg = bits}, where \texttt{pio} is a pointer to an \texttt{avr32_pio_t} struct containing the address of the appropriate \texttt{PIO}.
+
+	For a more detailed explanation of how the LEDs on the STK1000 are set up, see page 4 of \cite{tdt4258-1}.
+
+	LEDs can then be enabled or disabled by writing appropriate values to the PIO's \texttt{SODR} and \texttt{CODR} registers, respectively.
+	
 \subsubsection{Setting up the buttons}
 
 The button setup for this assignment is almost exactly the same as the setup from assignment 1.\cite{tdt4258-1}
