@@ -1,16 +1,16 @@
 The solution consists of three separate components. This section describes each of the three.
 
-\subsection{main program}
+\subsection{Main Program}
 
 The main program is the C program which runs on the STK1000.
 It interfaces with the hardware, and administers the user interface and main program logic.
 
-\subsection{synth}
+\subsection{Sound Effect Synthesizer}
 
 The synthesizer is responsible for generating the sound effects real-time as they are played.
 It generates sounds by producing waveforms as described in the sound effects section, and modifies the amplitude of the signals according to a ADSR envelope.
 
-\subsection{libmodam}
+\subsection{Libmodam - MOD Parser and Player Library}
 
 Libmodam is the name of the MOD file parser and player written for this assignment.
 It is written as a portable, cross-platform C library.
@@ -35,7 +35,7 @@ These two driving functions are split up like this to minimize and keep constant
 Libmodam implements support for \texttt{M.K.} type MODs.
 A subset of the playback effects from \texttt{M.K.} have been implemented.
 Which effects to implement was chosen so that the most popular and often used effects were prioritized.
-A list of the effects in \texttt{M.K.}, and their implementation status in libmodam can be found in \ref{libmodam-feats}.
+A list of the effects in \texttt{M.K.}, and their implementation status in libmodam can be found in table \ref{tbl-libmodam-feats}.
 
 \begin{table}[H]
 	\centering
@@ -105,7 +105,8 @@ A list of the effects in \texttt{M.K.}, and their implementation status in libmo
         \hline
         Set speed & implemented
     \end{tabular}
-    \label{libmodam-feats}
+    \caption{A list of MOD effects and their implementation status in libmodam.}
+    \label{tbl-libmodam-feats}
 \end{table}
 *was implemented at one point, but was later removed for performance reasons
 
