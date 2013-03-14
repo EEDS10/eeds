@@ -144,18 +144,64 @@ It has been tested on avr32 and on x86.
 
 Libmodam is statically linked in the main solution program.
 
-Libmodam also includes a python utility script for platforms without filesystems.
+Libmodam includes a python utility script for platforms without filesystems.
 Normally, to use libmodam, a programmer must read a MOD file to to a byte buffer, and pass the buffer to libmodam, as it is done in the sample usage program test.c.
 This is sadly impossible in environments without a file concept.
 The python script solves this by reading arbitrary files and converting them to C-code declaring large static const char* arrays representing those files.
-For most platforms, this means that the files will be bundled with the executable in the .text section, making it read only.
-For this reason, libmodam supports being passed read only buffers.
+For most platforms, this means that the files will be bundled with the executable in the .text section, making them read only.
 
-
-To the programmer using libmodam, two main functions must be called repeatedly to generate output.
+By the programmer using libmodam, two main functions must be called repeatedly to generate output.
 One of these functions is MOD_Player_play(...).
 This function returns a single sample of output, and must be called SAMPLE_RATE times per second for real time playback.
 The other function is MOD_Player_step(...), and advances logical state, such as which notes should be playing and what effect should be applied.
 This function should be called no less that 50 times per second for real time playback.
 
 These two driving functions are split up like this to minimize and constantivize the time spent generating the next output sample, to make libmodam more real-time-friendly.
+
+Libmodam implements support for 'M.K' type MODs.
+A subset of the playback effects from M.K. have been implemented.
+Which effects to implement was chosen so that the most popular and often used effects were prioritized.
+A list of the effects in M.K., and their implementation status in libmodam can be found in table XXX.
+
+table XXX:
+Arpeggio: implemented
+Slide up: implemented
+Slide down: implemented
+Slide to note: implemented
+Vibrato: not implemented*
+Continue slide to note and volume slide: implemented
+Tremolo: not implemented
+Unused: implemented
+Set sample offset: not implemented
+Volume slide: implemented
+Position jump: implemented
+Set volume: implemented
+Pattern break: implemented
+Set filter on/off: not implemented
+Fineslide up: not implemented
+Fineslide down: not implemented
+Set glissando on/off: not implemented
+Set vibrato waveform: not implemented
+Set finetune value: not implemented
+Loop pattern: implemented
+Set tremolo waveform: not implemented
+Extended unused: implemented
+Retrigger sample: not implemented
+Fine volume slide up: implemented
+Fine volume slide down: implemented
+Cut sample: implemented
+Delay sample: not implemented
+Delay pattern: not implemented
+Invert loop: not implemented
+Set speed: implemented
+
+*was implemented at one point, but was later removed for performance reasons
+
+
+For more details about what these effects do, refer to XXX.
+
+
+
+
+
+
