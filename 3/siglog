@@ -2,4 +2,45 @@ started to follow instructions from oeving3_guidelines.txt from its.
 
 cfdisk make the sdcard unavailable for some time. waiting fixes the issue.
 
+ended up using gparted on own ubuntu 12.10 laptop to format card
 
+removed hardware setting in minicom serial settings
+
+flashed u-boot.bin from its
+
+trying to boot now gives "Bad Magic Number" :D
+
+dd'd linux and flashed u-boot.bin from tdt4258-fagside
+
+minicommed and did:
+    U-boot> mmc init; ext2load mmc 0:1 0x90400000 /boot/uImage;boot
+
+that gave us a Kernel Panic (yay, one step closer!)
+
+VFS: Cannot open root device "mmcblk0p1" or unknown-block(2,0)
+Please append a correct "root=" boot option; here are the available partitions:
+1f00             128 mtdblock0 (driver?)
+1f01            8000 mtdblock1 (driver?)
+1f02              64 mtdblock2 (driver?)
+Kernel panic - not syncing: VFS: Unable to mount root fs on unknown-block(2,0)
+
+changed bootargs to rootwait instead of rootwait=1 with
+    U-boot> setenv bootargs console=ttyS0 root=/dev/mmcblk0p1 fbmem=600k rootwait
+. that fixes the kernel panic. now it finds the sd card, but hangs at 
+atmel_mci atmel_mci.0: Atmel MCI controller at 0xfff02400 irq 28, 1 slots
+mmc0: mmc_rescan: trying to init card at 400000 Hz
+Waiting for root device ...
+mmc0: mmc_rescanying to init card at 300000 Hz
+mmc0: mmc_rescan: trying to init card at 200000 Hz
+mmc0: host does not support reading read-only switch. assuming write-enable.
+mmc0: new SD card at address 0001
+mmcblk0: mmc0:0001  486 MiB 
+ mmcblk0: p1 p2
+
+
+tried doing the process aggain a couple of times. randomly, this fixed the hang, and things work now! finally, this is what must be run in minicom to make it work:
+    U-boot> mmc init; ext2load mmc 0:1 0x90400000 /boot/uImage; setenv bootargs console=ttyS0 root=/dev/mmcblk0p1 fbmem=600k rootwait; boot
+
+we can also do:
+    U-boot> saveenv
+. This saves the env to the flash on the stk1000.

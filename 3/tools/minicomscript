@@ -1,0 +1,5 @@
+mmc init
+ext2load mmc 0:1 0x90400000 /boot/uImage
+setenv bootargs console=ttyS0 root=/dev/mmcblk0p1 fbmem=600k rootwait
+saveenv
+boot
