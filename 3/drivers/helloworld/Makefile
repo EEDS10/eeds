@@ -5,7 +5,12 @@
 ###############################################################################
 
 # navn på kjernemodul (navnet på C-fila men uten ".c")
-MODULE = driver
+
+proxy:
+	make ARCH=avr32 CROSS_COMPILE=avr32-linux- default
+
+MODULE = helloworld_driver
+DESTINATION = 129.241.102.204
 
 ifneq ($(KERNELRELEASE),)
 obj-m := ${MODULE}.o
@@ -13,12 +18,15 @@ obj-m := ${MODULE}.o
 else
 
 # sti til linux-kildekoden
-KERNELDIR := ../linux/
+KERNELDIR := ../../linux/
 
 default:
 	$(MAKE) -C $(KERNELDIR) M=$$PWD modules
 
 endif
+
+upload: proxy
+	scp ${MODULE}.ko root@${DESTINATION}:
 
 .PHONY : clean
 clean:

@@ -23,66 +23,68 @@ static void __exit driver_exit(void);
 static int driver_open (struct inode *inode, struct file *filp);
 static int driver_release (struct inode *inode, struct file *filp);
 static ssize_t driver_read (struct file *filp, char __user *buff,
-                     size_t count, loff_t *offp);
+        size_t count, loff_t *offp);
 static ssize_t driver_write (struct file *filp, const char __user *buff,
-                      size_t count, loff_t *offp);
+        size_t count, loff_t *offp);
 
 /* fops-struct */
 
 static struct file_operations driver_fops = {
-  .owner = THIS_MODULE,
-  .read = driver_read,
-  .write = driver_write,
-  .open = driver_open,
-  .release = driver_release
+    .owner = THIS_MODULE,
+    .read = driver_read,
+    .write = driver_write,
+    .open = driver_open,
+    .release = driver_release
 };
 
 /*****************************************************************************/
 /* init-funksjon (kalles når modul lastes) */
 
 static int __init driver_init (void) {
-  /* allokere device-nummer */
+    printk( KERN_INFO "Hello world!\n");
+    /* allokere device-nummer */
 
-  /* be om tilgang til I/O-porter */
-  
-  /* initialisere PIO-maskinvaren (som i øving 2) */
- 
-  /* registrere device i systemet (må gjøres når alt annet er initialisert) */
+    /* be om tilgang til I/O-porter */
 
-  return 0;
+    /* initialisere PIO-maskinvaren (som i øving 2) */
+
+    /* registrere device i systemet (må gjøres når alt annet er initialisert) */
+
+    return 0;
 }
 
 /*****************************************************************************/
 /* exit-funksjon (kalles når modul fjernes fra systemet) */
 
 static void __exit driver_exit (void) {
+    printk( KERN_INFO "Goodbye world!\n");
 }
 
 /*****************************************************************************/
 /* fops-funksjoner */
 
 static int driver_open (struct inode *inode, struct file *filp) {
-  return 0;
+    return 0;
 }
 
 /*---------------------------------------------------------------------------*/
 
 static int driver_release (struct inode *inode, struct file *filp) {
-  return 0;
+    return 0;
 }
 
 /*---------------------------------------------------------------------------*/
 
 static ssize_t driver_read (struct file *filp, char __user *buff,
-              size_t count, loff_t *offp) {
-  return 0;
+        size_t count, loff_t *offp) {
+    return 0;
 }
 
 /*---------------------------------------------------------------------------*/
 
 static ssize_t driver_write (struct file *filp, const char __user *buff,
-               size_t count, loff_t *offp) {
-  return 0;
+        size_t count, loff_t *offp) {
+    return 0;
 }
 
 /*****************************************************************************/
