@@ -39,8 +39,12 @@ mmcblk0: mmc0:0001  486 MiB
 
 
 tried doing the process aggain a couple of times. randomly, this fixed the hang, and things work now! finally, this is what must be run in minicom to make it work:
-    U-boot> mmc init; ext2load mmc 0:1 0x90400000 /boot/uImage; setenv bootargs console=ttyS0 root=/dev/mmcblk0p1 fbmem=600k rootwait; boot
+    U-boot> setenv bootcmd 'mmc init; ext2load mmc 0:1 0x90400000 /boot/uImage; fsload; bootm $(fileaddr)'; setenv bootargs 'console=ttyS0 root=/dev/mmcblk0p1 fbmem=600k rootwait'; saveenv; boot
 
 we can also do:
     U-boot> saveenv
 . This saves the env to the flash on the stk1000.
+
+
+After mucking about with the drivers for a while, it became apparent that GPIO 16-31 are no longer usable due to the SW6 setting. writing 0xFF to pioc per kills the network connection. productive!
+LEDS moved to GPIO8-15.
