@@ -1,20 +1,26 @@
-# obj-m is a list of what kernel modules to build.  The .o and other
-# objects will be automatically built from the corresponding .c file -
-# no need to list the source files explicitly.
+###############################################################################
+#
+# Linux kjernemodul Makefile
+#
+###############################################################################
 
-obj-m := hello_printk.o 
+# navn på kjernemodul (navnet på C-fila men uten ".c")
+MODULE = driver
 
-# KDIR is the location of the kernel source.  The current standard is
-# to link to the associated source tree from the directory containing
-# the compiled modules.
-KDIR  := /lib/modules/$(shell uname -r)/build
+ifneq ($(KERNELRELEASE),)
+obj-m := ${MODULE}.o
 
-# PWD is the current working directory and the location of our module
-# source files.
-PWD   := $(shell pwd)
+else
 
-# default is the default make target.  The rule here says to run make
-# with a working directory of the directory containing the kernel
-# source and compile only the modules in the PWD (local) directory.
+# sti til linux-kildekoden
+KERNELDIR := ../linux/
+
 default:
-	$(MAKE) -C $(KDIR) M=$(PWD) modules
+	$(MAKE) -C $(KERNELDIR) M=$$PWD modules
+
+endif
+
+.PHONY : clean
+clean:
+	rm -rf *.o *.ko .*.cmd *.mod.* .tmp*  Module.symvers modules.order Module.symvers modules.order
+
