@@ -13,6 +13,9 @@ obj/%.o: src/%.c
 
 run: bin/game
 	bin/game
+
+debug: bin/game
+	cgdb bin/game
 	
 
 clean:

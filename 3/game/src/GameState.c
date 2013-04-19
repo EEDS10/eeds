@@ -1,7 +1,7 @@
 #include <allegro.h>
 #include "State.h"
 
-extern State* GameState;
+extern State* MainMenuState;
 
 static void state_init(){
 
@@ -24,14 +24,14 @@ static void state_resume(){
 
 
 static void state_render(){
-    textout_ex(screen, font, "Main menu, yo", 10, 10, makecol( 255, 0, 0), makecol( 0, 0, 0) );
+    textout_ex(screen, font, "This is the main game", 100, 10, makecol( 0, 255, 0), makecol( 0, 0, 0) );
 }
 
 
 static void state_update(){
-    if (key[KEY_SPACE]){
-        State_change(GameState);
+    if(key[KEY_ESC]){
+        State_change(MainMenuState);
     }
 }
 
-REGISTER_STATE(MainMenuState);
+REGISTER_STATE(GameState);
