@@ -1,6 +1,24 @@
 #ifndef STATE_H
 #define STATE_H
 
+#define CREATE_STATE(name) State MainMenuState = { \
+    .init = init, \
+    .deinit = deinit, \
+    .pause = pause, \
+    .resume = resume, \
+    .render = render, \
+    .update = update, \
+};
+
+typedef struct State{
+    void* init;
+    void* deinit;
+    void* pause;
+    void* resume;
+    void* render;
+    void* update;
+} State;
+
 void State_init(State*state);
 void State_deinit(State*state);
 
