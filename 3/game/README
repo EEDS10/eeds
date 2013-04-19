@@ -1,0 +1,5 @@
+You need allegro to run this game.
+
+apt-get install liballegro-dev
+
+or you can find binaries and source at allegro.cc
