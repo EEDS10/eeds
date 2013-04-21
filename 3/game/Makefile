@@ -2,8 +2,8 @@ C_FILES   := $(wildcard src/*.c)
 OBJ_FILES := $(addprefix obj/,$(notdir $(C_FILES:.c=.o)))
 TESTS_C_FILES   := $(wildcard tests/*.c)
 TESTS_OBJ_FILES := $(addprefix obj/tests/,$(notdir $(TESTS_C_FILES:.c=.o)))
-LD_FLAGS := -lalleg
-CC_FLAGS := -g -Iinclude/
+LD_FLAGS := -lalleg -lm
+CC_FLAGS := -std=c99 -g -Iinclude/
 
 CC := gcc
 

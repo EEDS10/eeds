@@ -24,9 +24,11 @@ MU_TEST(create){
     mu_assert_str_eq("pm1cd.png", song->cdtitle);
     mu_assert_str_eq("iturntoyou.ogg", song->music);
     mu_assert_int_eq(-3, song->offset_in_ms);
-    mu_assert_int_eq(-53897, song->samplestart_in_ms);
-    mu_assert_int_eq(-15647, song->samplelength_in_ms);
-    mu_check(!!song->selectable);
+    mu_assert_int_eq(53897, song->samplestart_in_ms);
+    mu_assert_int_eq(15647, song->samplelength_in_ms);
+    mu_check(song->selectable);
+    mu_assert_str_eq("0.000=138.041", song->BPMs);
+    mu_assert_str_eq("", song->BGchanges);
 }
 
 MU_TEST_SUITE(SMSong_suite){

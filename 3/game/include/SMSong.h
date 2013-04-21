@@ -18,10 +18,9 @@ typedef struct SMSong{
     int samplestart_in_ms;
     int samplelength_in_ms;
     int selectable;
-    int* BPMs;
-    int displayBPM;
-    int* stops;
-    //hashtable_t* bgchange;
+    char* BPMs;
+    char* stops;
+    char* BGchanges;
     void* notes;    
 } SMSong;
 

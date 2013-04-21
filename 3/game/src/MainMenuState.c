@@ -20,12 +20,10 @@ static void state_pause(){
 
 
 static void state_resume(){
-    SMSong* song = SMSong_load("res/Songs/Plaguemix Series/I Turn to You/iturntoyou.sm");
 }
 
 
 static void state_render(){
-    textout_ex(screen, font, "Main menu, yo", 10, 10, makecol( 255, 0, 0), makecol( 0, 0, 0) );
 }
 
 

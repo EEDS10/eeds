@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "string.h"
+#include <string.h>
+#include <math.h>
+#include "utils.h"
 #include "SMSong.h"
 
 
@@ -11,6 +13,20 @@
     n = strchr(line, ';') - strlen(key) - line; \
     song->target = (char*) malloc(sizeof(char)*(n+1)); \
     strncpy(song->target, line + strlen(key), n);
+
+#define PARSEINT(key, target) \
+    }else if(strbeginswith(line, key)){ \
+    n = strchr(line, ';') - strlen(key) - line; \
+    song->target = (int)round(strtod((char * restrict) line + strlen(key), (char ** restrict) (line + strlen(key) + n)) * 1000);
+
+#define PARSEBOOL(key, target) \
+    }else if(strbeginswith(line, key)){ \
+    n = strchr(line, ';') - strlen(key) - line; \
+    char* temp = (char*) malloc(sizeof(char)*(n+1)); \
+    strncpy(temp, line + strlen(key), n); \
+    song->target = strcmp(temp, "YES") == 0;
+
+
 
 SMSong* SMSong_load(char* filename){
 
@@ -40,15 +56,13 @@ SMSong* SMSong_load(char* filename){
         PARSE("#LYRICSPATH:", lyricspath);
         PARSE("#CDTITLE:", cdtitle);
         PARSE("#MUSIC:", music);
-        PARSE("#OFFSET:", offset_in_ms);
-        /*
-        PARSE("#SAMPLESTART:", samplestart_in_ms);
-        PARSE("#SAMPLELENGTH:", samplelength_in_ms);
-        PARSE("#SELECTABLE:", selectable);
-        PARSE("#BPMS:", bpms);
+        PARSEINT("#OFFSET:", offset_in_ms);
+        PARSEINT("#SAMPLESTART:", samplestart_in_ms);
+        PARSEINT("#SAMPLELENGTH:", samplelength_in_ms);
+        PARSEBOOL("#SELECTABLE:", selectable);
+        PARSE("#BPMS:", BPMs);
         PARSE("#STOPS:", stops);
-        PARSE("#BGCHANGES:", bgchanges);
-        */
+        PARSE("#BGCHANGES:", BGchanges);
         ENDPARSE();
     }
 
