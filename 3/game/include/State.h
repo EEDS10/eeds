@@ -22,7 +22,7 @@ typedef struct State{
 void State_change(State*state);
 void State_render();
 void State_update();
-void State_init();
-void State_deinit();
+void State_init(State* state);
+void State_deinit(State* state);
 
 #endif

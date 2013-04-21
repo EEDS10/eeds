@@ -13,3 +13,15 @@ long gettime(){
 
     return output;
 }
+
+
+int strbeginswith(char* str, char *beginswith){
+    int i = 0;
+    while(str[i] == beginswith[i]){
+        if(str[i+1] == '\0' || beginswith[i+1] == '\0'){
+            return 1;
+        }
+        i++;
+    }
+    return 0;
+}

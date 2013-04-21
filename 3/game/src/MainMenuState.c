@@ -1,10 +1,11 @@
 #include <allegro.h>
+#include <stdio.h>
 #include "State.h"
+#include "SMSong.h"
 
 extern State* GameState;
 
 static void state_init(){
-
 }
 
 
@@ -19,7 +20,7 @@ static void state_pause(){
 
 
 static void state_resume(){
-
+    SMSong* song = SMSong_load("res/Songs/Plaguemix Series/I Turn to You/iturntoyou.sm");
 }
 
 

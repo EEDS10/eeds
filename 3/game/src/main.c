@@ -4,6 +4,7 @@
 #include "utils.h"
 
 extern State* MainMenuState;
+extern State* GameState;
 
 int main(){
 
@@ -13,7 +14,8 @@ int main(){
     install_keyboard();
     set_gfx_mode(GFX_AUTODETECT_WINDOWED, 320, 240, 0, 0);
 
-    State_init();
+    State_init(MainMenuState);
+    State_init(GameState);
     State_change(MainMenuState);
 
     long t = gettime();
@@ -46,7 +48,8 @@ int main(){
         rest(50);
     }    
 
-    State_deinit();
+    State_deinit(MainMenuState);
+    State_deinit(GameState);
     return 0;
 
 }   

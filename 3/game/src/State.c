@@ -5,8 +5,11 @@ State* active_state;
 
 
 void State_init(State*state){
+    state->init();
 }
-void State_deinit(){
+
+void State_deinit(State*state){
+    state->deinit();
 }
 
 
