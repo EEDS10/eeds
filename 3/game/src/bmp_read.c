@@ -61,11 +61,9 @@ void eeds_free_bitmap(bitmap_t *bitmap) {
 
 
 void eeds_render_bitmap(bitmap_t* bitmap, unsigned char** screen, int x, int y){
-    int offset_x = MAX(x,0);
-    int offset_y = MAX(y,0);
     for(int i=MAX(x,0);i<MIN(x+bitmap->width-1, 320-1);i++){
         for(int j=MAX(y,0);j<MIN(y+bitmap->height-1, 240-1);j++){
-            colour_t c = bitmap->bitmap[j-offset_y][i-offset_x];
+            colour_t c = bitmap->bitmap[j-y][i-x];
             if(c.blue == 255 && c.red == 255) continue;
             screen[j][i*4+0] = c.blue;
             screen[j][i*4+1] = c.green; //green

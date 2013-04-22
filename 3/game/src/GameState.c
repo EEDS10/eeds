@@ -16,10 +16,13 @@ bitmap_t* note_sprite;
 int beat;
 int measure;
 int beats_per_measure;
+int ms_per_beat;
+int ms_since_last_beat;
 
 typedef struct Note{
     int x;
     int y;
+    int done;
 } Note;
 
 Note notes[256];
@@ -28,13 +31,15 @@ int n_notes = 0;
 void add_note(int x, int y){
     notes[n_notes].x = x;
     notes[n_notes].y = y;
+    notes[n_notes].done = 0;
     n_notes++;
 }
 
 void remove_note(int i){
     n_notes--;
-    notes[n_notes].x = notes[i].x;
-    notes[n_notes].y = notes[i].y;
+    notes[i].x = notes[n_notes].x;
+    notes[i].y = notes[n_notes].y;
+    notes[i].done = notes[n_notes].done;
 }
 
 static void state_init(){
@@ -60,6 +65,8 @@ static void state_resume(){
     beat = 0;
     measure = 0;
     beats_per_measure = 4;
+    ms_per_beat = 200;
+    ms_since_last_beat = 0;
 }
 
 
@@ -82,14 +89,30 @@ static void state_update(){
 
 
     for(int i=0;i<n_notes;i++){
-        notes[i].y--;
+        notes[i].y-= 2;
+
+        if(notes[i].done || notes[i].y < -30){
+            remove_note(i);
+            i--;
+        }
     }
 
 
-    if(elapsed_time_in_ms % 1000){
-        add_note(10, 240);
+    while(ms_since_last_beat > ms_per_beat){
+        ms_since_last_beat -= ms_per_beat;
+        beat++;
+        while(beat > beats_per_measure){
+            beat -= beats_per_measure;
+            measure++;
+        }
+        for(int i=0;i<4;i++){
+            if(song->measures[measure]->rows[beat][i] == '1'){
+                add_note(10 + 20*i, 240);
+            }
+        }
     }
 
+    ms_since_last_beat += 20;
     elapsed_time_in_ms += 20;
 }
 
