@@ -1,6 +1,12 @@
 #ifndef SMSONG_H
 #define SMSONG_H
 
+
+typedef struct Measure{
+    char rows[12][4];
+    int n_rows;
+} Measure;
+
 typedef struct SMSong{
     char* title;
     char* subtitle;
@@ -18,10 +24,11 @@ typedef struct SMSong{
     int samplestart_in_ms;
     int samplelength_in_ms;
     int selectable;
-    char* BPMs;
-    char* stops;
-    char* BGchanges;
+    int* BPMs;
+    int* stops;
+    int* BGchanges;
     void* notes;    
+    Measure** measures;
 } SMSong;
 
 

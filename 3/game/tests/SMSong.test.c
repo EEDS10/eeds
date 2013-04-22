@@ -27,8 +27,16 @@ MU_TEST(create){
     mu_assert_int_eq(53897, song->samplestart_in_ms);
     mu_assert_int_eq(15647, song->samplelength_in_ms);
     mu_check(song->selectable);
-    mu_assert_str_eq("0.000=138.041", song->BPMs);
-    mu_assert_str_eq("", song->BGchanges);
+    mu_check(song->BPMs);
+    mu_assert_int_eq(0, song->BPMs[0]);
+    mu_assert_int_eq(138041, song->BPMs[1]);
+    mu_check(song->BGchanges != NULL);
+    mu_check(song->measures != NULL);
+    mu_check(song->measures[4] != NULL);
+    mu_assert_int_eq('1', song->measures[4]->rows[3][0]);
+    mu_assert_int_eq('0', song->measures[4]->rows[3][1]);
+    mu_assert_int_eq('0', song->measures[4]->rows[3][2]);
+    mu_assert_int_eq('0', song->measures[4]->rows[3][3]);
 }
 
 MU_TEST_SUITE(SMSong_suite){
