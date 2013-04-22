@@ -58,13 +58,20 @@ static int __init driver_init (void) {
     printk( KERN_INFO "Trying to init Button driver...\n");
 
     /* allokere device-nummer */
+    /* device number, minor number, count, name */
     alloc_chrdev_region(&device_number, 0, 1, "buttons");
 
     /* be om tilgang til I/O-porter */
-    request_region(AVR32_PIOB_ADDRESS, AVR32_PIOC_ADDRESS - AVR32_PIOB_ADDRESS, "buttons");
+    /* This function tells the kernel that you would like 
+    to make use of n ports, starting with first. */
+    request_region(AVR32_PIOB_ADDRESS,
+         AVR32_PIOC_ADDRESS - AVR32_PIOB_ADDRESS, "buttons");
+    /* wait do I need to change this? */
 
     /* initialisere PIO-maskinvaren (som i øving 2) */
 
+    /* Are the buttons still connected to PIO B? 
+        I thought the LEDs were connected to PIO C. */
     pio = (avr32_pio_t*) AVR32_PIOB_ADDRESS;
 
     printk( KERN_INFO "pio: %p\n", pio);
@@ -72,8 +79,8 @@ static int __init driver_init (void) {
     /* Enable IO pins */
     pio->per = remap_to_physical(0xFF);
 
-    /* Set pins to act as output */
-    pio->oer = remap_to_physical(0xFF);
+    /* Enable pull-up resistors */
+    pio->puer = remap_to_physical(0xFF);
 
     /* registrere device i systemet (må gjøres når alt annet er initialisert) */
     cdev_init(&driver_cdev, &driver_fops);
@@ -88,8 +95,8 @@ static int __init driver_init (void) {
 
 static void __exit driver_exit (void) {
 
-    /* turn off buttons */
-    pio->codr = remap_to_physical(0xFF);
+    /* turn off pull-up resistors */
+    pio->puer = remap_to_physical(0xFF);
 
     /* disable IO-pins */
     pio->per = remap_to_physical(0x00);
