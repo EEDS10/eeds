@@ -3,7 +3,7 @@
 
 #include "bmp_read.h"
 
-bitmap_t *load_bmp(FILE *bmp) {
+bitmap_t *eeds_load_bmp(FILE *bmp) {
     int i, x, y, bytes;
     unsigned char *file_buffer;
     unsigned char header[54];
