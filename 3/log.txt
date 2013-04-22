@@ -29,7 +29,6 @@ C-ax > lukke minicom
 
 root/perper
 
-"...to expose the students to the inner workings of Linux and its kernel."
 
 How to start minicom:
 	minicom -o -D /dev/ttyS0
