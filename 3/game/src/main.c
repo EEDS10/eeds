@@ -7,7 +7,7 @@
 extern State* MainMenuState;
 extern State* GameState;
 
-bitmap_t* buffer;
+BITMAP* buffer;
 
 int main(){
 

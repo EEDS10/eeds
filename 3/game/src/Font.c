@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <allegro.h>
 #include "Font.h"
 #include "bmp_read.h"
 
@@ -13,7 +14,7 @@ Font* Font_load(char* filename, int char_w, int char_h){
 }
 
 
-void Font_render(Font*font, int* screen, char* string, int x, int y){
+void Font_render(Font*font, BITMAP* screen, char* string, int x, int y){
     do{
         printf("%c", string[0]);
     }while(string++[0] != '\0');

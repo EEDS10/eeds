@@ -50,7 +50,7 @@ bitmap_t *eeds_load_bmp(FILE *bmp) {
     return bitmap;
 }
 
-void free_bitmap(bitmap_t *bitmap) {
+void eeds_free_bitmap(bitmap_t *bitmap) {
     for (int i = 0; i < bitmap->height; i++) {
         free(bitmap->bitmap[i]);
     }
@@ -60,12 +60,13 @@ void free_bitmap(bitmap_t *bitmap) {
 }
 
 
-void render_bitmap(bitmap_t* bitmap, uint8_t** screen, int x, int y){
-    for(int i=MAX(x,0);i<MIN(x+bitmap->width, 320);i++){
-        for(int j=MAX(y,0);j<MIN(y+bitmap->height, 240);j++){
-            screen[j][i*3] = bitmap->bitmap[i][j].red;
-            screen[j][i*3+1] = bitmap->bitmap[i][j].green;
-            screen[j][i*3+2] = bitmap->bitmap[i][j].blue;
+void eeds_render_bitmap(bitmap_t* bitmap, unsigned char** screen, int x, int y){
+    for(int i=MAX(x,0);i<MIN(x+bitmap->width, 320-1);i++){
+        for(int j=MAX(y,0);j<MIN(y+bitmap->height, 240-1);j++){
+            screen[239-j][i*4+0] = bitmap->bitmap[j][i].blue;
+            screen[239-j][i*4+1] = bitmap->bitmap[j][i].green; //green
+            screen[239-j][i*4+2] = bitmap->bitmap[j][i].red; // red
+            screen[239-j][i*4+3] = 0;
         }
     }
 }
