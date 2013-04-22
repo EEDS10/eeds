@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <allegro.h>
 #include "State.h"
 
 State* active_state;
@@ -21,8 +22,8 @@ void State_change(State*state){
     active_state->resume();
 }
 
-void State_render(){
-    active_state->render();
+void State_render(BITMAP* buffer){
+    active_state->render(buffer);
 }
 
 

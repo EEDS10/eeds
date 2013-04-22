@@ -1,23 +1,33 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 #include "bmp_read.h"
+#include "utils.h"
 
-bitmap_t *load_bmp(FILE *bmp) {
-    int i, x, y, bytes;
+bitmap_t* eeds_create_bitmap(int w, int h){
+    bitmap_t *bitmap = malloc(sizeof(*bitmap));
+    bitmap->width = w;
+    bitmap->height = h;
+    bitmap->bitmap = malloc(sizeof(*bitmap->bitmap) * bitmap->height);
+    for (int i = 0; i < bitmap->height; i++) {
+        bitmap->bitmap[i] = malloc(sizeof(**bitmap->bitmap) * bitmap->width);
+    }
+    return bitmap;
+}
+
+bitmap_t *eeds_load_bmp(FILE *bmp) {
+    int i, x, y, w, h, bytes;
     unsigned char *file_buffer;
     unsigned char header[54];
-    bitmap_t *bitmap = malloc(sizeof(*bitmap));
+    bitmap_t* bitmap;
 
     fread(header, sizeof(*header), 54, bmp);
 
-    bitmap->width = *((int *) &(header[18]));
-    bitmap->height = -*((int *) &(header[22]));
+    w = *((int *) &(header[18]));
+    h = abs(*((int *) &(header[22])));
 
-    bitmap->bitmap = malloc(sizeof(*bitmap->bitmap) * bitmap->height);
-    for (i = 0; i < bitmap->height; i++) {
-        bitmap->bitmap[i] = malloc(sizeof(**bitmap->bitmap) * bitmap->width);
-    }
+    bitmap = eeds_create_bitmap(w, h);
 
     bytes = bitmap->width * bitmap->height * 4;
     file_buffer = malloc(sizeof(*file_buffer) * bytes);
@@ -47,4 +57,15 @@ void free_bitmap(bitmap_t *bitmap) {
 
     free(bitmap->bitmap);
     free(bitmap);
+}
+
+
+void render_bitmap(bitmap_t* bitmap, uint8_t** screen, int x, int y){
+    for(int i=MAX(x,0);i<MIN(x+bitmap->width, 320);i++){
+        for(int j=MAX(y,0);j<MIN(y+bitmap->height, 240);j++){
+            screen[j][i*3] = bitmap->bitmap[i][j].red;
+            screen[j][i*3+1] = bitmap->bitmap[i][j].green;
+            screen[j][i*3+2] = bitmap->bitmap[i][j].blue;
+        }
+    }
 }
