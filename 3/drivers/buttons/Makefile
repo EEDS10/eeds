@@ -10,7 +10,7 @@ proxy:
 	make ARCH=avr32 CROSS_COMPILE=avr32-linux- default
 
 MODULE = button_driver
-DESTINATION = 129.241.103.244
+DESTINATION = 129.241.103.122
 
 ifneq ($(KERNELRELEASE),)
 obj-m := ${MODULE}.o
