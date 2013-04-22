@@ -13,7 +13,7 @@ bitmap_t* test;
 
 static void state_init(){
     font_large = Font_load("res/fonts/font_large.bmp", 28, 36);
-    font_small = Font_load("res/fonts/font_small.bmp", 18, 24);
+    font_small = Font_load("res/fonts/font_small.bmp", 20, 24);
 
     FILE* fp = fopen("res/test.bmp", "rw");
     test = eeds_load_bmp(fp);
@@ -39,7 +39,7 @@ static void state_resume(){
 static void state_render(BITMAP* buffer){
 
     //eeds_render_bitmap(test, buffer->line, 0, 0);
-    Font_render(font_large, buffer, "hello world", 5, 5);
+    Font_render(font_small, buffer, "hello world", 5, 5);
 
 }
 
