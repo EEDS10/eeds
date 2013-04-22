@@ -133,17 +133,7 @@ static ssize_t driver_write (struct file *filp, const char __user *buff,
         size_t count, loff_t *offp) {
 
     printk( KERN_INFO "buttons written to. buff: %c, count: %i, offp: %s\n", buff[0], count, offp);
-
-    if(count > 0){
-        /* Turn off buttons */
-        pio->codr = remap_to_physical(0xFF);
-
-        /* Turn on buttons */
-        pio->sodr = remap_to_physical(buff[count - 1]);
-
-        return count;
-    }
-
+    printk( KERN_INFO "why would you write to the buttons?");
     return 0;
 }
 
