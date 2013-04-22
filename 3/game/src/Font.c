@@ -23,7 +23,6 @@ int chr_to_ypos(char c){
 }
 
 void Font_render(Font*font, BITMAP* screen, char* string, int x, int y){
-    printf("\n");
     do{
         int x_offset = chr_to_xpos(string[0]) * font->char_h;
         int y_offset = chr_to_ypos(string[0]) * font->char_w;

@@ -44,10 +44,12 @@ void eeds_blit_to_allegro(unsigned char** destination, bitmap_t* source, int dx,
     for(int i=MAX(dx,0);i<MIN(dx+w, 320-1);i++){
         sj = sx;
         for(int j=MAX(dy,0);j<MIN(dy+h, 240-1);j++){
-            destination[j][i*4+0] = source->bitmap[sj][si].blue;
-            destination[j][i*4+1] = source->bitmap[sj][si].green; //green
-            destination[j][i*4+2] = source->bitmap[sj][si].red; // red
-            destination[j][i*4+3] = 0;
+            if(source->bitmap[sj][si].red != 255 && source->bitmap[sj][si].blue != 255){
+                destination[j][i*4+0] = source->bitmap[sj][si].blue;
+                destination[j][i*4+1] = source->bitmap[sj][si].green; //green
+                destination[j][i*4+2] = source->bitmap[sj][si].red; // red
+                //destination[j][i*4+3] = 0;
+            }
             sj++;
         }
         si++;
