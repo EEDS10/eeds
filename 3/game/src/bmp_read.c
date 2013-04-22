@@ -12,7 +12,7 @@ bitmap_t *load_bmp(FILE *bmp) {
     fread(header, sizeof(*header), 54, bmp);
 
     bitmap->width = *((int *) &(header[18]));
-    bitmap->height = -*((int *) &(header[22]));
+    bitmap->height = abs(*((int *) &(header[22])));
 
     bitmap->bitmap = malloc(sizeof(*bitmap->bitmap) * bitmap->height);
     for (i = 0; i < bitmap->height; i++) {
