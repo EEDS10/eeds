@@ -120,8 +120,11 @@ static int driver_release (struct inode *inode, struct file *filp) {
 static ssize_t driver_read (struct file *filp, char __user *buff,
         size_t count, loff_t *offp) {
 
+    /* need to read the appropriate bit from PIOB PDSR */
+    int buttons = pio->pdsr;
     printk( KERN_INFO "buttons read.\n");
-    return 0;
+    /* Should we implement debouncing and such here? */ 
+    return buttons;
 }
 
 /*---------------------------------------------------------------------------*/
