@@ -34,9 +34,9 @@ bitmap_t *eeds_load_bmp(FILE *bmp) {
     fread(file_buffer, sizeof(*file_buffer), bytes, bmp);
 
     for (i = 0, x = 0, y = 0; i < bytes;) {
-        bitmap->bitmap[x][y].blue = file_buffer[i++] & 255;
-        bitmap->bitmap[x][y].green = file_buffer[i++] & 255;
-        bitmap->bitmap[x][y].red = file_buffer[i++] & 255;
+        bitmap->bitmap[bitmap->height - 1 - x][y].blue = file_buffer[i++] & 255;
+        bitmap->bitmap[bitmap->height - 1 - x][y].green = file_buffer[i++] & 255;
+        bitmap->bitmap[bitmap->height - 1 - x][y].red = file_buffer[i++] & 255;
         i++;
 
         if (++y == bitmap->width) {
@@ -63,10 +63,10 @@ void eeds_free_bitmap(bitmap_t *bitmap) {
 void eeds_render_bitmap(bitmap_t* bitmap, unsigned char** screen, int x, int y){
     for(int i=MAX(x,0);i<MIN(x+bitmap->width, 320-1);i++){
         for(int j=MAX(y,0);j<MIN(y+bitmap->height, 240-1);j++){
-            screen[239-j][i*4+0] = bitmap->bitmap[j][i].blue;
-            screen[239-j][i*4+1] = bitmap->bitmap[j][i].green; //green
-            screen[239-j][i*4+2] = bitmap->bitmap[j][i].red; // red
-            screen[239-j][i*4+3] = 0;
+            screen[j][i*4+0] = bitmap->bitmap[j][i].blue;
+            screen[j][i*4+1] = bitmap->bitmap[j][i].green; //green
+            screen[j][i*4+2] = bitmap->bitmap[j][i].red; // red
+            screen[j][i*4+3] = 0;
         }
     }
 }
