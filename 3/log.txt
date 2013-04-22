@@ -11,3 +11,12 @@ We decided to get a new sdcard because our initial pick was pre-broken.
 
 12:52 22.04.2013
 wait why does it work to request the same range on both the led and button drivers? According to http://www.makelinux.net/ldd3/chp-9-sect-2 it seems like it shouldn't.
+
+We are using Allegro 4.2
+	htttp://allegro.cc
+	http://wiki.allegro.cc/index.php?title=Allegro_4
+	sourceforge: http://alleg.sourceforge.net/
+
+We are implementing stuff from stepmania
+	http://www.stepmania.com/wiki/FAQ_Tutorials_Documentation#Documentation
+	#haha
