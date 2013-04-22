@@ -1,10 +1,13 @@
 #include <allegro.h>
 #include <stdio.h>
 #include "State.h"
+#include "bmp_read.h"
 #include "utils.h"
 
 extern State* MainMenuState;
 extern State* GameState;
+
+BITMAP* buffer;
 
 int main(){
 
@@ -12,8 +15,10 @@ int main(){
 
     allegro_init();
     install_keyboard();
+    set_color_depth(32);
     set_gfx_mode(GFX_AUTODETECT_WINDOWED, 320, 240, 0, 0);
 
+    buffer = create_bitmap(320, 240);
     State_init(MainMenuState);
     State_init(GameState);
     State_change(MainMenuState);
@@ -38,10 +43,9 @@ int main(){
         }
 
         if(redraw_required){
-            acquire_screen();
-            clear_bitmap(screen);
-            State_render();
-            release_screen();
+            clear_to_color(buffer, makecol(255,255,255));
+            State_render(buffer);
+            blit(buffer, screen, 0, 0, 0, 0, 320, 240);
             redraw_required = 0;
         }
 
