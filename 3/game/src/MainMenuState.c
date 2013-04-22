@@ -6,8 +6,8 @@
 
 extern State* GameState;
 
-FONT* font_large;
-FONT* font_small;
+Font* font_large;
+Font* font_small;
 
 static void state_init(){
     font_large = Font_load("res/fonts/font_large.bmp", 24, 24);
@@ -30,7 +30,10 @@ static void state_resume(){
 }
 
 
-static void state_render(){
+static void state_render(BITMAP* buffer){
+
+    //Font_render(font_large, screen, "hello world", 5, 5);
+    render_bitmap(font_large->bmp, buffer->line, 0, 0);
 
 }
 
