@@ -15,6 +15,8 @@ int n_songs;
 
 int active_selection = 0;
 
+int key_cooldown = 0;
+
 bitmap_t* test;
 
 static void state_init(){
@@ -86,12 +88,20 @@ static void state_update(){
     if (key[KEY_SPACE]){
         State_change(GameState);
     }
-    if (key[KEY_UP]){
-        active_selection--;
+    if(key_cooldown == 0){
+        if (key[KEY_UP]){
+            active_selection--;
+            key_cooldown = 5;
+        }
+        if (key[KEY_DOWN]){
+            active_selection++;
+            key_cooldown = 5;
+        }
+    }else{
+        key_cooldown--;
     }
-    if (key[KEY_DOWN]){
-        active_selection++;
-    }
+
+    active_selection = (active_selection + n_songs) % n_songs;
 }
 
 REGISTER_STATE(MainMenuState);
