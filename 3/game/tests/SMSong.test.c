@@ -6,7 +6,7 @@ SMSong* song;
 MU_TEST(create){
 
     /* act */
-    song = SMSong_load("res/Songs/Plaguemix Series/I Turn to You/iturntoyou.sm");
+    song = SMSong_load("res/Songs/iturntoyou/iturntoyou.sm");
 
     /* assert */
     mu_check(song != NULL);

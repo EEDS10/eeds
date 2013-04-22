@@ -1,4 +1,4 @@
-vi letet gjennom boksen med sd-kort og valgte et SanDisk Ultra II 2.0GB, med USB 2.0 kompabilitet. Dette var det kortet med mest lagringsplass.
+﻿vi letet gjennom boksen med sd-kort og valgte et SanDisk Ultra II 2.0GB, med USB 2.0 kompabilitet. Dette var det kortet med mest lagringsplass.
 Når bryteren på kortet er nede (nærmest usb-enden) er det i skrivebeskyttet modus ("lock")
 
 Vi følger instruksjonene i oeving3_guidelines.txt
@@ -9,3 +9,14 @@ during stage 5/6 the sdcard is not automagically mounted in media/<name assigned
 
 We decided to get a new sdcard because our initial pick was pre-broken.
 
+12:52 22.04.2013
+wait why does it work to request the same range on both the led and button drivers? According to http://www.makelinux.net/ldd3/chp-9-sect-2 it seems like it shouldn't.
+
+We are using Allegro 4.2
+	htttp://allegro.cc
+	http://wiki.allegro.cc/index.php?title=Allegro_4
+	sourceforge: http://alleg.sourceforge.net/
+
+We are implementing stuff from stepmania
+	http://www.stepmania.com/wiki/FAQ_Tutorials_Documentation#Documentation
+	#haha
