@@ -12,7 +12,8 @@
     }else if(strbeginswith(line, key)){ \
     n = strchr(line, ';') - strlen(key) - line; \
     song->target = (char*) malloc(sizeof(char)*(n+1)); \
-    strncpy(song->target, line + strlen(key), n);
+    strncpy(song->target, line + strlen(key), n); \
+    song->target[n] = '\0';
 
 #define PARSECUSTOM(key) \
     }else if(strbeginswith(line, key)){ \
@@ -127,6 +128,6 @@ SMSong* SMSong_load(char* filename){
 
         ENDPARSE();
     }
-
+    fclose(fp);
     return song;
 }

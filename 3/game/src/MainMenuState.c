@@ -13,6 +13,8 @@ Font* font_small;
 SMSong** songs;
 int n_songs;
 
+int active_selection = 0;
+
 bitmap_t* test;
 
 static void state_init(){
@@ -25,7 +27,9 @@ static void state_init(){
     n_songs = 0;
     dp = opendir("res/Songs/");
     while(ep = readdir (dp)){
-        n_songs++;
+        if(ep->d_name[0] != '.'){
+            n_songs++;
+        }
     }
     closedir(dp);
     songs = (SMSong**) malloc(sizeof(SMSong*) * n_songs);
@@ -34,7 +38,7 @@ static void state_init(){
     strcpy(filename, "res/Songs/");
     for(int i=0;i<n_songs;i++){
         ep = readdir(dp);
-        if(ep->d_name[0] == '.') continue;
+        if(ep->d_name[0] == '.'){ i--; continue;}
         strcpy(filename+10, ep->d_name);
         strcpy(filename+10 + strlen(ep->d_name), "/");
         strcpy(filename+10 + strlen(ep->d_name) + 1, "/");
@@ -69,7 +73,11 @@ static void state_resume(){
 static void state_render(BITMAP* buffer){
 
     //eeds_render_bitmap(test, buffer->line, 0, 0);
-    Font_render(font_small, buffer, "hello world", 5, 5);
+    Font_render(font_small, buffer, songs[(active_selection - 2 + n_songs) % n_songs]->title, 5, 5);
+    Font_render(font_small, buffer, songs[(active_selection - 1 + n_songs) % n_songs]->title, 5, 45);
+    Font_render(font_large, buffer, songs[(active_selection     + n_songs) % n_songs]->title, 5, 85);
+    Font_render(font_small, buffer, songs[(active_selection + 1 + n_songs) % n_songs]->title, 5, 125);
+    Font_render(font_small, buffer, songs[(active_selection + 2 + n_songs) % n_songs]->title, 5, 165);
 
 }
 
@@ -77,6 +85,12 @@ static void state_render(BITMAP* buffer){
 static void state_update(){
     if (key[KEY_SPACE]){
         State_change(GameState);
+    }
+    if (key[KEY_UP]){
+        active_selection--;
+    }
+    if (key[KEY_DOWN]){
+        active_selection++;
     }
 }
 
