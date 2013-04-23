@@ -130,7 +130,7 @@ static ssize_t driver_read (struct file *filp, char __user *buff,
 static ssize_t driver_write (struct file *filp, const char __user *buff,
         size_t count, loff_t *offp) {
 
-    printk( KERN_INFO "LEDs written to. buff: %c, count: %i, offp: %s\n", buff[0], count, offp);
+    printk( KERN_INFO "LEDs written to. buff: %c, count: %i, offp: %s, buff[count-1]: %c\n", buff[0], count, offp, buff[count-1]);
 
     if(count > 0){
         /* Turn off all leds */
