@@ -101,13 +101,14 @@ static void state_update(){
     while(ms_since_last_beat > ms_per_beat){
         ms_since_last_beat -= ms_per_beat;
         beat++;
-        while(beat > beats_per_measure){
+        if(beat > beats_per_measure){
             beat -= beats_per_measure;
             measure++;
+            beats_per_measure = song->measures[measure]->n_rows;
         }
         for(int i=0;i<4;i++){
             if(song->measures[measure]->rows[beat][i] == '1'){
-                add_note(10 + 20*i, 240);
+                add_note(10 + 30*i, 240);
             }
         }
     }
