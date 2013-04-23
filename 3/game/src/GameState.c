@@ -13,10 +13,12 @@ int elapsed_time_in_ms;
 
 bitmap_t* note_sprite;
 
+int current_bpm;
+int current_bpm_index;
 int beat;
 int measure;
 int beats_per_measure;
-int ms_per_beat;
+int ms_per_measure;
 int ms_since_last_beat;
 
 typedef struct Note{
@@ -65,8 +67,10 @@ static void state_resume(){
     beat = 0;
     measure = 0;
     beats_per_measure = 4;
-    ms_per_beat = 200;
+    ms_per_measure = 800;
     ms_since_last_beat = 0;
+    current_bpm_index = 1;
+    current_bpm = song->BPMs[current_bpm_index];
 }
 
 
@@ -98,6 +102,7 @@ static void state_update(){
     }
 
 
+    int ms_per_beat = ms_per_measure / beats_per_measure;
     while(ms_since_last_beat > ms_per_beat){
         ms_since_last_beat -= ms_per_beat;
         beat++;
@@ -105,6 +110,12 @@ static void state_update(){
             beat -= beats_per_measure;
             measure++;
             beats_per_measure = song->measures[measure]->n_rows;
+            if(measure == song->BPMs[current_bpm_index + 1]){
+                current_bpm_index += 2;
+                current_bpm = song->BPMs[current_bpm_index]; 
+
+                ms_per_measure = (current_bpm * 60 * 1000) / 4;
+            }
         }
         for(int i=0;i<4;i++){
             if(song->measures[measure]->rows[beat][i] == '1'){
