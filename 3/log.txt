@@ -32,6 +32,8 @@ root/perper
 
 How to start minicom:
 	minicom -o -D /dev/ttyS0
+	restart the stk1000 (or hit the reset button)
+	log in with root/perper
 how to get IP from STK1000:
 	ifconfig
 	note: the ethernet cable has to be plugged into the slot closest to the power outlet.
@@ -41,8 +43,14 @@ how to get IP from STK1000:
 
 Enabling the LED driver:
 		insmod led_driver.ko
-mknod /dev/leds c $(grep leds /proc/devices | awk '{print $1}') 0
+	mknod /dev/leds c $(grep leds /proc/devices | awk '{print $1}') 0
 
 
 15:12 23.04.2013
 scoring should be exclusively based on judgments and we could use the LEDs to indicate either life or which player is winning (has more points)
+
+Note to self: check if jumpers are set correctly.
+
+>what?
+<enabling the led driver>
+echo 1 > /dev/leds
