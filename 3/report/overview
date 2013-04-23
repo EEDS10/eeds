@@ -1,0 +1,45 @@
+Abstract
+	>NEEDS WORK?
+
+Introduction
+	^OK
+	Scorched Land Defense
+		^OK
+		Scorched Land Dance Dance Defense
+			^OK
+	DDR & StepMania
+		DDR
+			^OK
+		StepMania
+			^OK
+
+Description and Methodology
+	Functional description
+		``herp derp a game.''
+		gameplay
+	Solution Components
+		linux device drivers
+			led driver
+			button driver
+		sound
+		game engine
+		the .sm file format
+	configuration of the STK1000
+		jumpers
+			as defined on pg 61 of comp
+		GPIO Connections
+			J2>J15 (LEDS)
+			J1>J25 (Buttons)
+		Audio
+	Development of the Program
+
+	Programming Environment
+		Other tools
+			git, gcc, vim, github, LaTeX, 
+
+Results and Tests
+	Basic functionality test
+
+Evaluation of Assignment
+
+Conclusion

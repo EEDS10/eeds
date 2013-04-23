@@ -32,16 +32,28 @@ root/perper
 
 How to start minicom:
 	minicom -o -D /dev/ttyS0
+	restart the stk1000 (or hit the reset button)
+	log in with root/perper
 how to get IP from STK1000:
 	ifconfig
 	note: the ethernet cable has to be plugged into the slot closest to the power outlet.
 
 129.241.103.186
 
-How does one load a driver?
 
-Enabling a driver:
-	loading the driver:
-		insmod <filename>.ko
-		lsmod (to see what major number it was assigned)
-		mknod /dev/<drivername> c <major> <minor>
+Enabling the LED driver:
+		insmod led_driver.ko
+	mknod /dev/leds c $(grep leds /proc/devices | awk '{print $1}') 0
+
+
+15:12 23.04.2013
+scoring should be exclusively based on judgments and we could use the LEDs to indicate either life or which player is winning (has more points)
+
+Note to self: check if jumpers are set correctly.
+
+I think we're supposed to read ch 1-3 and 9 of Linux Device Drivers.
+
+SOUNDS! I think I am hearing them.
+#alsamixer
+	the card was muted. unmuted it in alsamixer and now cat /dev/random > /dev/dsp pumps out white noise.
+	
