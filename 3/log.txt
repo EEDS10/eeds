@@ -51,6 +51,9 @@ scoring should be exclusively based on judgments and we could use the LEDs to in
 
 Note to self: check if jumpers are set correctly.
 
->what?
-<enabling the led driver>
-echo 1 > /dev/leds
+I think we're supposed to read ch 1-3 and 9 of Linux Device Drivers.
+
+SOUNDS! I think I am hearing them.
+#alsamixer
+	the card was muted. unmuted it in alsamixer and now cat /dev/random > /dev/dsp pumps out white noise.
+	
