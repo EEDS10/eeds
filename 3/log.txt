@@ -38,13 +38,10 @@ how to get IP from STK1000:
 
 129.241.103.186
 
-How does one load a driver?
 
-Enabling a driver:
-	loading the driver:
-		insmod <filename>.ko
-		lsmod (to see what major number it was assigned)
-		mknod /dev/<drivername> c <major> <minor>
+Enabling the LED driver:
+		insmod led_driver.ko
+mknod /dev/leds c $(grep leds /proc/devices | awk '{print $1}') 0
 
 
 15:12 23.04.2013
