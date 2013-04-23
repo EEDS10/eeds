@@ -48,7 +48,7 @@ we can also do:
 
 After mucking about with the drivers for a while, it became apparent that GPIO 16-31 are no longer usable due to the SW6 setting. writing 0xFF to pioc per kills the network connection. productive!
 LEDS moved to GPIO8-15.
-
+	//is this J2? J4? - Odd
 
 
 OK, this is how you do the insmodding! (this time I'm writing it down...)
