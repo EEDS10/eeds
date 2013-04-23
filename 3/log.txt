@@ -45,3 +45,7 @@ Enabling a driver:
 		insmod <filename>.ko
 		lsmod (to see what major number it was assigned)
 		mknod /dev/<drivername> c <major> <minor>
+
+
+15:12 23.04.2013
+scoring should be exclusively based on judgments and we could use the LEDs to indicate either life or which player is winning (has more points)
