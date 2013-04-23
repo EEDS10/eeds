@@ -1,4 +1,6 @@
+#ifndef NO_ALLEGRO
 #include <allegro.h>
+#endif
 #include <stdio.h>
 #include "State.h"
 #include "bmp_read.h"

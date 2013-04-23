@@ -1,7 +1,9 @@
 #ifndef FONT_H
 #define FONT_H
 
+#ifdef NO_ALLEGRO
 #include <allegro.h>
+#endif
 #include "bmp_read.h"
 
 typedef struct Font {

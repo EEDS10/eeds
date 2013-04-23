@@ -10,7 +10,9 @@
     .update = state_update, \
 }; State* name = &_state;
 
+#ifndef NO_ALLEGRO
 #include <allegro.h>
+#endif
 
 typedef struct State{
     void (*init)();

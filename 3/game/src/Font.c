@@ -1,5 +1,7 @@
 #include <stdlib.h>
+#ifndef NO_ALLEGRO
 #include <allegro.h>
+#endif
 #include "Font.h"
 #include "bmp_read.h"
 #include "utils.h"

@@ -1,5 +1,7 @@
 #include <stdlib.h>
+#ifndef NO_ALLEGRO
 #include <allegro.h>
+#endif
 #include "State.h"
 
 State* active_state;
