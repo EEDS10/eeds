@@ -57,3 +57,6 @@ insmod led_driver.ko
 mknod /dev/leds c $(grep leds /proc/devices | awk '{print $1}') 0
 
 
+
+
+oggdec was used to decode ogg files to wav

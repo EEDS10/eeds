@@ -21,6 +21,12 @@ run: bin/game
 
 debug: bin/game
 	cgdb bin/game
+
+avr32:
+	make CC=avr32-gcc
+
+upload: bin/game
+	sshpass -p 'perper' scp -r bin root@$(curl http://arkt.is/ip/):/game/
 	
 test: bin/game $(TESTS_OBJ_FILES)
 	python tests/testrunner.py
