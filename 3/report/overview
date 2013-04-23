@@ -26,11 +26,11 @@ Description and Methodology
 		the .sm file format
 	configuration of the STK1000
 		jumpers
-			as defined on pg 61 of comp
+			^OK
 		GPIO Connections
-			J2>J15 (LEDS)
-			J1>J25 (Buttons)
+			^OK
 		Audio
+			"see previous assignment"
 	Development of the Program
 
 	Programming Environment
