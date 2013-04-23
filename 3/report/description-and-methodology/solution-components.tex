@@ -1,0 +1,39 @@
+This section describes the solutions' various components.
+
+\subsection{Linux Device Drivers for the STK1000}
+	Something about LDDs?
+	Init & Exit functions and cleanup and such
+
+	\subsubsection{LED driver}
+		the LED driver allows the software to turn the LEDs on and off?
+	\subsubsection{Button driver}
+		the buttan driver reads the buttons' state.	
+
+	\subsubsection{Sound driver}
+		/dev/dsa!
+	\subsubsection{Display driver}
+		/dev/fb0
+		Screen size: 320x240
+		32 bits per pixel (8bit color depth)
+
+\subsection{Game Engine -- WORKING TITLE}
+	this is the game engine we developed. it has parts that are pretty good. like sound, it can play sound and display things on the screen.
+	\subsubection{Sound}
+		how does the engine handle sound?
+		we just pipe that to /dev/dsa right?
+		pretty much I guess.
+	\subsubsection{Graphics}
+		them graphics are pretty good but how do we handle them????
+
+\subsection{The .sm file format}
+	yo imma just rewrite http://www.stepmania.com/wiki/The_.SM_file_format
+
+\subsection{Configuration of the STK1000}
+	\subsubsection{Jumpers}
+		The jumpers on the STK1000 were set to the positions specified on page 61 of the lab compendium\cite{lab-compendium}.
+	\subsubsection{GPIO Connections}
+		Two flat cables of the same type used in assignment 1\cite{tdt4258-1} and 2\cite{tdt4258-2} were used to connect the buttons (\texttt{J25}) to \texttt{GPIO 0-GPIO7} (\texttt{J1}) and the LEDs (\texttt{J15}) to \texttt{GPIO 8-15} (\texttt{J2}).
+		In the previous exercises the LEDs were connected to \texttt{GPIO 16-31} but this was not possible in this assignment due to requirement that the jumper \texttt{SW6} is set to 
+		\texttt{MACB0/DMAC}\cite{lab-compendium} (page 21).
+	\subsubsection{Audio}
+		See previous assignment (lol)
