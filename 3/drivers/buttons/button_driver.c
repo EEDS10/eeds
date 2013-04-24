@@ -41,7 +41,6 @@ dev_t device_number;
 avr32_pio_t* pio;
 struct cdev driver_cdev;
 
-int previous_button_state = 0;
 
 static long remap_to_physical(int logical){
     printk( KERN_INFO "remap_to_physical( logical: 0x%X )\n", logical);
@@ -131,10 +130,8 @@ static ssize_t driver_read (struct file *filp, char __user *buff,
 
     /* need to read the appropriate bit from PIOB PDSR */
     int buttons = pio->pdsr;
-    previous_button_state |= buttons;
-    previous_button_state = ~previous_button_state;
-    return previous_button_state&&0xff;
     printk( KERN_INFO "buttons read.\n");
+    return buttons;
 }
 
 /*---------------------------------------------------------------------------*/
