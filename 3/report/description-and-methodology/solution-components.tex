@@ -1,8 +1,14 @@
 This section describes the solutions' various components.
 
+\subsection{Linux}
+	The assignment required that the Linux 2.6 kernel be compiled for the AVR32 STK1000 development board.
+	Specifically, Linux 2.6.16.11-avr32-20060626 was used.
+
+	Linux was compiled and flashed onto a \texttt{16GB} SD Card, by virtue of following the distributed guidelines and a great deal of blood, sweat and tears\footnote{there were so many tears.}.
+
 \subsection{Linux Device Drivers for the STK1000}
 	Something about LDDs?
-	Init & Exit functions and cleanup and such
+	Init and Exit functions and cleanup and such
 
 	\subsubsection{LED driver}
 		the LED driver allows the software to turn the LEDs on and off?
@@ -18,12 +24,17 @@ This section describes the solutions' various components.
 
 \subsection{Game Engine -- WORKING TITLE}
 	this is the game engine we developed. it has parts that are pretty good. like sound, it can play sound and display things on the screen.
-	\subsubection{Sound}
+	\subsubsection{Sound}
 		how does the engine handle sound?
 		we just pipe that to /dev/dsa right?
 		pretty much I guess.
 	\subsubsection{Graphics}
 		them graphics are pretty good but how do we handle them????
+\subsection{``Fontenizer'', the Font Engine}
+	A font rendering engine (\texttt{font.h} and \texttt{font.c} found in \texttt{game/include/}) was developed in order to display text on the screen.
 
+	It takes some \texttt{char} and locates it on the given font-bitmap (using math), and renders it on the screen.
+
+	
 \subsection{The .sm file format}
 	yo imma just rewrite http://www.stepmania.com/wiki/The_.SM_file_format

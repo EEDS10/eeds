@@ -5,6 +5,7 @@ cfdisk make the sdcard unavailable for some time. waiting fixes the issue.
 ended up using gparted on own ubuntu 12.10 laptop to format card
 
 removed hardware setting in minicom serial settings
+	hardware flow control = no
 
 flashed u-boot.bin from its
 

@@ -18,6 +18,8 @@ Description and Methodology
 		``herp derp a game.''
 		gameplay
 	Solution Components
+		Linux
+			^OK?
 		linux device drivers
 			led driver
 			button driver
@@ -37,7 +39,7 @@ Description and Methodology
 		Allegro 4.2
 			^OK?
 		Other tools
-			vim, git, github, latex, oggdec,
+			vim, git, github, latex, oggdec, gparted, u-boot
 
 Results and Tests
 	^init'd
