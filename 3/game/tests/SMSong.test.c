@@ -26,7 +26,6 @@ MU_TEST(create){
     mu_assert_int_eq(-3, song->offset_in_ms);
     mu_assert_int_eq(53897, song->samplestart_in_ms);
     mu_assert_int_eq(15647, song->samplelength_in_ms);
-    mu_check(song->selectable);
     mu_check(song->BPMs);
     mu_assert_int_eq(0, song->BPMs[0]);
     mu_assert_int_eq(138041, song->BPMs[1]);

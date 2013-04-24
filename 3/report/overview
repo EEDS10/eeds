@@ -1,0 +1,51 @@
+Abstract
+	>NEEDS WORK?
+
+Introduction
+	^OK
+	Scorched Land Defense
+		^OK
+		Scorched Land Dance Dance Defense
+			^OK
+	DDR & StepMania
+		DDR
+			^OK
+		StepMania
+			^OK
+
+Description and Methodology
+	Functional description
+		``herp derp a game.''
+		gameplay
+	Solution Components
+		Linux
+			^OK?
+		linux device drivers
+			led driver
+			button driver
+		sound
+		game engine
+		the .sm file format
+	configuration of the STK1000
+		jumpers
+			^OK
+		GPIO Connections
+			^OK
+		Audio
+			"see previous assignment"
+	Development of the Program
+
+	Programming Environment
+		Allegro 4.2
+			^OK?
+		Other tools
+			vim, git, github, latex, oggdec, gparted, u-boot
+
+Results and Tests
+	^init'd
+	Basic functionality test
+
+Evaluation of Assignment
+	^init'd
+Conclusion
+	^init'd

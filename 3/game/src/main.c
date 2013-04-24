@@ -1,5 +1,16 @@
-#include <allegro.h>
+#ifndef NO_ALLEGRO
+    #include <allegro.h>
+#else
+    #include <linux/fb.h>
+    #include <fcntl.h>
+    #include <sys/types.h>
+    #include <sys/stat.h>
+    #include <sys/mman.h>
+    #include "allegro_shim.h"
+#endif
 #include <stdio.h>
+#include <linux/soundcard.h>
+#include <stdlib.h>
 #include "State.h"
 #include "bmp_read.h"
 #include "utils.h"
@@ -7,18 +18,31 @@
 extern State* MainMenuState;
 extern State* GameState;
 
-BITMAP* buffer;
+bitmap_t* buffer;
 
 int main(){
 
     int running = 1;
+
+#ifdef NO_ALLEGRO
+
+    int screen_size = 320*240*3;
+    int framebuffer;
+    if(!(framebuffer = open("/dev/fb0", O_RDWR))){
+        printf("Failed to open framebuffer.\n"); 
+    }
+    unsigned char* screen = mmap(0, screen_size, PROT_READ | PROT_WRITE, MAP_SHARED, framebuffer, 0);
+    if((int)screen == -1){
+        printf("Failed to mmap the framebuffer.\n");
+    }
+#endif
 
     allegro_init();
     install_keyboard();
     set_color_depth(32);
     set_gfx_mode(GFX_AUTODETECT_WINDOWED, 320, 240, 0, 0);
 
-    buffer = create_bitmap(320, 240);
+    buffer = eeds_create_bitmap(320, 240);
     State_init(MainMenuState);
     State_init(GameState);
     State_change(MainMenuState);
@@ -36,6 +60,7 @@ int main(){
         dt += t - old_t;
 
         while(dt > MILLISECONDS_PER_TICK){
+            printf("[%lu:%lu] update\n", t, dt);
             dt -= MILLISECONDS_PER_TICK;
             clear_keybuf();
             State_update();
@@ -43,13 +68,12 @@ int main(){
         }
 
         if(redraw_required){
-            clear_to_color(buffer, makecol(255,255,255));
+            printf("[%lu:%lu] render\n", t, dt);
+            eeds_clear_to_color(buffer, 255, 255, 255);
             State_render(buffer);
-            blit(buffer, screen, 0, 0, 0, 0, 320, 240);
+            blit_to_screen(buffer, screen, 0, 0, 0, 0, 320, 240);
             redraw_required = 0;
         }
-
-        rest(50);
     }    
 
     State_deinit(MainMenuState);

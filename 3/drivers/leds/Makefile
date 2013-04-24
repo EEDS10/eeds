@@ -10,7 +10,7 @@ proxy:
 	make ARCH=avr32 CROSS_COMPILE=avr32-linux- default
 
 MODULE = led_driver
-DESTINATION = 129.241.103.244
+DESTINATION = $$(wget -qO- arkt.is/ip/)
 
 ifneq ($(KERNELRELEASE),)
 obj-m := ${MODULE}.o
@@ -26,7 +26,7 @@ default:
 endif
 
 upload: proxy
-	scp ${MODULE}.ko root@${DESTINATION}:
+	../../tools/sshpass -p 'perper' scp ${MODULE}.ko root@${DESTINATION}:
 
 .PHONY : clean
 clean:

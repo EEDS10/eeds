@@ -1,5 +1,10 @@
 #include <stdio.h>
 #include <sys/time.h>
+#ifndef NO_ALLEGRO
+#include <allegro.h>
+#else
+#include "allegro_shim.h"
+#endif
 #include "bmp_read.h"
 #include "utils.h"
 
@@ -27,31 +32,66 @@ int strbeginswith(char* str, char *beginswith){
     return 0;
 }
 
-
-void eeds_blit(bitmap_t* destination, bitmap_t* source, int dx, int dy, int sx, int sy, int w, int h){
-    for(int i=MAX(dx,0);i<MIN(dx+w, 320-1);i++){
-        for(int j=MAX(dy,0);j<MIN(dy+h, 240-1);j++){
-            destination->bitmap[j][i].blue = source->bitmap[j][i].blue;
-            destination->bitmap[j][i].red = source->bitmap[j][i].red;
-            destination->bitmap[j][i].green = source->bitmap[j][i].green;
-        }
-    }
-}
-
-void eeds_blit_to_allegro(unsigned char** destination, bitmap_t* source, int dx, int dy, int sx, int sy, int w, int h){
+void eeds_blit(bitmap_t* source, bitmap_t* destination, int dx, int dy, int sx, int sy, int w, int h){
+    //printf("eeds_blit( destination: %p, source: %p, dx: %i, dy: %i, sx: %i, sy: %i, w: %i, h: %i )\n", destination, source, dx, dy, sx, dy, w, h);
     int si = sy;
     int sj = sx;
-    for(int i=MAX(dx,0);i<MIN(dx+w, 320-1);i++){
-        sj = sx;
-        for(int j=MAX(dy,0);j<MIN(dy+h, 240-1);j++){
-            if(source->bitmap[sj][si].red != 255 && source->bitmap[sj][si].blue != 255){
-                destination[j][i*4+0] = source->bitmap[sj][si].blue;
-                destination[j][i*4+1] = source->bitmap[sj][si].green; //green
-                destination[j][i*4+2] = source->bitmap[sj][si].red; // red
-                //destination[j][i*4+3] = 0;
+    for(int j=MAX(dy,0);j<MIN(dy+h, 240);j++){
+        si = sy;
+        for(int i=MAX(dx,0);i<MIN(dx+w, 320);i++){
+            colour_t c = source->bitmap[sj][si];
+            if(c.blue != 255 || c.red != 255){
+                destination->bitmap[j][i].blue  = c.blue;
+                destination->bitmap[j][i].red   = c.red;
+                destination->bitmap[j][i].green = c.green;
             }
-            sj++;
+            si++;
         }
-        si++;
+        sj++;
     }
 }
+
+void eeds_clear_to_color(bitmap_t* bitmap, int r, int g, int b){
+    for(int j=0;j<bitmap->width;j++){
+        for(int i=0;i<bitmap->height;i++){
+            bitmap->bitmap[i][j].blue  = b;
+            bitmap->bitmap[i][j].red   = r;
+            bitmap->bitmap[i][j].green = g;
+        }
+    }
+}
+
+void eeds_blit_to_screen(bitmap_t* source, unsigned char* destination, int dx, int dy, int sx, int sy, int w, int h){
+    //printf("eeds_blit_to_screen( destination: %p, source: %p, dx: %i, dy: %i, sx: %i, sy: %i, w: %i, h: %i )\n", destination, source, dx, dy, sx, dy, w, h);
+    int si = sy;
+    int sj = sx;
+    int k = 0;
+    for(int j=MAX(dy,0);j<MIN(dy+h, 240);j++){
+        si = sy;
+        for(int i=MAX(dx,0);i<MIN(dx+w, 320);i++){
+            destination[ k ] = source->bitmap[sj][si].blue;
+            destination[k+1] = source->bitmap[sj][si].green;
+            destination[k+2] = source->bitmap[sj][si].red;
+            k += 3;
+            si++;
+        }
+        sj++;
+    }
+}
+
+
+#ifndef NO_ALLEGRO
+void blit_to_screen(bitmap_t* source, BITMAP* destination, int dx, int dy, int sx, int sy, int w, int h){
+    int si = sy;
+    int sj = sx;
+    for(int j=MAX(dy,0);j<MIN(dy+h, 240);j++){
+        si = sy;
+        for(int i=MAX(dx,0);i<MIN(dx+w, 320);i++){
+            colour_t c = source->bitmap[sj][si];
+                putpixel(destination, si, sj, makecol(c.red, c.green, c.blue));
+            si++;
+        }
+        sj++;
+    }
+}
+#endif

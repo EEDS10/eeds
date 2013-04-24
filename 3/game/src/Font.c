@@ -1,5 +1,9 @@
 #include <stdlib.h>
+#ifndef NO_ALLEGRO
 #include <allegro.h>
+#else
+#include "allegro_shim.h"
+#endif
 #include "Font.h"
 #include "bmp_read.h"
 #include "utils.h"
@@ -22,11 +26,11 @@ int chr_to_ypos(char c){
     return (((unsigned int)c) - 32) % 15;
 }
 
-void Font_render(Font*font, BITMAP* screen, char* string, int x, int y){
+void Font_render(Font*font, bitmap_t* screen, char* string, int x, int y){
     do{
         int x_offset = chr_to_xpos(string[0]) * font->char_h;
         int y_offset = chr_to_ypos(string[0]) * font->char_w;
-        eeds_blit_to_allegro(screen->line, font->bmp, x, y, x_offset, y_offset, font->char_w - 6, font->char_h);
+        eeds_blit(font->bmp, screen, x, y, x_offset, y_offset, font->char_w - 6, font->char_h);
         x += font->char_w - 6;
     }while((++string)[0] != '\0');
 }

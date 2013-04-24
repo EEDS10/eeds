@@ -5,6 +5,7 @@ cfdisk make the sdcard unavailable for some time. waiting fixes the issue.
 ended up using gparted on own ubuntu 12.10 laptop to format card
 
 removed hardware setting in minicom serial settings
+	hardware flow control = no
 
 flashed u-boot.bin from its
 
@@ -48,3 +49,15 @@ we can also do:
 
 After mucking about with the drivers for a while, it became apparent that GPIO 16-31 are no longer usable due to the SW6 setting. writing 0xFF to pioc per kills the network connection. productive!
 LEDS moved to GPIO8-15.
+	//this is J2.
+
+
+OK, this is how you do the insmodding! (this time I'm writing it down...)
+
+insmod led_driver.ko
+mknod /dev/leds c $(grep leds /proc/devices | awk '{print $1}') 0
+
+
+
+
+oggdec was used to decode ogg files to wav
