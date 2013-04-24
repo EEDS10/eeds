@@ -80,6 +80,7 @@ void eeds_blit_to_screen(bitmap_t* source, unsigned char* destination, int dx, i
 }
 
 
+#ifndef NO_ALLEGRO
 void blit_to_screen(bitmap_t* source, BITMAP* destination, int dx, int dy, int sx, int sy, int w, int h){
     int si = sy;
     int sj = sx;
@@ -93,3 +94,4 @@ void blit_to_screen(bitmap_t* source, BITMAP* destination, int dx, int dy, int s
         sj++;
     }
 }
+#endif

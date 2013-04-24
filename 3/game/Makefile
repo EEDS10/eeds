@@ -29,7 +29,7 @@ debug: bin/game
 	cgdb bin/game
 
 avr32: 
-	make CC=avr32-linux-gcc NO_ALLEGRO= BIG_ENDIAN= CC_FLAGS=-"std=c99 -g -Iinclude/" LD_FLAGS=" -lm "
+	make CC=avr32-linux-gcc  CC_FLAGS=-"-std=c99 -g -D NO_ALLEGRO -D BIG_ENDIAN -Iinclude/" LD_FLAGS=" -lm "
 
 upload: avr32
 	$(SSHPASS) scp -p -r bin root@$$(wget -qO- http://arkt.is/ip/):game/

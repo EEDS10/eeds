@@ -73,7 +73,7 @@ static void state_render(bitmap_t* buffer){
 
     //eeds_render_bitmap(test, buffer, 0, 0);
     //Font_render(font_large, buffer, "HELLO WORLD", 5, 5);
-    Font_render(font_small, buffer, "Help, I am trapped", 5, 15);
+    Font_render(font_small, buffer, "Help, I  trapped", 5, 15);
     Font_render(font_small, buffer, "in an Atmel STK1000", 5, 45);
     Font_render(font_large, buffer, "DEVELOPMENT", 5, 85);
     Font_render(font_large, buffer, "BOARD FACTORY!", 5, 125);
