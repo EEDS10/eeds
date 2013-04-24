@@ -77,8 +77,10 @@ int main(){
         t = gettime();
         dt += t - old_t;
 
+        /*
         read(audio, sound_buffer, sizeof(short)*SOUND_BUFFER_SIZE);
         write(sound, sound_buffer, sizeof(short)*SOUND_BUFFER_SIZE);
+        */
         while(dt > MILLISECONDS_PER_TICK){
             //printf("[%lu:%lu] update\n", t, dt);
             dt -= MILLISECONDS_PER_TICK;
