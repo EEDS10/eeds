@@ -3,7 +3,9 @@
 #else
     #include <linux/fb.h>
     #include <fcntl.h>
+    #include <linux/soundcard.h>
     #include <sys/types.h>
+    #include <sys/ioctl.h>
     #include <sys/stat.h>
     #include <sys/mman.h>
     #include "allegro_shim.h"
@@ -19,6 +21,8 @@ extern State* MainMenuState;
 extern State* GameState;
 
 bitmap_t* buffer;
+
+#define SOUND_BUFFER_SIZE 1024*8
 
 int main(){
 
@@ -36,6 +40,20 @@ int main(){
         printf("Failed to mmap the framebuffer.\n");
     }
 #endif
+
+    FILE* sound = open("/dev/dsp", O_RDWR);
+    int args, status;
+    args = 16;
+    status = ioctl(sound, SOUND_PCM_WRITE_BITS, &args);
+
+    args = 1;
+    status = ioctl(sound, SOUND_PCM_WRITE_CHANNELS, &args);
+
+    args = 44100;
+    status = ioctl(sound, SOUND_PCM_WRITE_RATE, &args);
+
+    FILE* audio = open("res/Songs/iturntoyou/iturntoyou.raw", O_RDONLY);
+    char* sound_buffer[SOUND_BUFFER_SIZE];
 
     allegro_init();
     install_keyboard();
@@ -59,8 +77,10 @@ int main(){
         t = gettime();
         dt += t - old_t;
 
+        read(audio, sound_buffer, sizeof(short)*SOUND_BUFFER_SIZE);
+        write(sound, sound_buffer, sizeof(short)*SOUND_BUFFER_SIZE);
         while(dt > MILLISECONDS_PER_TICK){
-            printf("[%lu:%lu] update\n", t, dt);
+            //printf("[%lu:%lu] update\n", t, dt);
             dt -= MILLISECONDS_PER_TICK;
             clear_keybuf();
             State_update();
@@ -68,7 +88,7 @@ int main(){
         }
 
         if(redraw_required){
-            printf("[%lu:%lu] render\n", t, dt);
+            //printf("[%lu:%lu] render\n", t, dt);
             eeds_clear_to_color(buffer, 255, 255, 255);
             State_render(buffer);
             blit_to_screen(buffer, screen, 0, 0, 0, 0, 320, 240);
