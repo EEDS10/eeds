@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-
 #include "bmp_read.h"
 #include "utils.h"
 
@@ -24,8 +23,8 @@ bitmap_t *eeds_load_bmp(FILE *bmp) {
 
     fread(header, sizeof(*header), 54, bmp);
 
-    w = *((int *) &(header[18]));
-    h = abs(*((int *) &(header[22])));
+    w = FLIP_ENDIANNESS_INT32(*((int *) &(header[18])));
+    h = FLIP_ENDIANNESS_INT32((*((int *) &(header[22]))));
 
     bitmap = eeds_create_bitmap(w, h);
 
@@ -38,7 +37,6 @@ bitmap_t *eeds_load_bmp(FILE *bmp) {
         bitmap->bitmap[bitmap->height - 1 - x][y].green = file_buffer[i++] & 255;
         bitmap->bitmap[bitmap->height - 1 - x][y].red = file_buffer[i++] & 255;
         i++;
-
         if (++y == bitmap->width) {
             x++;
             y = 0;
@@ -60,15 +58,6 @@ void eeds_free_bitmap(bitmap_t *bitmap) {
 }
 
 
-void eeds_render_bitmap(bitmap_t* bitmap, unsigned char** screen, int x, int y){
-    for(int i=MAX(x,0);i<MIN(x+bitmap->width-1, 320-1);i++){
-        for(int j=MAX(y,0);j<MIN(y+bitmap->height-1, 240-1);j++){
-            colour_t c = bitmap->bitmap[j-y][i-x];
-            if(c.blue == 255 && c.red == 255) continue;
-            screen[j][i*4+0] = c.blue;
-            screen[j][i*4+1] = c.green; //green
-            screen[j][i*4+2] = c.red; // red
-            screen[j][i*4+3] = 0;
-        }
-    }
+void eeds_render_bitmap(bitmap_t* source, bitmap_t* destination, int x, int y){
+    eeds_blit(source, destination, x, y, 0, 0, source->width, source->height);
 }

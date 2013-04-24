@@ -1,4 +1,8 @@
+#ifdef NO_ALLEGRO
 #include <allegro.h>
+#else
+#include "allegro_shim.h"
+#endif
 #include "State.h"
 #include "Font.h"
 #include "SMSong.h"
@@ -45,9 +49,11 @@ void remove_note(int i){
 }
 
 static void state_init(){
+    printf("gamestate init\n");
     FILE* fp = fopen("res/note_sprite.bmp", "rb");
     note_sprite = eeds_load_bmp(fp);
     fclose(fp);
+    printf("init done!\n");
 }
 
 
@@ -77,7 +83,7 @@ static void state_resume(){
 static void state_render(BITMAP* buffer){
 
     for(int i=0;i<n_notes;i++){
-        eeds_render_bitmap(note_sprite, buffer->line, notes[i].x, notes[i].y);
+        eeds_render_bitmap(note_sprite, buffer, notes[i].x, notes[i].y);
     }
 
     char elapsed_time_display_string[10];

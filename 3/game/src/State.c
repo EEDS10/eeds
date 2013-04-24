@@ -1,6 +1,8 @@
 #include <stdlib.h>
-#ifndef NO_ALLEGRO
+#ifdef NO_ALLEGRO
 #include <allegro.h>
+#else
+#include "allegro_shim.h"
 #endif
 #include "State.h"
 
