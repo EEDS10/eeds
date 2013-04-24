@@ -34,13 +34,16 @@ Description and Methodology
 	Development of the Program
 
 	Programming Environment
-		Allegro
+		Allegro 4.2
+			^OK?
 		Other tools
-			git, gcc, vim, github, LaTeX, 
+			vim, git, github, latex, oggdec,
 
 Results and Tests
+	^init'd
 	Basic functionality test
 
 Evaluation of Assignment
-
+	^init'd
 Conclusion
+	^init'd
