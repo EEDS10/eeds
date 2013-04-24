@@ -33,12 +33,19 @@ static void state_init(){
     font_small = Font_load("res/fonts/font_small.bmp", 20, 24);
     printf("done loading fonts...\n");
 
-    songs = malloc(sizeof(SMSong*));
-    n_songs = 1;
-    songs[0] = SMSong_load("res/Songs/32a5/32a5.sm"); 
-    printf(" TITLE: %s\n", songs[0]->title);
-    printf("loading test image...");
-    printf(" done!\n");
+    n_songs = 3;
+    songs = malloc(sizeof(SMSong*)*n_songs);
+
+    songs[0] = SMSong_load("res/Songs/32a5/32a5.sm");
+    songs[1] = SMSong_load("res/Songs/iturntoyou/iturntoyou.sm");
+    songs[2] = SMSong_load("res/Songs/lost/lost.sm");
+    for(int i=0;i<n_songs;i++){
+        if(songs[i] == NULL){
+            printf("[%i] NULL!\n", i);
+        }
+        printf("[%i] TITLE: %s\n", i, songs[i]->title);
+    }
+
     FILE* fp = fopen("res/test.bmp", "rw");
     test = eeds_load_bmp(fp);
     fclose(fp);
@@ -66,11 +73,18 @@ static void state_render(BITMAP* buffer){
 
     //eeds_render_bitmap(test, buffer, 0, 0);
     //Font_render(font_large, buffer, "HELLO WORLD", 5, 5);
+    Font_render(font_small, buffer, "Help, I am trapped", 5, 15);
+    Font_render(font_small, buffer, "in an Atmel STK1000", 5, 45);
+    Font_render(font_large, buffer, "DEVELOPMENT", 5, 85);
+    Font_render(font_large, buffer, "BOARD FACTORY!", 5, 125);
+    Font_render(font_small, buffer, "(true story)", 5, 185);
+    /*
     Font_render(font_small, buffer, songs[(active_selection - 2 + n_songs) % n_songs]->title, 5, 5);
     Font_render(font_small, buffer, songs[(active_selection - 1 + n_songs) % n_songs]->title, 5, 45);
     Font_render(font_large, buffer, songs[(active_selection     + n_songs) % n_songs]->title, 5, 85);
     Font_render(font_small, buffer, songs[(active_selection + 1 + n_songs) % n_songs]->title, 5, 125);
     Font_render(font_small, buffer, songs[(active_selection + 2 + n_songs) % n_songs]->title, 5, 165);
+    */
 }
 
 
