@@ -81,5 +81,15 @@ void eeds_blit_to_screen(bitmap_t* source, unsigned char* destination, int dx, i
 
 
 void blit_to_screen(bitmap_t* source, BITMAP* destination, int dx, int dy, int sx, int sy, int w, int h){
-    eeds_blit_to_screen(source,  *destination->line, dx, dy, sx, sy, w, h);
+    int si = sy;
+    int sj = sx;
+    for(int j=MAX(dy,0);j<MIN(dy+h, 240);j++){
+        si = sy;
+        for(int i=MAX(dx,0);i<MIN(dx+w, 320);i++){
+            colour_t c = source->bitmap[sj][si];
+                putpixel(destination, si, sj, makecol(c.red, c.green, c.blue));
+            si++;
+        }
+        sj++;
+    }
 }

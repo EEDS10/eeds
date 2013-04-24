@@ -39,7 +39,7 @@ int main(){
 
     allegro_init();
     install_keyboard();
-    set_color_depth(24);
+    set_color_depth(32);
     set_gfx_mode(GFX_AUTODETECT_WINDOWED, 320, 240, 0, 0);
 
     buffer = eeds_create_bitmap(320, 240);
@@ -72,7 +72,7 @@ int main(){
             eeds_clear_to_color(buffer, 255, 255, 255);
             State_render(buffer);
             blit_to_screen(buffer, screen, 0, 0, 0, 0, 320, 240);
-            redraw_required = 1;
+            redraw_required = 0;
         }
     }    
 
