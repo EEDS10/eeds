@@ -66,3 +66,7 @@ SOUNDS! I think I am hearing them.
 oh wow all I need to do is write a short C program that forwards some .ogg file to /dev/dsp? I have no idea how to do that.
 
 "suckvensielt arbeid"
+
+We did some prototype testing and came to the conclusion that having two players control each trying to use four buttons on the board simultaneously did not result in an enjoyable experience.
+Our testers preferred being the sole user of the STK1000's buttons.
+A possible explanation for this is that all of our testers were above the age of 20 and did not posess the child-like hand size required to operate four neighbouring STK1000 buttons at the same time.

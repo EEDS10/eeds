@@ -18,6 +18,7 @@ This section describes the solutions' various components.
 	\subsubsection{Sound driver}
 		/dev/dsa!
 	\subsubsection{Display driver}
+		The STK1000's has a screen. It has a resolution of \texttt{320}\cross \texttt{240}.
 		/dev/fb0
 		Screen size: 320x240
 		32 bits per pixel (8bit color depth)
@@ -31,10 +32,9 @@ This section describes the solutions' various components.
 	\subsubsection{Graphics}
 		them graphics are pretty good but how do we handle them????
 \subsection{``Fontenizer'', the Font Engine}
-	A font rendering engine (\texttt{font.h} and \texttt{font.c} found in \texttt{game/include/}) was developed in order to display text on the screen.
+	A font rendering engine (\texttt{font.h} and \texttt{font.c} found in \texttt{game/include/}) was developed in order to easily render some given text on the screen.
+	It does this by iterating through a given string\footnote{Actually a C string.} and locating each character's corresponding glyph in a given font bitmap.
+	The glyphs are strung together and passed to the screen buffer.
 
-	It takes some \texttt{char} and locates it on the given font-bitmap (using math), and renders it on the screen.
-
-	
 \subsection{The .sm file format}
 	yo imma just rewrite http://www.stepmania.com/wiki/The_.SM_file_format
