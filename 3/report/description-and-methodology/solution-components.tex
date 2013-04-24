@@ -31,6 +31,10 @@ This section describes the solutions' various components.
 	\subsubsection{Graphics}
 		them graphics are pretty good but how do we handle them????
 \subsection{``Fontenizer'', the Font Engine}
-	Yeah that's right we made a font engine and called it ``Fontenizer''.
+	A font rendering engine (\texttt{font.h} and \texttt{font.c} found in \texttt{game/include/}) was developed in order to display text on the screen.
+
+	It takes some \texttt{char} and locates it on the given font-bitmap (using math), and renders it on the screen.
+
+	
 \subsection{The .sm file format}
 	yo imma just rewrite http://www.stepmania.com/wiki/The_.SM_file_format
