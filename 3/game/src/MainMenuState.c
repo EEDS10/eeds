@@ -1,4 +1,4 @@
-#ifdef NO_ALLEGRO
+#ifndef NO_ALLEGRO
 #include <allegro.h>
 #else
 #include "allegro_shim.h"
@@ -10,8 +10,6 @@
 #include "State.h"
 #include "SMSong.h"
 #include "Font.h"
-
-#define die(e) do { fprintf(stderr, e); exit(EXIT_FAILURE); } while (0);
 
 extern State* GameState;
 
@@ -25,7 +23,7 @@ int active_selection = 0;
 
 int key_cooldown = 0;
 
-bitmap_t* test;
+bitmap_t* menu_bg;
 
 static void state_init(){
     printf("main_menu_init()\n");
@@ -46,8 +44,8 @@ static void state_init(){
         printf("[%i] TITLE: %s\n", i, songs[i]->title);
     }
 
-    FILE* fp = fopen("res/test.bmp", "rw");
-    test = eeds_load_bmp(fp);
+    FILE* fp = fopen("res/menu.bmp", "rw");
+    menu_bg = eeds_load_bmp(fp);
     fclose(fp);
     printf("init done!\n");
 }
@@ -68,23 +66,15 @@ static void state_resume(){
 }
 
 
-static void state_render(BITMAP* buffer){
+static void state_render(bitmap_t* buffer){
     printf("mmstate render\n");
 
-    //eeds_render_bitmap(test, buffer, 0, 0);
-    //Font_render(font_large, buffer, "HELLO WORLD", 5, 5);
-    Font_render(font_small, buffer, "Help, I am trapped", 5, 15);
-    Font_render(font_small, buffer, "in an Atmel STK1000", 5, 45);
-    Font_render(font_large, buffer, "DEVELOPMENT", 5, 85);
-    Font_render(font_large, buffer, "BOARD FACTORY!", 5, 125);
-    Font_render(font_small, buffer, "(true story)", 5, 185);
-    /*
-    Font_render(font_small, buffer, songs[(active_selection - 2 + n_songs) % n_songs]->title, 5, 5);
-    Font_render(font_small, buffer, songs[(active_selection - 1 + n_songs) % n_songs]->title, 5, 45);
-    Font_render(font_large, buffer, songs[(active_selection     + n_songs) % n_songs]->title, 5, 85);
-    Font_render(font_small, buffer, songs[(active_selection + 1 + n_songs) % n_songs]->title, 5, 125);
-    Font_render(font_small, buffer, songs[(active_selection + 2 + n_songs) % n_songs]->title, 5, 165);
-    */
+    eeds_render_bitmap(menu_bg, buffer, 0, 0);
+    Font_render(font_small, buffer, songs[(active_selection + n_songs - 2) % n_songs]->title, 2, 15);
+    Font_render(font_small, buffer, songs[(active_selection + n_songs - 1) % n_songs]->title, 2, 57);
+    Font_render(font_large, buffer, songs[(active_selection + n_songs    ) % n_songs]->title, 2, 100);
+    Font_render(font_small, buffer, songs[(active_selection + n_songs + 1) % n_songs]->title, 2, 157);
+    Font_render(font_small, buffer, songs[(active_selection + n_songs + 2) % n_songs]->title, 2, 197);
 }
 
 
@@ -105,7 +95,7 @@ static void state_update(){
         key_cooldown--;
     }
 
-    active_selection = (active_selection + n_songs) % n_songs;
+    active_selection = (active_selection + n_songs + 1) % n_songs;
 }
 
 REGISTER_STATE(MainMenuState);

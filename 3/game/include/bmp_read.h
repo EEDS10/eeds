@@ -19,6 +19,6 @@ typedef struct {
 bitmap_t *eeds_load_bmp(FILE *bmp);
 void eeds_free_bitmap(bitmap_t *bitmap);
 bitmap_t* eeds_create_bitmap(int w, int h);
-void eeds_render_bitmap(bitmap_t* bitmap, bitmap_t* screen, int x, int y);
+void eeds_render_bitmap(bitmap_t* source, bitmap_t* destination, int x, int y);
 
 #endif

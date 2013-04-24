@@ -85,22 +85,22 @@ SMSong* SMSong_load(char* filename){
         PARSE("#STOPS:", stops);
         PARSELIST("#BGCHANGES:", BGchanges, int, intify);
         PARSECUSTOM("#NOTES:")
-            fgets(line, 1024, fp);
+            char* status = fgets(line, 1024, fp);
          
             /* skip notestype */
-            fgets(line, 1024, fp);
+            status = fgets(line, 1024, fp);
 
             /* skip description */
-            fgets(line, 1024, fp);
+            status = fgets(line, 1024, fp);
 
             /* skip difficultyclass */
-            fgets(line, 1024, fp);
+            status = fgets(line, 1024, fp);
 
             /* skip difficultymeter */
-            fgets(line, 1024, fp);
+            status = fgets(line, 1024, fp);
 
             /* skip radarvalues */
-            fgets(line, 1024, fp);
+            status = fgets(line, 1024, fp);
 
             /* parse notes */
             song->measures = (Measure**) malloc(sizeof(Measure*) * 256);
@@ -110,7 +110,7 @@ SMSong* SMSong_load(char* filename){
                 song->measures[i] = (Measure*) malloc(sizeof(Measure));
                 while(line != NULL && line[0] != ',' && line[0] != ';'){
                     strncpy((char * restrict)song->measures[i]->rows[j++],(char * restrict) strdup(line), 4);
-                    fgets(line, 1024, fp);
+                    status = fgets(line, 1024, fp);
                 }
                 song->measures[i]->n_rows = j;
                 j = 0;
