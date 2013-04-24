@@ -23,13 +23,6 @@
     n = strchr(line, ';') - strlen(key) - line; \
     song->target = (int)round(strtod((char * restrict) line + strlen(key), (char ** restrict) (line + strlen(key) + n)) * 1000);
 
-#define PARSEBOOL(key, target) \
-    }else if(strbeginswith(line, key)){ \
-    n = strchr(line, ';') - strlen(key) - line; \
-    char* temp = (char*) malloc(sizeof(char)*(n+1)); \
-    strncpy(temp, line + strlen(key), n); \
-    song->target = strcmp(temp, "YES") == 0;
-
 #define PARSELIST(key, target, type, process) \
     }else if(strbeginswith(line, key)){ \
     n = strchr(line, ';') - strlen(key) - line; \
@@ -88,7 +81,6 @@ SMSong* SMSong_load(char* filename){
         PARSEINT("#OFFSET:", offset_in_ms);
         PARSEINT("#SAMPLESTART:", samplestart_in_ms);
         PARSEINT("#SAMPLELENGTH:", samplelength_in_ms);
-        PARSEBOOL("#SELECTABLE:", selectable);
         PARSELIST("#BPMS:", BPMs, int, intify);
         PARSE("#STOPS:", stops);
         PARSELIST("#BGCHANGES:", BGchanges, int, intify);
