@@ -8,20 +8,46 @@ This section describes the solutions' various components.
 
 \subsection{Linux Device Drivers for the STK1000}
 	Something about LDDs?
+	Linux Device Drivers are pretty cool.
+	They live in kernel space.
+	Kernel space is like user space in the same way that the actions of children are like the actions of adults.
+
+
 	Init and Exit functions and cleanup and such
 
-	\subsubsection{LED driver}
-		the LED driver allows the software to turn the LEDs on and off?
-	\subsubsection{button driver}
-		the buttan driver reads the buttons' state.	
+	\subsubsection{Loading drivers}
+	%insmod <driver>.ko
+	%mknod /dev/leds c $(grep <driver> /proc/devices | awk '{print $1}') 0
 
+
+	\subsubsection{LED driver}
+		On initialization the driver obtains a major number dynamically and requests some region before enabling the relevant I/O pins by writing \texttt{0xFF} to the PIO Enable Register (\texttt{PER}) and to the Output Enable Register (\texttt{OER}).
+		
+		Upon exit, the driver turns the LEDs off by writing \texttt{0xFF} to the Clear Output Data Register (\texttt{CODR}) and \texttt{0x00} to the PIO Enable Register (\texttt{PER}) to disable the I/O pins.
+		It also releases the region it requested during initialization.
+
+		The driver interacts with the LEDs by first turning all the LEDs off (by writing \texttt{0xFF} to the \texttt{CODR}) and then enabling the desired LEDs by writing the given value to the Set Output Data Register (\texttt{SODR}).
+
+
+		For a more detailed explanation of the set-up of the LEDs on the STK1000, see \cite{tdt4258-1}.
+	\subsubsection{button driver}
+		The button driver allows the video game to read the state of the buttons, letting them function as a source of input for the players.
+		Its initialization is similar to the LED driver's, except that it writes \texttt{0xFF} to the Pull-up Enable Register (\texttt{PUER}) rather than the \texttt{OER}.
+		Its exit function is similarly different.
+
+		The driver reads the button's state by returning the value found in the Pin-Data Status Register (\texttt{PDSR}).
+
+
+
+		For a more detailed explanation of the set-up of the buttons on the STK1000, see \cite{tdt4258-1}.
 	\subsubsection{Sound driver}
-		/dev/dsa!
+		/dev/dsp!
+		OPEN SOUND SYSTEM -> http://en.wikipedia.org/wiki/Open_Sound_System
 	\subsubsection{Display driver}
-		The STK1000's has a screen. It has a resolution of \texttt{320}\cross \texttt{240}.
-		/dev/fb0
-		Screen size: 320x240
-		32 bits per pixel (8bit color depth)
+		The STK1000's has a screen.
+		It has a resolution of \texttt{320}$\times$\texttt{240} and sports 32 bits per pixel (24 bit color depth, the last 8 bits are unused)\cite{lab-compendium}.
+
+		Data is displayed on the screen by writing a bitmap buffer directly to \texttt{/dev/fb0}.
 
 \subsection{Game Engine -- WORKING TITLE}
 	this is the game engine we developed. it has parts that are pretty good. like sound, it can play sound and display things on the screen.
@@ -32,7 +58,7 @@ This section describes the solutions' various components.
 	\subsubsection{Graphics}
 		them graphics are pretty good but how do we handle them????
 \subsection{``Fontenizer'', the Font Engine}
-	A font rendering engine (\texttt{font.h} and \texttt{font.c} found in \texttt{game/include/}) was developed in order to easily render some given text on the screen.
+	A font rendering engine (\texttt{game/include/font.h} and \texttt{game/src/font.c}) was developed in order to easily render some given text on the screen.
 	It does this by iterating through a given string\footnote{Actually a C string.} and locating each character's corresponding glyph in a given font bitmap.
 	The glyphs are strung together and passed to the screen buffer.
 
