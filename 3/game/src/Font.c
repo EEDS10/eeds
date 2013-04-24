@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#ifdef NO_ALLEGRO
+#ifndef NO_ALLEGRO
 #include <allegro.h>
 #else
 #include "allegro_shim.h"
@@ -26,7 +26,7 @@ int chr_to_ypos(char c){
     return (((unsigned int)c) - 32) % 15;
 }
 
-void Font_render(Font*font, BITMAP* screen, char* string, int x, int y){
+void Font_render(Font*font, bitmap_t* screen, char* string, int x, int y){
     do{
         int x_offset = chr_to_xpos(string[0]) * font->char_h;
         int y_offset = chr_to_ypos(string[0]) * font->char_w;

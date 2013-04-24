@@ -10,7 +10,9 @@
     .update = state_update, \
 }; State* name = &_state;
 
-#ifdef NO_ALLEGRO
+#include "bmp_read.h"
+
+#ifndef NO_ALLEGRO
 #include <allegro.h>
 #else
 #include "allegro_shim.h"
@@ -21,12 +23,12 @@ typedef struct State{
     void (*deinit)();
     void (*pause)();
     void (*resume)();
-    void (*render)(BITMAP*);
+    void (*render)(bitmap_t*);
     void (*update)();
 } State;
 
 void State_change(State*state);
-void State_render(BITMAP* buffer);
+void State_render(bitmap_t* buffer);
 void State_update();
 void State_init(State* state);
 void State_deinit(State* state);

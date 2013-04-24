@@ -1,4 +1,4 @@
-#ifdef NO_ALLEGRO
+#ifndef NO_ALLEGRO
 #include <allegro.h>
 #else
 #include "allegro_shim.h"
@@ -68,7 +68,7 @@ static void state_resume(){
 }
 
 
-static void state_render(BITMAP* buffer){
+static void state_render(bitmap_t* buffer){
     printf("mmstate render\n");
 
     //eeds_render_bitmap(test, buffer, 0, 0);

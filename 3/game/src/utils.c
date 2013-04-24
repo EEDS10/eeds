@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <sys/time.h>
-#ifdef NO_ALLEGRO
+#ifndef NO_ALLEGRO
+#include <allegro.h>
+#else
 #include "allegro_shim.h"
 #endif
 #include "bmp_read.h"
@@ -52,15 +54,15 @@ void eeds_blit(bitmap_t* source, bitmap_t* destination, int dx, int dy, int sx, 
 void eeds_clear_to_color(bitmap_t* bitmap, int r, int g, int b){
     for(int j=0;j<bitmap->width;j++){
         for(int i=0;i<bitmap->height;i++){
-            bitmap->bitmap[i][j].blue  = 255;
-            bitmap->bitmap[i][j].red   = 255;
-            bitmap->bitmap[i][j].green = 255;
+            bitmap->bitmap[i][j].blue  = b;
+            bitmap->bitmap[i][j].red   = r;
+            bitmap->bitmap[i][j].green = g;
         }
     }
 }
 
-void eeds_blit_to_allegro(bitmap_t* source, unsigned char* destination, int dx, int dy, int sx, int sy, int w, int h){
-    //printf("eeds_blit_to_allegro( destination: %p, source: %p, dx: %i, dy: %i, sx: %i, sy: %i, w: %i, h: %i )\n", destination, source, dx, dy, sx, dy, w, h);
+void eeds_blit_to_screen(bitmap_t* source, unsigned char* destination, int dx, int dy, int sx, int sy, int w, int h){
+    //printf("eeds_blit_to_screen( destination: %p, source: %p, dx: %i, dy: %i, sx: %i, sy: %i, w: %i, h: %i )\n", destination, source, dx, dy, sx, dy, w, h);
     int si = sy;
     int sj = sx;
     int k = 0;
@@ -75,4 +77,9 @@ void eeds_blit_to_allegro(bitmap_t* source, unsigned char* destination, int dx, 
         }
         sj++;
     }
+}
+
+
+void blit_to_screen(bitmap_t* source, BITMAP* destination, int dx, int dy, int sx, int sy, int w, int h){
+    eeds_blit_to_screen(source,  *destination->line, dx, dy, sx, sy, w, h);
 }

@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#ifdef NO_ALLEGRO
+#ifndef NO_ALLEGRO
 #include <allegro.h>
 #else
 #include "allegro_shim.h"
@@ -26,7 +26,7 @@ void State_change(State*state){
     active_state->resume();
 }
 
-void State_render(BITMAP* buffer){
+void State_render(bitmap_t* buffer){
     active_state->render(buffer);
 }
 

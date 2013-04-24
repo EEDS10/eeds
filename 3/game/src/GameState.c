@@ -1,4 +1,4 @@
-#ifdef NO_ALLEGRO
+#ifndef NO_ALLEGRO
 #include <allegro.h>
 #else
 #include "allegro_shim.h"
@@ -80,7 +80,7 @@ static void state_resume(){
 }
 
 
-static void state_render(BITMAP* buffer){
+static void state_render(bitmap_t* buffer){
 
     for(int i=0;i<n_notes;i++){
         eeds_render_bitmap(note_sprite, buffer, notes[i].x, notes[i].y);

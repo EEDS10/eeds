@@ -1,4 +1,4 @@
-#ifdef NO_ALLEGRO
+#ifndef NO_ALLEGRO
     #include <allegro.h>
 #else
     #include <linux/fb.h>
@@ -18,13 +18,13 @@
 extern State* MainMenuState;
 extern State* GameState;
 
-BITMAP* buffer;
+bitmap_t* buffer;
 
 int main(){
 
     int running = 1;
 
-#ifndef NO_ALLEGRO
+#ifdef NO_ALLEGRO
 
     int screen_size = 320*240*3;
     int framebuffer;
@@ -42,7 +42,7 @@ int main(){
     set_color_depth(24);
     set_gfx_mode(GFX_AUTODETECT_WINDOWED, 320, 240, 0, 0);
 
-    buffer = create_bitmap(320, 240);
+    buffer = eeds_create_bitmap(320, 240);
     State_init(MainMenuState);
     State_init(GameState);
     State_change(MainMenuState);
@@ -60,7 +60,7 @@ int main(){
         dt += t - old_t;
 
         while(dt > MILLISECONDS_PER_TICK){
-            printf("[%i:%i] update\n", t, dt);
+            printf("[%lu:%lu] update\n", t, dt);
             dt -= MILLISECONDS_PER_TICK;
             clear_keybuf();
             State_update();
@@ -68,10 +68,10 @@ int main(){
         }
 
         if(redraw_required){
-            printf("[%i:%i] render\n", t, dt);
-            clear_to_color(buffer, makecol(255,255,255));
+            printf("[%lu:%lu] render\n", t, dt);
+            eeds_clear_to_color(buffer, 255, 255, 255);
             State_render(buffer);
-            eeds_blit_to_allegro(buffer, screen, 0, 0, 0, 0, 320, 240);
+            blit_to_screen(buffer, screen, 0, 0, 0, 0, 320, 240);
             redraw_required = 1;
         }
     }    

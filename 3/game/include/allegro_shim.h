@@ -18,6 +18,7 @@ int key[8];
 
 #define clear_to_color eeds_clear_to_color
 #define makecol(a,b,c) (a),(b),(c)
+#define blit_to_screen eeds_blit_to_screen
 
 #define KEY_ESC 1
 #define KEY_SPACE 2
