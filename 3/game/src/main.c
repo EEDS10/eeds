@@ -9,6 +9,7 @@
     #include "allegro_shim.h"
 #endif
 #include <stdio.h>
+#include <linux/soundcard.h>
 #include <stdlib.h>
 #include "State.h"
 #include "bmp_read.h"

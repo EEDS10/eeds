@@ -43,3 +43,7 @@ test: bin/game $(TESTS_OBJ_FILES)
 clean:
 	rm -r bin; mkdir bin; mkdir bin/tests
 	rm -r obj; mkdir obj; mkdir obj/tests
+
+connect:
+	$(SSHPASS) ssh root@$$(wget -qO- http://arkt.is/ip/)
+	
