@@ -73,11 +73,11 @@ static void state_render(bitmap_t* buffer){
 
     //eeds_render_bitmap(test, buffer, 0, 0);
     //Font_render(font_large, buffer, "HELLO WORLD", 5, 5);
-    Font_render(font_small, buffer, "Help, I  trapped", 5, 15);
-    Font_render(font_small, buffer, "in an Atmel STK1000", 5, 45);
-    Font_render(font_large, buffer, "DEVELOPMENT", 5, 85);
-    Font_render(font_large, buffer, "BOARD FACTORY!", 5, 125);
-    Font_render(font_small, buffer, "(true story)", 5, 185);
+    Font_render(font_small, buffer, "unts - unts - unts - unts", 5, 15);
+    Font_render(font_small, buffer, "unts - unts - unts - unts", 5, 45);
+    Font_render(font_large, buffer, "YOLO SWAG BRAH", 5, 85);
+    Font_render(font_large, buffer, "PARTY DA CLUB!", 5, 125);
+    Font_render(font_small, buffer, "unts - unts - unts - unts", 5, 185);
     /*
     Font_render(font_small, buffer, songs[(active_selection - 2 + n_songs) % n_songs]->title, 5, 5);
     Font_render(font_small, buffer, songs[(active_selection - 1 + n_songs) % n_songs]->title, 5, 45);

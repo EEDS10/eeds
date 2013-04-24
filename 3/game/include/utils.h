@@ -19,7 +19,7 @@
 #endif
 
 
-#ifdef NO_ALLEGRO
+#ifdef BIG_ENDIAN
 #define FLIP_ENDIANNESS_INT32(a)(((a>>24)&0xff)     | \
                                  ((a<<8)&0xff0000)  | \
                                  ((a>>8)&0xff00)    | \
