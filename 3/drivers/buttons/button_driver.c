@@ -41,6 +41,8 @@ dev_t device_number;
 avr32_pio_t* pio;
 struct cdev driver_cdev;
 
+int previous_button_state = 0;
+
 static long remap_to_physical(int logical){
     printk( KERN_INFO "remap_to_physical( logical: 0x%X )\n", logical);
     long out = 0;
@@ -129,9 +131,10 @@ static ssize_t driver_read (struct file *filp, char __user *buff,
 
     /* need to read the appropriate bit from PIOB PDSR */
     int buttons = pio->pdsr;
+    previous_button_state |= buttons;
+    previous_button_state = ~previous_button_state;
+    return previous_button_state&&0xff;
     printk( KERN_INFO "buttons read.\n");
-    /* Should we implement debouncing and such here? */ 
-    return buttons;
 }
 
 /*---------------------------------------------------------------------------*/
@@ -139,8 +142,7 @@ static ssize_t driver_read (struct file *filp, char __user *buff,
 static ssize_t driver_write (struct file *filp, const char __user *buff,
         size_t count, loff_t *offp) {
 
-    printk( KERN_INFO "buttons written to. buff: %c, count: %i, offp: %s\n", buff[0], count, offp);
-    printk( KERN_INFO "why would you write to the buttons?");
+    printk( KERN_INFO "Why would you write to the buttons? buff: %c, count: %i, offp: %s\n", buff[0], count, offp);
     return 0;
 }
 
