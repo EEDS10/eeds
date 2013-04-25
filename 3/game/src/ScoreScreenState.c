@@ -35,7 +35,7 @@ static void state_resume(){
 
 static void state_render(bitmap_t* buffer){
 
-    clear_to_color(buffer,255,255,255);
+    clear_to_color(buffer,makecol(255,255,255));
 
     char message[30];
     sprintf(message, "PERFECT!: %i", score_perfect);
