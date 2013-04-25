@@ -17,6 +17,7 @@
 
 #define MILLISECONDS_PER_TICK 20
 
+extern State* IntroState;
 extern State* MainMenuState;
 extern State* GameState;
 int redraw_required = 1;
@@ -56,9 +57,10 @@ int main(){
     set_gfx_mode(GFX_AUTODETECT_WINDOWED, 320, 240, 0, 0);
 
     buffer = eeds_create_bitmap(320, 240);
+    State_init(IntroState);
     State_init(MainMenuState);
     State_init(GameState);
-    State_change(MainMenuState);
+    State_change(IntroState);
 
     t = gettime();
     old_t = t;
