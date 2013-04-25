@@ -88,7 +88,7 @@ static void state_render(bitmap_t* buffer){
 
     char elapsed_time_display_string[10];
     sprintf(elapsed_time_display_string, "%3.i.%1.is", elapsed_time_in_ms / 1000, (elapsed_time_in_ms % 1000) / 100);
-    Font_render(font_small, buffer, elapsed_time_display_string, 5, 215);
+    Font_render(font_small, buffer, elapsed_time_display_string, 5, 215, 9);
 }
 
 
