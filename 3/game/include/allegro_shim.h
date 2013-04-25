@@ -3,15 +3,13 @@
 
 #include "bmp_read.h"
 
-int key[8];
-
-FILE *keyboard;
+extern int key[8];
+extern unsigned char* screen;
 
 #define BITMAP bitmap_t
 
 #define blit eeds_blit
 
-#define allegro_init()
 #define  set_color_depth(a);
 #define  set_gfx_mode(a, b, c, d, e);
 #define END_OF_MAIN()
@@ -24,11 +22,20 @@ FILE *keyboard;
 #define blit_to_screen eeds_blit_to_screen
 
 #define KEY_ESC 0
-#define KEY_SPACE 1
-#define KEY_UP 2
-#define KEY_DOWN 3
-#define KEY_LEFT 0
-#define KEY_RIGHT 1
+
+#define KEY_UP 1
+#define KEY_LEFT 1
+
+#define KEY_DOWN 2
+#define KEY_RIGHT 2
+
+#define KEY_SPACE 3
+#define KEY_ENTER 3
+
+#define KEY_A 7
+#define KEY_S 5
+#define KEY_D 3
+#define KEY_F 2
 
 #define GFX_AUTODETECT_WINDOWED 1
 
@@ -36,5 +43,6 @@ FILE *keyboard;
 
 void install_keyboard();
 void clear_keybuf();
+void allegro_init();
 
 #endif

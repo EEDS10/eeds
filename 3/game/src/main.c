@@ -6,8 +6,6 @@
     #include <linux/soundcard.h>
     #include <sys/types.h>
     #include <sys/ioctl.h>
-    #include <sys/stat.h>
-    #include <sys/mman.h>
     #include "allegro_shim.h"
 #endif
 #include <stdio.h>
@@ -17,33 +15,29 @@
 #include "bmp_read.h"
 #include "utils.h"
 
+#define MILLISECONDS_PER_TICK 20
+
 extern State* MainMenuState;
 extern State* GameState;
+int redraw_required = 1;
+
+long t;
+long old_t;
+long dt;
 
 bitmap_t* buffer;
 
-#define SOUND_BUFFER_SIZE 1024*8
+#define SOUND_BUFFER_SIZE (1024*4)
 
 int main(){
 
     int running = 1;
 
-#ifdef NO_ALLEGRO
+    int sound_tracker = 0;
 
-    int screen_size = 320*240*3;
-    int framebuffer;
-    if(!(framebuffer = open("/dev/fb0", O_RDWR))){
-        printf("Failed to open framebuffer.\n"); 
-    }
-    unsigned char* screen = mmap(0, screen_size, PROT_READ | PROT_WRITE, MAP_SHARED, framebuffer, 0);
-    if((int)screen == -1){
-        printf("Failed to mmap the framebuffer.\n");
-    }
-#endif
-
-    FILE* sound = open("/dev/dsp", O_RDWR);
+    int sound = open("/dev/dsp", O_RDWR);
     int args, status;
-    args = 16;
+    args = 8;
     status = ioctl(sound, SOUND_PCM_WRITE_BITS, &args);
 
     args = 1;
@@ -52,8 +46,15 @@ int main(){
     args = 44100;
     status = ioctl(sound, SOUND_PCM_WRITE_RATE, &args);
 
-    FILE* audio = open("res/Songs/iturntoyou/iturntoyou.raw", O_RDONLY);
-    char* sound_buffer[SOUND_BUFFER_SIZE];
+    FILE* audio = fopen("res/menumusic.wav", "rb");
+    fseek(audio, 0, SEEK_END);
+    int size = ftell(audio);
+    fseek(audio, 0, SEEK_SET);
+    char sound_buffer[size];
+    fread(&sound_buffer, sizeof(char), size, audio);
+    fclose(audio);
+
+
 
     allegro_init();
     install_keyboard();
@@ -65,11 +66,11 @@ int main(){
     State_init(GameState);
     State_change(MainMenuState);
 
-    long t = gettime();
-    long old_t = t;
-    long dt = 0;
+    t = gettime();
+    old_t = t;
+    dt = 0;
 
-    int redraw_required = 0;
+    long bench_time;
 
     while(running){
 
@@ -77,25 +78,29 @@ int main(){
         t = gettime();
         dt += t - old_t;
 
-        /*
-        read(audio, sound_buffer, sizeof(short)*SOUND_BUFFER_SIZE);
-        write(sound, sound_buffer, sizeof(short)*SOUND_BUFFER_SIZE);
-        */
         while(dt > MILLISECONDS_PER_TICK){
-            //printf("[%lu:%lu] update\n", t, dt);
             dt -= MILLISECONDS_PER_TICK;
+            bench_time = gettime();
             clear_keybuf();
             State_update();
-            redraw_required = 1;
+            printf("[%lu:%lu] update()\n", dt, gettime() - bench_time);
         }
 
         if(redraw_required){
+            bench_time = gettime();
             //printf("[%lu:%lu] render\n", t, dt);
             //eeds_clear_to_color(buffer, 255, 255, 255);
             State_render(buffer);
             blit_to_screen(buffer, screen, 0, 0, 0, 0, 320, 240);
             redraw_required = 0;
+            printf("[%lu] render()\n", gettime() - bench_time);
         }
+        /*
+        bench_time = gettime();
+        int written = write(sound, sound_buffer + sound_tracker, sizeof(short)*SOUND_BUFFER_SIZE);
+        sound_tracker = (sound_tracker + written) % size;
+        printf("[%lu] render_sound()\n", gettime() - bench_time);
+        */
     }    
 
     State_deinit(MainMenuState);

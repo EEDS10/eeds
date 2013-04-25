@@ -3,6 +3,7 @@
 #else
 #include "allegro_shim.h"
 #endif
+#include <stdlib.h>
 #include "State.h"
 #include "Font.h"
 #include "SMSong.h"
@@ -26,6 +27,7 @@ int measure;
 int beats_per_measure;
 int ms_per_measure;
 int ms_since_last_beat;
+int need_to_draw_song_bg;
 
 typedef struct Note{
     int column;
@@ -82,6 +84,7 @@ static void state_resume(){
     ms_since_last_beat = 0;
     current_bpm_index = 1;
     current_bpm = song->BPMs[current_bpm_index];
+    need_to_draw_song_bg = 1;
 
     char path_to_bg[256];
     sprintf(path_to_bg, "res/Songs/%s/%s.bmp", song->basename, song->basename);
@@ -92,17 +95,15 @@ static void state_resume(){
 
 
 static void state_render(bitmap_t* buffer){
-
-    eeds_render_bitmap(song_bg, buffer, 0, 0);
+    if(need_to_draw_song_bg){
+        eeds_render_bitmap(song_bg, buffer, 0, 0);
+        need_to_draw_song_bg = 0;
+    }
     eeds_render_bitmap(game_bg, buffer, 0, 0);
 
     for(int i=0;i<n_notes;i++){
-        eeds_render_bitmap(note_sprite, buffer, 80 + notes[i].column * 40, notes[i].y);
+        eeds_render_bitmap(note_sprite, buffer, 70 + notes[i].column * 50, notes[i].y);
     }
-
-    char elapsed_time_display_string[10];
-    sprintf(elapsed_time_display_string, "%3.i.%1.is", elapsed_time_in_ms / 1000, (elapsed_time_in_ms % 1000) / 100);
-    Font_render(font_small, buffer, elapsed_time_display_string, 5, 215, 9);
 }
 
 void hit_notes(int column){
@@ -128,6 +129,9 @@ void hit_notes(int column){
 
 
 static void state_update(){
+
+    redraw_required = 1;
+
     if(key[KEY_ESC]){
         State_change(MainMenuState);
     }
@@ -150,7 +154,7 @@ static void state_update(){
 
 
     for(int i=0;i<n_notes;i++){
-        notes[i].y -= 3;
+        notes[i].y -= 1;
 
         if(notes[i].done || notes[i].y < -30){
             remove_note(i);
@@ -165,12 +169,11 @@ static void state_update(){
         if(beat > beats_per_measure){
             beat -= beats_per_measure;
             measure++;
-            printf("UNTS\n");
             beats_per_measure = song->measures[measure]->n_rows;
             if(measure == song->BPMs[current_bpm_index + 1]){
                 current_bpm_index += 2;
                 current_bpm = song->BPMs[current_bpm_index]; 
-                ms_per_measure = (current_bpm * 60 * 1000) / 4;
+                ms_per_measure = 60000 * beats_per_measure/current_bpm;
             }
         }
         for(int i=0;i<4;i++){

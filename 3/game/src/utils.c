@@ -61,22 +61,27 @@ void eeds_clear_to_color(bitmap_t* bitmap, int r, int g, int b){
     }
 }
 
+/* hand-optimized and benchmarked */
 void eeds_blit_to_screen(bitmap_t* source, unsigned char* destination, int dx, int dy, int sx, int sy, int w, int h){
     //printf("eeds_blit_to_screen( destination: %p, source: %p, dx: %i, dy: %i, sx: %i, sy: %i, w: %i, h: %i )\n", destination, source, dx, dy, sx, dy, w, h);
-    int si = sy;
-    int sj = sx;
+    long bt = gettime();
     int k = 0;
-    for(int j=MAX(dy,0);j<MIN(dy+h, 240);j++){
-        si = sy;
-        for(int i=MAX(dx,0);i<MIN(dx+w, 320);i++){
-            destination[ k ] = source->bitmap[sj][si].blue;
-            destination[k+1] = source->bitmap[sj][si].green;
-            destination[k+2] = source->bitmap[sj][si].red;
-            k += 3;
-            si++;
+    int j_max = sx + MIN(dy+h, 240) - MAX(dy, 0);
+    int i_max = sy + MIN(dx+w, 320) - MAX(dx, 0) - 1;
+    for(int j=sx;j<j_max;j++){
+        for(int i=sy;i<i_max;i+=2){
+            colour_t* c = &(source->bitmap[j][i]);
+            destination[k] = c->blue;
+            destination[k+1] = c->green;
+            destination[k+2] = c->red;
+            c = &(source->bitmap[j][i+1]);
+            destination[k+3] = c->blue;
+            destination[k+4] = c->green;
+            destination[k+5] = c->red;
+            k += 6;
         }
-        sj++;
     }
+    printf("[%lu] eeds_blit_to_screen(..)\n", gettime() - bt);
 }
 
 

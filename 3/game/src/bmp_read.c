@@ -26,6 +26,8 @@ bitmap_t *eeds_load_bmp(FILE *bmp) {
     w = FLIP_ENDIANNESS_INT32(*((int *) &(header[18])));
     h = FLIP_ENDIANNESS_INT32((*((int *) &(header[22]))));
 
+    printf("w: %i, h: %i\n", w, h);
+
     bitmap = eeds_create_bitmap(w, h);
 
     bytes = bitmap->width * bitmap->height * 4;
