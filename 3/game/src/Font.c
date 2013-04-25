@@ -26,11 +26,18 @@ int chr_to_ypos(char c){
     return (((unsigned int)c) - 32) % 15;
 }
 
-void Font_render(Font*font, bitmap_t* screen, char* string, int x, int y){
-    do{
-        int x_offset = chr_to_xpos(string[0]) * font->char_h;
-        int y_offset = chr_to_ypos(string[0]) * font->char_w;
-        eeds_blit(font->bmp, screen, x, y, x_offset, y_offset, font->char_w - 6, font->char_h);
-        x += font->char_w - 8;
-    }while((++string)[0] != '\0');
+void Font_render(Font*font, bitmap_t* screen, char* string, int x, int y, int kerning){
+    if(string != NULL){
+        do{
+            int x_offset = chr_to_xpos(string[0]) * font->char_h;
+            int y_offset = chr_to_ypos(string[0]) * font->char_w;
+            if(x_offset < 0 || x_offset > font->bmp->width ||
+                y_offset < 0 || y_offset > font->bmp->height){
+                continue;
+            }
+
+            eeds_blit(font->bmp, screen, x, y, x_offset, y_offset, font->char_w - 6, font->char_h - 3);
+            x += font->char_w - kerning;
+        }while((++string)[0] != '\0');
+    }
 }

@@ -16,6 +16,6 @@ typedef struct Font {
 
 
 Font* Font_load(char* filename, int char_w, int char_h);
-void Font_render(Font*font, bitmap_t* screen, char* string, int x, int y);
+void Font_render(Font*font, bitmap_t* screen, char* string, int x, int y, int kerning);
 
 #endif
