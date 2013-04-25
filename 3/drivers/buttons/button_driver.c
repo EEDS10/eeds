@@ -42,16 +42,6 @@ avr32_pio_t* pio;
 struct cdev driver_cdev;
 
 
-static long remap_to_physical(int logical){
-    printk( KERN_INFO "remap_to_physical( logical: 0x%X )\n", logical);
-    long out = 0;
-    out |= (logical & 0x07) << 8;
-    out |= (logical & 0x78) << 10;
-    out |= (logical & 0x80) << 23;
-    printk( KERN_INFO "<-- 0x%X --\n", out);
-    return out;
-}
-
 /*****************************************************************************/
 /* init-funksjon (kalles når modul lastes) */
 
@@ -78,10 +68,10 @@ static int __init driver_init (void) {
     printk( KERN_INFO "pio: %p\n", pio);
 
     /* Enable IO pins */
-    pio->per = remap_to_physical(0xFF);
+    pio->per |= 0xFF;
 
     /* Enable pull-up resistors */
-    pio->puer = remap_to_physical(0xFF);
+    pio->puer |= 0xFF;
 
     /* registrere device i systemet (må gjøres når alt annet er initialisert) */
     cdev_init(&driver_cdev, &driver_fops);
@@ -97,10 +87,10 @@ static int __init driver_init (void) {
 static void __exit driver_exit (void) {
 
     /* turn off pull-up resistors */
-    pio->puer = remap_to_physical(0xFF);
+    pio->puer = 0x00;
 
     /* disable IO-pins */
-    pio->per = remap_to_physical(0x00);
+    pio->per = 0x00;
 
     cdev_del(&driver_cdev);
     release_region(AVR32_PIOB_ADDRESS, AVR32_PIOC_ADDRESS - AVR32_PIOB_ADDRESS);
@@ -129,9 +119,11 @@ static ssize_t driver_read (struct file *filp, char __user *buff,
         size_t count, loff_t *offp) {
 
     /* need to read the appropriate bit from PIOB PDSR */
-    int buttons = pio->pdsr;
+    char buttons = ~(pio->pdsr);
     printk( KERN_INFO "buttons read.\n");
-    return buttons;
+
+    copy_to_user(buff, &buttons, 1);
+    return 1;
 }
 
 /*---------------------------------------------------------------------------*/

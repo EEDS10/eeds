@@ -11,6 +11,7 @@ void install_keyboard() {
 }
 
 void clear_keybuf() {
+    rewind(keyboard);
     int keystates = fgetc(keyboard);
 
     key[0] = !!(keystates & 128);
