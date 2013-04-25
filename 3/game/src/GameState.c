@@ -80,11 +80,11 @@ static void state_resume(){
     beat = 0;
     measure = 0;
     beats_per_measure = 4;
-    ms_per_measure = 800;
     ms_since_last_beat = 0;
     current_bpm_index = 1;
     current_bpm = song->BPMs[current_bpm_index];
     need_to_draw_song_bg = 1;
+    ms_per_measure = 4*60000000 / current_bpm;
 
     char path_to_bg[256];
     sprintf(path_to_bg, "res/Songs/%s/%s.bmp", song->basename, song->basename);
@@ -154,7 +154,7 @@ static void state_update(){
 
 
     for(int i=0;i<n_notes;i++){
-        notes[i].y -= 1;
+        notes[i].y -= 2;
 
         if(notes[i].done || notes[i].y < -30){
             remove_note(i);
@@ -173,7 +173,7 @@ static void state_update(){
             if(measure == song->BPMs[current_bpm_index + 1]){
                 current_bpm_index += 2;
                 current_bpm = song->BPMs[current_bpm_index]; 
-                ms_per_measure = 60000 * beats_per_measure/current_bpm;
+                ms_per_measure = 4*60000000 / current_bpm;
             }
         }
         for(int i=0;i<4;i++){
