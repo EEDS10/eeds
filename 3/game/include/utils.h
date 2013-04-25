@@ -31,6 +31,7 @@ int strbeginswith(char* str, char *beginswith);
 void eeds_blit(bitmap_t* destination, bitmap_t* source, int dx, int dy, int sx, int sy, int w, int h);
 void eeds_blit_to_screen(bitmap_t* source, unsigned char* destination, int dx, int dy, int sx, int sy, int w, int h);
 void eeds_clear_to_color(bitmap_t* bitmap, int r, int g, int b);
+void eeds_fade_in(bitmap_t* bg, bitmap_t* buffer, int x, int y, int timer);
 
 #ifndef NO_ALLEGRO
 void blit_to_screen(bitmap_t* source, BITMAP* destination, int dx, int dy, int sx, int sy, int w, int h);

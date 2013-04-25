@@ -1,6 +1,18 @@
-\section{Basic functionality test}
+\section{Energy Efficiency}
+	the solution doesn't make use of interrupts.
+	the buttons are polled each frame. some sort of interrupt-based scheme could surely be implemented.
 
-\section{Game engine test suite}
+	update() is called more often than render().
+
+	cpu usage vs redrawing on the screen (is it better to redraw large areas or just the specific areas affected between frames?)
+
+\section{Testing}
+\subsection{Basic functionality test}
+
+\subsection{Energy consumption}
+
+
+\subsection{Game engine test suite}
 	all those tests we made
 
 	all those tests we made
@@ -14,12 +26,25 @@
 	(runnin' through my board)
 
 	they were not enough
-	\subsection{Evaluating the efficiency of functions}
-		Select functions were 
-		EEDS_blit_to_screen tok f;rst 80ms, og s[ ble det oppdaget og det var dumt s[ n[ tar den litt under 40ms (35ms).
-		det gjorde det lett å se hvilke tiltak som hjalp og hvilke som ikke hjalp.
+	\subsubsection{Evaluating the efficiency of functions}
+		Select functions print their runtime/TTC (time to completion) to the console, allowing an evaluation to be made regarding their efficiency.
+		This facilitates the evaluation of changes made to functions: if a change in the function results in an increase in its runtime, the change did not contribute to increased efficiency.
 
+		This particular technique is a kind of profiling\footnote{\url{http://en.wikipedia.org/wiki/Profiling_(computer_programming)}} dubbed ``ghetto profiling'' by one of the authors. 
 
-\section{Gameplay tests}
+\subsection{Gameplay}
 	we had people test the gameplay.
 	those who did not enjoy themselves were eliminated.
+	\subsubsection{Prototyping}
+		rough test of gameplay
+		two people attempted to control the STK1000's buttons at the same time, resting one finger on each button.
+		After the conclusion of the test the participants reported that 
+	\subsubsection{External reviews}
+		we let some peeps play the finished game.
+		they rated it somewhere between 0 and 100.
+		the test involved having them play the game.
+
+
+\section{Discussion}
+	hey yo what up what is there to discuss?
+	maybe we should have conducted more gameplay tests underway?
