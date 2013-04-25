@@ -6,6 +6,11 @@
 #endif
 #include "State.h"
 
+extern long t;
+extern long old_t;
+extern long dt;
+
+
 State* active_state;
 
 
@@ -24,6 +29,9 @@ void State_change(State*state){
     }
     active_state = state;
     active_state->resume();
+    t = gettime();
+    old_t = t;
+    dt = 0;
 }
 
 void State_render(bitmap_t* buffer){

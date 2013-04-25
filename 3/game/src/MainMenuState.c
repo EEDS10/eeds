@@ -62,12 +62,14 @@ static void state_pause(){
 
 
 static void state_resume(){
-
+    printf("main menu resume\n");
 }
 
 
 static void state_render(bitmap_t* buffer){
+    printf("renderrender\n");
     eeds_render_bitmap(menu_bg, buffer, 0, 0);
+
     Font_render(font_small, buffer, songs[(active_selection + n_songs - 2) % n_songs]->title, 2, 15, 9);
     Font_render(font_small, buffer, songs[(active_selection + n_songs - 1) % n_songs]->title, 2, 57, 9);
     Font_render(font_large, buffer, songs[(active_selection + n_songs    ) % n_songs]->title, 2, 100, 11);
@@ -89,11 +91,13 @@ static void state_update(){
     if(key_cooldown == 0){
         if (key[KEY_UP]){
             active_selection--;
-            key_cooldown = 10;
+            key_cooldown = 5;
+            redraw_required = 1;
         }
         if (key[KEY_DOWN]){
             active_selection++;
-            key_cooldown = 10;
+            key_cooldown = 5;
+            redraw_required = 1;
         }
     }else{
         key_cooldown--;

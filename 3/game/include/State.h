@@ -18,6 +18,8 @@
 #include "allegro_shim.h"
 #endif
 
+extern int redraw_required;
+
 typedef struct State{
     void (*init)();
     void (*deinit)();

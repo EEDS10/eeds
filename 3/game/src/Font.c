@@ -10,6 +10,7 @@
 
 
 Font* Font_load(char* filename, int char_w, int char_h){
+    printf("loading font %s...\n", filename);
     Font* font = (Font*) malloc(sizeof(Font));
     FILE* fp = fopen(filename, "rb");
     font->bmp = eeds_load_bmp(fp);
