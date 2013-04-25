@@ -36,7 +36,7 @@ upload: avr32
 	$(SSHPASS) scp -p -o $(SSHOPTS) -r bin root@$$(wget -qO- http://arkt.is/ip/):game/
 
 upload-all: avr32
-	$(SSHPASS) scp -p -o $(SSHOPTS) -r bin res root@$$(wget -qO- http://arkt.is/ip/):game/
+	$(SSHPASS) scp -p -v -o $(SSHOPTS) -r bin res root@$$(wget -qO- http://arkt.is/ip/):game/
 	
 test: bin/game $(TESTS_OBJ_FILES)
 	python tests/testrunner.py
