@@ -34,9 +34,9 @@ static void state_init(){
     n_songs = 3;
     songs = malloc(sizeof(SMSong*)*n_songs);
 
-    songs[0] = SMSong_load("res/Songs/32a5/32a5.sm");
-    songs[1] = SMSong_load("res/Songs/iturntoyou/iturntoyou.sm");
-    songs[2] = SMSong_load("res/Songs/lost/lost.sm");
+    songs[0] = SMSong_load("res/Songs/32a5/32a5.sm", "32a5");
+    songs[1] = SMSong_load("res/Songs/iturntoyou/iturntoyou.sm", "iturntoyou");
+    songs[2] = SMSong_load("res/Songs/lost/lost.sm", "lost");
     for(int i=0;i<n_songs;i++){
         if(songs[i] == NULL){
             printf("[%i] NULL!\n", i);
@@ -67,14 +67,18 @@ static void state_resume(){
 
 
 static void state_render(bitmap_t* buffer){
-    printf("mmstate render\n");
-
     eeds_render_bitmap(menu_bg, buffer, 0, 0);
-    Font_render(font_small, buffer, songs[(active_selection + n_songs - 2) % n_songs]->title, 2, 15);
-    Font_render(font_small, buffer, songs[(active_selection + n_songs - 1) % n_songs]->title, 2, 57);
-    Font_render(font_large, buffer, songs[(active_selection + n_songs    ) % n_songs]->title, 2, 100);
-    Font_render(font_small, buffer, songs[(active_selection + n_songs + 1) % n_songs]->title, 2, 157);
-    Font_render(font_small, buffer, songs[(active_selection + n_songs + 2) % n_songs]->title, 2, 197);
+    Font_render(font_small, buffer, songs[(active_selection + n_songs - 2) % n_songs]->title, 2, 15, 9);
+    Font_render(font_small, buffer, songs[(active_selection + n_songs - 1) % n_songs]->title, 2, 57, 9);
+    Font_render(font_large, buffer, songs[(active_selection + n_songs    ) % n_songs]->title, 2, 100, 11);
+    Font_render(font_small, buffer, songs[(active_selection + n_songs + 1) % n_songs]->title, 2, 157, 9);
+    Font_render(font_small, buffer, songs[(active_selection + n_songs + 2) % n_songs]->title, 2, 197, 9);
+
+    Font_render(font_small, buffer, "by:", 190, 37, 9);
+    Font_render(font_small, buffer, songs[(active_selection + n_songs) % n_songs]->artist, 190, 57, 9);
+    char bpm_string[30];
+    sprintf(bpm_string, "BPM: %i", songs[(active_selection + n_songs) % n_songs]->BPMs[1]/1000);
+    Font_render(font_small, buffer, bpm_string, 190, 157, 9);
 }
 
 
@@ -85,17 +89,17 @@ static void state_update(){
     if(key_cooldown == 0){
         if (key[KEY_UP]){
             active_selection--;
-            key_cooldown = 5;
+            key_cooldown = 10;
         }
         if (key[KEY_DOWN]){
             active_selection++;
-            key_cooldown = 5;
+            key_cooldown = 10;
         }
     }else{
         key_cooldown--;
     }
 
-    active_selection = (active_selection + n_songs + 1) % n_songs;
+    active_selection = (active_selection + n_songs) % n_songs;
 }
 
 REGISTER_STATE(MainMenuState);

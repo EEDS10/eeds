@@ -91,7 +91,7 @@ int main(){
 
         if(redraw_required){
             //printf("[%lu:%lu] render\n", t, dt);
-            eeds_clear_to_color(buffer, 255, 255, 255);
+            //eeds_clear_to_color(buffer, 255, 255, 255);
             State_render(buffer);
             blit_to_screen(buffer, screen, 0, 0, 0, 0, 320, 240);
             redraw_required = 0;

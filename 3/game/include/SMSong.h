@@ -29,9 +29,10 @@ typedef struct SMSong{
     int* BGchanges;
     void* notes;    
     Measure** measures;
+    char* basename;
 } SMSong;
 
 
-SMSong* SMSong_load(char* filename);
+SMSong* SMSong_load(char* filename, char* basename);
 
 #endif
