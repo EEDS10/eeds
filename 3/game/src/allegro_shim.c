@@ -19,6 +19,9 @@ unsigned char* screen;
 
 void install_keyboard() {
     keyboard = fopen("/dev/buttons", "rb");
+    if(!keyboard){
+        printf("FAILED TO LOAD KEYBOARD!\n");
+    }
 }
 
 void clear_keybuf() {
@@ -28,13 +31,6 @@ void clear_keybuf() {
     for(int i=0;i<8;i++){
         key[i] = !!(keystates & (int)pow(2,i));
     }
-
-    /*
-    key[0] = !!(keystates & 128);
-    key[1] = !!(keystates & 64);
-    key[2] = !!(keystates & 32);
-    key[3] = !!(keystates & 16);
-    */
 }
 
 
