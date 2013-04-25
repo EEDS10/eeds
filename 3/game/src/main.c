@@ -38,9 +38,7 @@ int main(){
 
     int sound_tracker = 0;
 
-    printf("perper\n");
     int sound = open("/dev/dsp", O_RDWR);
-    printf("to\n");
     int args, status;
     args = 16;
     status = ioctl(sound, SOUND_PCM_WRITE_BITS, &args);
@@ -79,7 +77,7 @@ int main(){
             bench_time = gettime();
             clear_keybuf();
             State_update();
-            printf("[%lu:%lu] update()\n", dt, gettime() - bench_time);
+            //printf("[%lu:%lu] update()\n", dt, gettime() - bench_time);
         }
 
         if(redraw_required){
@@ -90,14 +88,14 @@ int main(){
             bench_time = gettime();
         }
 
-        printf("[%lu] render()\n", gettime() - bench_time);
+        //printf("[%lu] render()\n", gettime() - bench_time);
         bench_time = gettime();
         if(audio != NULL){
             fread(sound_buffer, sizeof(short), SOUND_BUFFER_SIZE, audio);
             int written = write(sound, sound_buffer, sizeof(short)*SOUND_BUFFER_SIZE);
             audio_progress += written;
         }
-        printf("[%lu] render_sound()\n", gettime() - bench_time);
+        //printf("[%lu] render_sound()\n", gettime() - bench_time);
     }    
 
     State_deinit(MainMenuState);

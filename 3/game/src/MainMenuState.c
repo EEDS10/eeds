@@ -37,6 +37,7 @@ static void state_init(){
     songs[0] = SMSong_load("res/Songs/32a5/32a5.sm", "32a5");
     songs[1] = SMSong_load("res/Songs/iturntoyou/iturntoyou.sm", "iturntoyou");
     songs[2] = SMSong_load("res/Songs/lost/lost.sm", "lost");
+    songs[3] = SMSong_load("res/Songs/supertrouper/supertrouper.sm", "snowbound");
     for(int i=0;i<n_songs;i++){
         if(songs[i] == NULL){
             printf("[%i] NULL!\n", i);

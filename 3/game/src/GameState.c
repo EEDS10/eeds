@@ -223,7 +223,7 @@ void hit_notes(int column){
     for(int i=0;i<n_notes;i++){
         if(notes[i].column == column){
             int difference = abs(notes[i].y - 40 + note_sprite->height);
-            if(difference < 2){
+            if(difference < 4){
                 accuracy_feedback = accuracy_perfect;
                 score_perfect++;
                 score_combo++;
@@ -305,16 +305,16 @@ static void state_update(){
         if(beat > beats_per_measure){
             beat -= beats_per_measure;
             measure++;
+            if(song->measures[measure] == NULL){
+                State_change(ScoreScreenState);
+                return;
+            }
             beats_per_measure = song->measures[measure]->n_rows;
             if(measure == song->BPMs[current_bpm_index + 1]){
                 current_bpm_index += 2;
                 current_bpm = song->BPMs[current_bpm_index]; 
                 ms_per_measure = 4*60000000 / current_bpm;
             }
-        }
-        if(song->measures[measure] == NULL){
-            State_change(ScoreScreenState);
-            return;
         }
         for(int i=0;i<4;i++){
             if(song->measures[measure]->rows[beat][i] == '1'){
