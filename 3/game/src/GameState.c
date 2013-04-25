@@ -99,7 +99,7 @@ static void state_render(bitmap_t* buffer){
         eeds_render_bitmap(song_bg, buffer, 0, 0);
         need_to_draw_song_bg = 0;
     }
-    eeds_render_bitmap(game_bg, buffer, 0, 0);
+    eeds_render_bitmap(game_bg, buffer, 64, 0);
 
     for(int i=0;i<n_notes;i++){
         eeds_render_bitmap(note_sprite, buffer, 70 + notes[i].column * 50, notes[i].y);
