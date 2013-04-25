@@ -31,13 +31,16 @@ static void state_init(){
     font_small = Font_load("res/fonts/font_small.bmp", 20, 24);
     printf("done loading fonts...\n");
 
-    n_songs = 3;
+    n_songs = 6;
     songs = malloc(sizeof(SMSong*)*n_songs);
 
     songs[0] = SMSong_load("res/Songs/32a5/32a5.sm", "32a5");
     songs[1] = SMSong_load("res/Songs/iturntoyou/iturntoyou.sm", "iturntoyou");
-    songs[2] = SMSong_load("res/Songs/lost/lost.sm", "lost");
-    songs[3] = SMSong_load("res/Songs/supertrouper/supertrouper.sm", "snowbound");
+    songs[2] = SMSong_load("res/Songs/jumparound/jumparound.sm", "jumparound");
+    songs[3] = SMSong_load("res/Songs/lost/lost.sm", "lost");
+    songs[4] = SMSong_load("res/Songs/supertrouper/supertrouper.sm", "supertrouper");
+    songs[5] = SMSong_load("res/Songs/whothehell/whothehell.sm", "whothehell");
+
     for(int i=0;i<n_songs;i++){
         if(songs[i] == NULL){
             printf("[%i] NULL!\n", i);
