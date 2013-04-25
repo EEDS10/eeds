@@ -21,6 +21,7 @@ This section describes the solutions' various components.
 
 
 	\subsubsection{LED driver}
+		A custom driver was written for the STK1000 to facilitate the turning off and on of the LEDs.
 		On initialization the driver obtains a major number dynamically and requests some region before enabling the relevant I/O pins by writing \texttt{0xFF} to the PIO Enable Register (\texttt{PER}) and to the Output Enable Register (\texttt{OER}).
 		
 		Upon exit, the driver turns the LEDs off by writing \texttt{0xFF} to the Clear Output Data Register (\texttt{CODR}) and \texttt{0x00} to the PIO Enable Register (\texttt{PER}) to disable the I/O pins.
@@ -30,7 +31,9 @@ This section describes the solutions' various components.
 
 
 		For a more detailed explanation of the set-up of the LEDs on the STK1000, see \cite{tdt4258-1}.
-	\subsubsection{button driver}
+	\subsubsection{Button driver}
+		A custom driver was written in order to allow the software to read the buttons' state.
+
 		The button driver allows the video game to read the state of the buttons, letting them function as a source of input for the players.
 		Its initialization is similar to the LED driver's, except that it writes \texttt{0xFF} to the Pull-up Enable Register (\texttt{PUER}) rather than the \texttt{OER}.
 		Its exit function is similarly different.
@@ -38,8 +41,7 @@ This section describes the solutions' various components.
 		The driver reads the button's state by returning the value found in the Pin-Data Status Register (\texttt{PDSR}).
 
 
-
-		For a more detailed explanation of the set-up of the buttons on the STK1000, see \cite{tdt4258-1}.
+		For a more detailed explanation of the set-up of the buttons on the STK1000, see \cite{tdt4258-1}.	
 	\subsubsection{Sound driver}
 		/dev/dsp!
 		OPEN SOUND SYSTEM -> http://en.wikipedia.org/wiki/Open_Sound_System
@@ -49,6 +51,8 @@ This section describes the solutions' various components.
 
 		Data is displayed on the screen by writing a bitmap buffer directly to \texttt{/dev/fb0}.
 
+		% should we mention something about orientation?
+
 \subsection{Game Engine -- WORKING TITLE}
 	this is the game engine we developed. it has parts that are pretty good. like sound, it can play sound and display things on the screen.
 	\subsubsection{Sound}
@@ -57,10 +61,12 @@ This section describes the solutions' various components.
 		pretty much I guess.
 	\subsubsection{Graphics}
 		them graphics are pretty good but how do we handle them????
+		everything is a bitmap, right?
 \subsection{``Fontenizer'', the Font Engine}
 	A font rendering engine (\texttt{game/include/font.h} and \texttt{game/src/font.c}) was developed in order to easily render some given text on the screen.
 	It does this by iterating through a given string\footnote{Actually a C string.} and locating each character's corresponding glyph in a given font bitmap.
 	The glyphs are strung together and passed to the screen buffer.
 
-\subsection{The .sm file format}
+\subsection{The \texttt{.SM} file format}
+	The \texttt{.SM}
 	yo imma just rewrite http://www.stepmania.com/wiki/The_.SM_file_format
