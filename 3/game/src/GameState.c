@@ -126,7 +126,7 @@ void hit_notes(int column){
     int note_hit_height = 20;
     for(int i=0;i<n_notes;i++){
         if(notes[i].column == column){
-            int difference = abs(notes[i].y - 40);
+            int difference = abs(notes[i].y - 40 + note_sprite->height);
             if(difference == 0){
                 printf("PERFECT!\n");
                 remove_note(i--);
