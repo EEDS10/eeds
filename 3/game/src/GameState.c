@@ -102,7 +102,23 @@ static void state_render(bitmap_t* buffer){
     eeds_render_bitmap(game_bg, buffer, 64, 0);
 
     for(int i=0;i<n_notes;i++){
-        eeds_render_bitmap(note_sprite, buffer, 70 + notes[i].column * 50, notes[i].y);
+        eeds_render_bitmap(note_sprite, buffer, 72 + notes[i].column * 50, notes[i].y);
+    }
+
+    if(key[KEY_A]){
+        eeds_render_bitmap(note_sprite, buffer, 72 + 0 * 50, 29);
+    }
+
+    if(key[KEY_S]){
+        eeds_render_bitmap(note_sprite, buffer, 72 + 1 * 50, 29);
+    }
+
+    if(key[KEY_D]){
+        eeds_render_bitmap(note_sprite, buffer, 72 + 2 * 50, 29);
+    }
+
+    if(key[KEY_F]){
+        eeds_render_bitmap(note_sprite, buffer, 72 + 3 * 50, 29);
     }
 }
 
