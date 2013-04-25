@@ -2,8 +2,8 @@ C_FILES   := $(wildcard src/*.c)
 OBJ_FILES := $(addprefix obj/,$(notdir $(C_FILES:.c=.o)))
 TESTS_C_FILES   := $(wildcard tests/*.c)
 TESTS_OBJ_FILES := $(addprefix obj/tests/,$(notdir $(TESTS_C_FILES:.c=.o)))
-LD_FLAGS := -lalleg -lm -O3
-CC_FLAGS := -std=c99 -g -Iinclude/ -O3
+LD_FLAGS := -lalleg -lm -O2
+CC_FLAGS := -std=c99 -g -Iinclude/ -O2
 SHELL=/bin/bash
 
 SSHPASS := ../tools/sshpass -p 'perper' 
@@ -30,7 +30,7 @@ debug: bin/game
 	cgdb bin/game
 
 avr32: 
-	make CC=avr32-linux-gcc  CC_FLAGS=-"-std=c99 -g -D NO_ALLEGRO=1 -Iinclude/" LD_FLAGS=" -lm -03"
+	make CC=avr32-linux-gcc  CC_FLAGS=-"-std=c99 -g -D NO_ALLEGRO=1 -Iinclude/ -O2" LD_FLAGS=" -lm -02"
 
 upload: avr32
 	$(SSHPASS) scp -p -o $(SSHOPTS) -r bin root@$$(wget -qO- http://arkt.is/ip/):game/
