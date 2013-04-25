@@ -120,8 +120,6 @@ static ssize_t driver_read (struct file *filp, char __user *buff,
 
     /* need to read the appropriate bit from PIOB PDSR */
     char buttons = ~(pio->pdsr);
-    int foo = buttons;
-    printk( KERN_INFO "FOO: %d\n", foo);
     printk( KERN_INFO "buttons read.\n");
 
     copy_to_user(buff, &buttons, 1);
