@@ -70,6 +70,7 @@ static void state_pause(){
     eeds_free_bitmap(song_bg);
 }
 
+static void merge_bgs();
 
 static void state_resume(){
     song = songs[active_selection];
@@ -97,6 +98,8 @@ static void state_resume(){
     merge_bgs();
 }
 
+static int isTransparent(colour_t colour);
+
 static void merge_bgs() {
     /*  bitmap_t has width, height and colour_t **bitmap
         need to start the loop at x = 
@@ -104,43 +107,47 @@ static void merge_bgs() {
         x = [(songbg->width - game_bg-width)/2, (songbg->width - game_bg->width)/2 + game_bg->width]
         y = [0, songbg->height]
      */
+    printf("merge yo\n");
     int x = (song_bg->width - game_bg->width)/2;
     /* int endx = startx + game_bg->width; */
     /*  
         (value1 * a + value2*(255-a))/255
-    */
-    int overlayAlpha = 127;
+        printf("merge yo\n");
+        */
+    int overlayAlpha = 180;
     for (int i = 0; i < game_bg->width; i++, x++) {
         for (int j = 0; j < game_bg->height; j++) {
+            printf("i: %i, j: %i, x: %i\n", i, j, x);
             /* uh, ok, how do I create fake transparency? */
             /* whatever I'll just overwrite game_bg */
-            if (isTransparent(game_bg->bitmap[i][j])) {
-                game_bg->bitmap[i][j] = song_bg[x][j];
+            if (isTransparent(game_bg->bitmap[j][i])) {
+                game_bg->bitmap[j][i] = song_bg->bitmap[j][x];
             } else {
-                game_bg->bitmap[i][j].red =
-                    (game_bg->bitmap[i][j]*overlayAlpha
-                    + song_bg->bitmap[x][j]*(255 - overlayAlpha)
+                game_bg->bitmap[j][i].red =
+                    (game_bg->bitmap[j][i].red * overlayAlpha +
+                     song_bg->bitmap[j][x].red*(255 - overlayAlpha)
                     )/255;
-                game_bg->bitmap[i][j].blue =
-                    (game_bg->bitmap[i][j]*overlayAlpha
-                    + song_bg->bitmap[x][j]*(255 - overlayAlpha)
+                game_bg->bitmap[j][i].blue =
+                    (game_bg->bitmap[j][i].blue*overlayAlpha
+                     + song_bg->bitmap[j][x].blue*(255 - overlayAlpha)
                     )/255;
-                game_bg->bitmap[i][j].green =
-                    (game_bg->bitmap[i][j]*overlayAlpha
-                    + song_bg->bitmap[x][j]*(255 - overlayAlpha)
+                game_bg->bitmap[j][i].green =
+                    (game_bg->bitmap[j][i].green*overlayAlpha
+                     + song_bg->bitmap[j][x].green*(255 - overlayAlpha)
                     )/255;
             }
         }
     }
+    printf("merVSFOSJDOSDJFSDOFge yo\n");
 }
 
 /* Returns true if given colour is transparent 
     bmp transparency == r=255, b=255, g=0 */
-static bool isTransparent(colour_t colour) {
+static int isTransparent(colour_t colour) {
     if (colour.red == 255 && colour.blue == 255 && colour.green == 0) {
-        return true;
+        return 1;
     }
-    return false;
+    return 0;
 }
 
 static void state_render(bitmap_t* buffer){
