@@ -48,6 +48,7 @@ This section describes the solutions' various components.
 	\subsubsection{Display driver}
 		The STK1000's has a screen.
 		It has a resolution of \texttt{320}$\times$\texttt{240} and sports 32 bits per pixel (24 bit color depth, the last 8 bits are unused)\cite{lab-compendium}.
+		However, only 24 of these are enabled by default\cite{avr32-disp}.
 
 		Data is displayed on the screen by writing a bitmap buffer directly to \texttt{/dev/fb0}.
 
@@ -62,11 +63,12 @@ This section describes the solutions' various components.
 	\subsubsection{Graphics}
 		them graphics are pretty good but how do we handle them????
 		everything is a bitmap, right?
-\subsection{``Fontenizer'', the Font Engine}
+\subsection{``Fontenizer'': the Font Engine}
 	A font rendering engine (\texttt{game/include/font.h} and \texttt{game/src/font.c}) was developed in order to easily render some given text on the screen.
 	It does this by iterating through a given string\footnote{Actually a C string.} and locating each character's corresponding glyph in a given font bitmap.
 	The glyphs are strung together and passed to the screen buffer.
 
 \subsection{The \texttt{.SM} file format}
-	The \texttt{.SM}
+	The \texttt{.SM} was created by the developers of StepMania. It is at the heart of every ``Song'' in StepMania as StepMania reads these files to obtain the location of the actual audio file as well as the steps.
+	
 	yo imma just rewrite http://www.stepmania.com/wiki/The_.SM_file_format
