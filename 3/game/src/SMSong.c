@@ -56,10 +56,15 @@ SMSong* SMSong_load(char* filename, char*basename){
     FILE* fp = fopen(filename, "rt");
 
     if(fp == NULL){
+        printf("SHIIEETT COULDN'T EVEN OPEN, YO\n");
         return NULL;
     }
 
     SMSong* song = (SMSong*) malloc(sizeof(SMSong));
+
+    if(song == NULL){
+        printf("OH MY GOD SONG iS NOT EVEN MALLOCED YO\n");
+    }
 
     song->basename = strdup(basename);
 
