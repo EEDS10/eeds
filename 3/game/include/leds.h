@@ -1,6 +1,6 @@
 #ifndef LEDS_H
 #define LEDS_H
 
-void set_leds(unsigned char state);
+void eeds_set_leds(unsigned char state);
 
 #endif

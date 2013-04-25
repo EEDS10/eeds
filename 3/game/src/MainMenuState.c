@@ -68,7 +68,7 @@ static void state_pause(){
 static void state_resume(){
     printf("main menu resume\n");
     redraw_required = 1;
-    set_leds(0xE);
+    eeds_set_leds(0xE);
 }
 
 
