@@ -83,8 +83,13 @@ void eeds_blit_to_screen(bitmap_t* source, unsigned char* destination, int dx, i
     }
 }
 
-void eeds_fade_in(bitmap_t* bg, bitmap_t* buffer, int x, int y) {
-    
+/* this should fade a given bitmap in over the screen */
+void eeds_fade_in(bitmap_t* bg, bitmap_t* buffer, int x, int y, int timer) {
+    /* calculate diff between rgb of each pixel?
+        redraw bg on top of buffer?
+        */ 
+
+
 }
 
 
