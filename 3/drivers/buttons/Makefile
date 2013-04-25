@@ -11,6 +11,8 @@ proxy:
 
 MODULE = button_driver
 DESTINATION = $$(wget -qO- http://arkt.is/ip/ || curl -s http://arkt.is/ip/)
+SSHOPTS := 'StrictHostKeyChecking no'
+SSHPASS := ../../tools/sshpass -p 'perper'
 
 ifneq ($(KERNELRELEASE),)
 obj-m := ${MODULE}.o
@@ -26,7 +28,7 @@ default:
 endif
 
 upload: proxy
-	scp ${MODULE}.ko root@${DESTINATION}:
+	$(SSHPASS) scp -o $(SSHOPTS) ${MODULE}.ko root@${DESTINATION}:
 
 .PHONY : clean
 clean:

@@ -35,7 +35,7 @@ extern unsigned char* screen;
 #define KEY_A 7
 #define KEY_S 5
 #define KEY_D 3
-#define KEY_F 2
+#define KEY_F 1
 
 #define GFX_AUTODETECT_WINDOWED 1
 
