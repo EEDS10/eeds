@@ -7,10 +7,29 @@
 	cpu usage vs redrawing on the screen (is it better to redraw large areas or just the specific areas affected between frames?)
 
 \section{Testing}
-\subsection{Basic functionality test}
+\subsection{Basic functionality tests}
+	\subsubsection{LED \& button driver test}
+		\begin{description}
+			\item[Description] \hfill \\
+				This test is designed to assertain whether the LED and button drivers function as intended.
+			\item[Prerequisites] \hfill
+				\begin{itemize}
+					\item{a driver for the STK1000's LEDs.}
+					\item{a driver for the STK1000's buttons.}
+					\item{a working installation of Linux running on the STK1000.}
+				\end{itemize}
+			\item[Procedure] \hfill
+				\begin{enumerate}
+					\item{Load the LED \& button drivers using \texttt{insmod} and \texttt{mknod}.}
+					\item{enter \texttt{cat /dev/buttons > /dev/leds} into the console.}
+				\end{enumerate}
+			\item[Expected results] \hfill \\
+				When \texttt{SWn} is held down \texttt{LEDn} should light up.
+				\\$n \in [0,7]$
+		\end{description}	
 
 \subsection{Energy consumption}
-
+	what about it? Right we should probably test it.
 
 \subsection{Game engine test suite}
 	all those tests we made
