@@ -67,18 +67,18 @@ static void state_render(bitmap_t* buffer){
     }
 
     /* Ugly, but speedier. */
-    for (int y = 0; y < 329; y++) {
+    for (int y = 0; y < 319; y++) {
         fire_array[0][y] = rand() % 256;
         buffer->bitmap[239][y] = fire_palette->bitmap[0][fire_array[0][y]];
     }
 
-    for (int y = 0; y < 329; y++) {
+    for (int y = 0; y < 319; y++) {
         fire_array[1][y] = rand() % 256;
         buffer->bitmap[238][y] = fire_palette->bitmap[0][fire_array[1][y]];
     }
 
     for (int x = 1; x < 128; x++) {
-        for (int y = 1; y < 329; y++) {
+        for (int y = 1; y < 318; y++) {
             //fire_array[x+1][y] = (fire_array[x-1][y] + fire_array[x+1][y] + fire_array[x][y-1] + fire_array[x][y+1]) / 3;
             fire_array[x+1][y] = (fire_array[x-1][y] + fire_array[x+1][y] + fire_array[x][y-1] + fire_array[x][y+1] + fire_array[x-1][y-1] + fire_array[x-1][y+1] + fire_array[x+1][y-1] + fire_array[x+1][y+1]) / 7;
             buffer->bitmap[239-x][y] = fire_palette->bitmap[0][fire_array[x][y]];
