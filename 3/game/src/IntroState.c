@@ -8,8 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "State.h"
-#include "SMSong.h"
-#include "Font.h"
+#include "leds.h"
 
 extern State* MainMenuState;
 
@@ -37,6 +36,8 @@ static void state_init(){
     }
 
     draw_bg = 1;
+
+    eeds_set_leds(0x08);
 
     printf("init done!\n");
 }
