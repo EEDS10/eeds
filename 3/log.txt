@@ -67,32 +67,11 @@ oh wow all I need to do is write a short C program that forwards some .ogg file 
 
 "suckvensielt arbeid"
 
-We did some prototype testing and came to the conclusion that having two players control each trying to use four buttons on the board simultaneously did not result in an enjoyable experience.
-Our testers preferred being the sole user of the STK1000's buttons.
-A possible explanation for this is that all of our testers were above the age of 20 and did not posess the child-like hand size required to operate four neighbouring STK1000 buttons at the same time.
+
 
 
 Q: Where on the screen is origo? Do we have to rotate our bitmaps?
 
-Test: ghetto profiling > selected functions print how long they have been running to the console, allowing us to evaluate their efficiency. This technique is dubbed ``a sort of ghetto profiling''.
-
-Q: Where could we put a glossary of StepMania-words?
-Arrows: the arrows that scroll across the screen representing the rhythm of the song.
-Stationary arrows: the stationary arrows (or targets) the arrows approach.
-Dance platform/mat: a type of controller pressure sensitive areas that correspond to the arrows.
-Song: a ``song'' in StepMania includes the actual song/sound track and its steps.
-Dance pattern: the set of arrows for a given song at a given difficulty.
-Steps: alternative name for ``dance pattern''.
-Step: all the arrows at a given time value. All arrows in a step have to be pressed within the step's time window for it to register as a hit.
-Note: alternate name for ``step''.
-Double: a type of step containing two arrows.
-Triples (trips): steps containing three arrows.
-Quadruples (quads): steps containing four arrows.
-Judgment: A ``score'' given for each step hit.
-
-Note: SLDDD treats each individual arrow as a step. 
-
-Andre forkunnskaper?
 
 origo på skjermen er øverst i venstre hjørne
 origo på bitmap formatet er nederst i venstre hjørne
@@ -100,13 +79,16 @@ origo på bitmap formatet er nederst i venstre hjørne
 Fontenizer vII: the fontenizening.
 Fontenizer vIII: the fontenizinator.
 
-LIST OF FEATURES WE DID NOT IMPLEMENT:
-preview of songs in main menu
-other step types
-
-the entire vidya is single threaded, meaning the playback of music runs in the same thread as the rest of the game. Because threading is for pussies.
 
 glossary
 glossayo
 vocyobulary
 yocabulary
+co-author = cauthor
+
+test: what happens when we pull out the ethernet cable during a song?
+game continues.
+
+test: let people play the 'final' game and ask them to rate it on a scale from 0 to 100. we can do this with like, three people.
+
+sende inn snapshot av current state til neste state som kj;rer en loop hvor den fader mellom bildene.
