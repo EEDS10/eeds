@@ -84,6 +84,7 @@ Song: a ``song'' in StepMania includes the actual song/sound track and its steps
 Dance pattern: the set of arrows for a given song at a given difficulty.
 Steps: alternative name for ``dance pattern''.
 Step: all the arrows at a given time value. All arrows in a step have to be pressed within the step's time window for it to register as a hit.
+Note: alternate name for ``step''.
 Double: a type of step containing two arrows.
 Triples (trips): steps containing three arrows.
 Quadruples (quads): steps containing four arrows.
@@ -92,3 +93,20 @@ Judgment: A ``score'' given for each step hit.
 Note: SLDDD treats each individual arrow as a step. 
 
 Andre forkunnskaper?
+
+origo på skjermen er øverst i venstre hjørne
+origo på bitmap formatet er nederst i venstre hjørne
+
+Fontenizer vII: the fontenizening.
+Fontenizer vIII: the fontenizinator.
+
+LIST OF FEATURES WE DID NOT IMPLEMENT:
+preview of songs in main menu
+other step types
+
+the entire vidya is single threaded, meaning the playback of music runs in the same thread as the rest of the game. Because threading is for pussies.
+
+glossary
+glossayo
+vocyobulary
+yocabulary
