@@ -25,9 +25,12 @@ long t;
 long old_t;
 long dt;
 
+FILE* audio;
+int audio_progress;
+
 bitmap_t* buffer;
 
-#define SOUND_BUFFER_SIZE (1024*4)
+#define SOUND_BUFFER_SIZE (1024*8)
 
 int main(){
 
@@ -46,15 +49,7 @@ int main(){
     args = 44100;
     status = ioctl(sound, SOUND_PCM_WRITE_RATE, &args);
 
-    FILE* audio = fopen("res/Songs/iturntoyou/iturntoyou.raw", "rb");
-    if(audio == NULL){
-        printf("COULD NOT LOAD AUDIO!\n");
-    }
-    fseek(audio, 0, SEEK_END);
-    int size = ftell(audio);
-    fseek(audio, 0, SEEK_SET);
     short sound_buffer[SOUND_BUFFER_SIZE];
-
 
 
     allegro_init();
@@ -89,18 +84,20 @@ int main(){
 
         if(redraw_required){
             bench_time = gettime();
-            //printf("[%lu:%lu] render\n", t, dt);
-            //eeds_clear_to_color(buffer, 255, 255, 255);
             State_render(buffer);
             blit_to_screen(buffer, screen, 0, 0, 0, 0, 320, 240);
             redraw_required = 0;
-            printf("[%lu] render()\n", gettime() - bench_time);
             bench_time = gettime();
-            read(audio, sound_buffer + sound_tracker, sizeof(short)*SOUND_BUFFER_SIZE);
-            int written = write(sound, sound_buffer + sound_tracker, sizeof(short)*SOUND_BUFFER_SIZE);
-            sound_tracker = (sound_tracker + written) % size;
-            printf("[%lu] render_sound()\n", gettime() - bench_time);
         }
+
+        printf("[%lu] render()\n", gettime() - bench_time);
+        bench_time = gettime();
+        if(audio != NULL){
+            fread(sound_buffer, sizeof(short), SOUND_BUFFER_SIZE, audio);
+            int written = write(sound, sound_buffer, sizeof(short)*SOUND_BUFFER_SIZE);
+            audio_progress += written;
+        }
+        printf("[%lu] render_sound()\n", gettime() - bench_time);
     }    
 
     State_deinit(MainMenuState);

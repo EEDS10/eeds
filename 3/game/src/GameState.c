@@ -7,14 +7,21 @@
 #include "State.h"
 #include "Font.h"
 #include "SMSong.h"
+#include "utils.h"
 
 extern State* MainMenuState;
+extern State* ScoreScreenState;
+
+extern FILE* audio;
+extern int audio_progress;
 
 SMSong* song;
 extern Font* font_small;
+extern Font* font_large;
 extern SMSong** songs;
 extern int active_selection;
 int elapsed_time_in_ms;
+
 
 bitmap_t* note_sprite;
 bitmap_t* song_bg;
@@ -28,6 +35,19 @@ int beats_per_measure;
 int ms_per_measure;
 int ms_since_last_beat;
 int need_to_draw_song_bg;
+
+int score_OK;
+int score_great;
+int score_perfect;
+int score_combo;
+int score_greatest_combo;
+
+char* accuracy_feedback;
+int feedback_counter;
+
+char* accuracy_OK =      "  O.K.";
+char* accuracy_great =   " Great!";
+char* accuracy_perfect = "PERFECT!";
 
 typedef struct Note{
     int column;
@@ -68,13 +88,21 @@ static void state_deinit(){
 
 static void state_pause(){
     eeds_free_bitmap(song_bg);
+    eeds_free_bitmap(game_bg);
+    fclose(audio); 
+    audio = NULL;
 }
 
 static void merge_bgs();
 
 static void state_resume(){
+    score_OK = 0;
+    score_perfect = 0;
+    score_great = 0;
+    score_combo = 0;
+    score_greatest_combo = 0;
     song = songs[active_selection];
-    elapsed_time_in_ms = 0;
+    elapsed_time_in_ms = -song->offset_in_ms - 43;
     beat = 0;
     measure = 0;
     beats_per_measure = 4;
@@ -83,6 +111,10 @@ static void state_resume(){
     current_bpm = song->BPMs[current_bpm_index];
     need_to_draw_song_bg = 1;
     ms_per_measure = 4*60000000 / current_bpm;
+
+    char path_to_song[256];
+    sprintf(path_to_song, "res/Songs/%s/%s.raw", song->basename, song->basename);
+    audio = fopen(path_to_song, "rb");
 
     char path_to_bg[256];
     sprintf(path_to_bg, "res/Songs/%s/%s.bmp", song->basename, song->basename);
@@ -107,7 +139,6 @@ static void merge_bgs() {
         x = [(songbg->width - game_bg-width)/2, (songbg->width - game_bg->width)/2 + game_bg->width]
         y = [0, songbg->height]
      */
-    printf("merge yo\n");
     int x = (song_bg->width - game_bg->width)/2;
     /* int endx = startx + game_bg->width; */
     /*  
@@ -117,7 +148,6 @@ static void merge_bgs() {
     int overlayAlpha = 180;
     for (int i = 0; i < game_bg->width; i++, x++) {
         for (int j = 0; j < game_bg->height; j++) {
-            printf("i: %i, j: %i, x: %i\n", i, j, x);
             /* uh, ok, how do I create fake transparency? */
             /* whatever I'll just overwrite game_bg */
             if (isTransparent(game_bg->bitmap[j][i])) {
@@ -138,7 +168,6 @@ static void merge_bgs() {
             }
         }
     }
-    printf("merVSFOSJDOSDJFSDOFge yo\n");
 }
 
 /* Returns true if given colour is transparent 
@@ -177,6 +206,16 @@ static void state_render(bitmap_t* buffer){
     if(key[KEY_F]){
         eeds_render_bitmap(note_sprite, buffer, 72 + 3 * 50, 29);
     }
+
+    if(accuracy_feedback != NULL && feedback_counter > 0){
+        Font_render(font_small, buffer, accuracy_feedback, 120, 4, 9);
+    }
+
+    if(score_combo > 3){
+        char combo_score[30];
+        sprintf(combo_score, "%i combo!", score_combo);
+        Font_render(font_large, buffer, combo_score, 80, 100, 9);
+    }
 }
 
 void hit_notes(int column){
@@ -184,24 +223,53 @@ void hit_notes(int column){
     for(int i=0;i<n_notes;i++){
         if(notes[i].column == column){
             int difference = abs(notes[i].y - 40 + note_sprite->height);
-            if(difference == 0){
-                printf("PERFECT!\n");
-                remove_note(i--);
-            }else if(difference < 4){
-                printf("Great!\n");
+            if(difference < 2){
+                accuracy_feedback = accuracy_perfect;
+                score_perfect++;
+                score_combo++;
+                feedback_counter = 20;
                 remove_note(i--);
             }else if(difference < 10){
-                printf("OK\n");
+                accuracy_feedback = accuracy_great;
+                score_combo++;
+                score_great++;
+                feedback_counter = 20;
                 remove_note(i--);
             }else if(difference < 20){
-                printf("You suck\n");
+                accuracy_feedback = accuracy_OK;
+                score_OK++;
+                score_combo++;
+                feedback_counter = 20;
+                remove_note(i--);
             }
         }
     }
 }
 
+int audio_time = 0;
+int old_audio_time = 0;
+int audio_dt = 0;
+
 
 static void state_update(){
+
+    old_audio_time = audio_time;
+    audio_time = audio_progress;
+    audio_dt += audio_time - old_audio_time;
+    while(audio_dt >= 441*2){
+        audio_dt -= 441*2;
+        ms_since_last_beat += 5;
+
+        for(int i=0;i<n_notes;i++){
+            notes[i].y--;
+            if(notes[i].done || notes[i].y < -30){
+                score_greatest_combo = MAX(score_greatest_combo, score_combo);
+                score_combo = 0;
+                remove_note(i);
+                i--;
+            }
+        }
+    }
 
     redraw_required = 1;
 
@@ -225,15 +293,10 @@ static void state_update(){
         hit_notes(3);     
     }
 
-
-    for(int i=0;i<n_notes;i++){
-        notes[i].y -= 2;
-
-        if(notes[i].done || notes[i].y < -30){
-            remove_note(i);
-            i--;
-        }
+    if(feedback_counter > 0){
+        feedback_counter--;
     }
+
 
     int ms_per_beat = ms_per_measure / beats_per_measure;
     while(ms_since_last_beat > ms_per_beat){
@@ -249,15 +312,17 @@ static void state_update(){
                 ms_per_measure = 4*60000000 / current_bpm;
             }
         }
+        if(song->measures[measure] == NULL){
+            State_change(ScoreScreenState);
+            return;
+        }
         for(int i=0;i<4;i++){
             if(song->measures[measure]->rows[beat][i] == '1'){
-                add_note(i, 240);
+                add_note(i, 244);
             }
         }
     }
 
-    ms_since_last_beat += 20;
-    elapsed_time_in_ms += 20;
 }
 
 REGISTER_STATE(GameState);
