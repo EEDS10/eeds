@@ -50,7 +50,7 @@ int intify(char*item){
 }
 
 
-SMSong* SMSong_load(char* filename){
+SMSong* SMSong_load(char* filename, char*basename){
 
 
     FILE* fp = fopen(filename, "rt");
@@ -60,6 +60,8 @@ SMSong* SMSong_load(char* filename){
     }
 
     SMSong* song = (SMSong*) malloc(sizeof(SMSong));
+
+    song->basename = strdup(basename);
 
     char line[1024];
 

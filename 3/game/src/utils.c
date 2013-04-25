@@ -40,7 +40,7 @@ void eeds_blit(bitmap_t* source, bitmap_t* destination, int dx, int dy, int sx, 
         si = sy;
         for(int i=MAX(dx,0);i<MIN(dx+w, 320);i++){
             colour_t c = source->bitmap[sj][si];
-            if(c.blue != 255 || c.red != 255){
+            if(c.blue != 255 || c.red != 255 || c.green != 0){
                 destination->bitmap[j][i].blue  = c.blue;
                 destination->bitmap[j][i].red   = c.red;
                 destination->bitmap[j][i].green = c.green;
