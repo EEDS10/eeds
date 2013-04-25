@@ -119,6 +119,7 @@ SMSong* SMSong_load(char* filename, char*basename){
                 i++;
                 fgets(line, 1024, fp);
             }
+            song->measures[i] = NULL;
 
         ENDPARSE();
     }

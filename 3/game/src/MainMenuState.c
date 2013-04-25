@@ -81,6 +81,7 @@ static void state_render(bitmap_t* buffer){
     char bpm_string[30];
     sprintf(bpm_string, "BPM: %i", songs[(active_selection + n_songs) % n_songs]->BPMs[1]/1000);
     Font_render(font_small, buffer, bpm_string, 190, 157, 9);
+    printf("perper\n");
 }
 
 
@@ -91,12 +92,12 @@ static void state_update(){
     if(key_cooldown == 0){
         if (key[KEY_UP]){
             active_selection--;
-            key_cooldown = 5;
+            key_cooldown = 7;
             redraw_required = 1;
         }
         if (key[KEY_DOWN]){
             active_selection++;
-            key_cooldown = 5;
+            key_cooldown = 7;
             redraw_required = 1;
         }
     }else{

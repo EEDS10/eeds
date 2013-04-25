@@ -66,3 +66,29 @@ SOUNDS! I think I am hearing them.
 oh wow all I need to do is write a short C program that forwards some .ogg file to /dev/dsp? I have no idea how to do that.
 
 "suckvensielt arbeid"
+
+
+
+
+Q: Where on the screen is origo? Do we have to rotate our bitmaps?
+
+
+origo på skjermen er øverst i venstre hjørne
+origo på bitmap formatet er nederst i venstre hjørne
+
+Fontenizer vII: the fontenizening.
+Fontenizer vIII: the fontenizinator.
+
+
+glossary
+glossayo
+vocyobulary
+yocabulary
+co-author = cauthor
+
+test: what happens when we pull out the ethernet cable during a song?
+game continues.
+
+test: let people play the 'final' game and ask them to rate it on a scale from 0 to 100. we can do this with like, three people.
+
+sende inn snapshot av current state til neste state som kj;rer en loop hvor den fader mellom bildene.
