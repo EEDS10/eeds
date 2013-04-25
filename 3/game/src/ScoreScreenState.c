@@ -12,7 +12,6 @@ extern State* MainMenuState;
 extern int score_perfect;
 extern int score_great;
 extern int score_OK;
-extern int score_OK;
 extern int score_combo;
 extern int score_greatest_combo;
 
@@ -36,19 +35,19 @@ static void state_resume(){
 
 static void state_render(bitmap_t* buffer){
 
-    clear_to_color(buffer,255,255,255);
+    clear_to_color(buffer,makecol(255,255,255));
 
     char message[30];
     sprintf(message, "PERFECT!: %i", score_perfect);
     Font_render(font_small, buffer, message, 5, 15, 9);
 
-    sprintf(message, "Great!: %i", score_perfect);
+    sprintf(message, "Great!: %i", score_great);
     Font_render(font_small, buffer, message, 5, 45, 9);
 
-    sprintf(message, "O.K.!: %i", score_perfect);
+    sprintf(message, "O.K.: %i", score_OK);
     Font_render(font_small, buffer, message, 5, 75, 9);
 
-    sprintf(message, "Best combo: %i", score_perfect);
+    sprintf(message, "Best combo: %i", score_greatest_combo);
     Font_render(font_large, buffer, message, 5, 135, 11);
     Font_render(font_large, buffer, "GREAT, YOU ROCK!", 5, 185, 11);
 }

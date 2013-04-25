@@ -67,11 +67,12 @@ static void state_pause(){
 
 static void state_resume(){
     printf("main menu resume\n");
+    redraw_required = 1;
+    eeds_set_leds(0xE);
 }
 
 
 static void state_render(bitmap_t* buffer){
-    printf("renderrender\n");
     eeds_render_bitmap(menu_bg, buffer, 0, 0);
 
     Font_render(font_small, buffer, songs[(active_selection + n_songs - 2) % n_songs]->title, 2, 15, 9);
@@ -85,7 +86,6 @@ static void state_render(bitmap_t* buffer){
     char bpm_string[30];
     sprintf(bpm_string, "BPM: %i", songs[(active_selection + n_songs) % n_songs]->BPMs[1]/1000);
     Font_render(font_small, buffer, bpm_string, 190, 157, 9);
-    printf("perper\n");
 }
 
 

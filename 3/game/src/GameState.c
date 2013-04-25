@@ -4,6 +4,7 @@
 #include "allegro_shim.h"
 #endif
 #include <stdlib.h>
+#include "leds.h"
 #include "State.h"
 #include "Font.h"
 #include "SMSong.h"
@@ -96,6 +97,7 @@ static void state_pause(){
 static void merge_bgs();
 
 static void state_resume(){
+    eeds_set_leds(0xAA);
     score_OK = 0;
     score_perfect = 0;
     score_great = 0;
