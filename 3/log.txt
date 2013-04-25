@@ -74,4 +74,21 @@ A possible explanation for this is that all of our testers were above the age of
 
 Q: Where on the screen is origo? Do we have to rotate our bitmaps?
 
+Test: ghetto profiling > selected functions print how long they have been running to the console, allowing us to evaluate their efficiency. This technique is dubbed ``a sort of ghetto profiling''.
+
 Q: Where could we put a glossary of StepMania-words?
+Arrows: the arrows that scroll across the screen representing the rhythm of the song.
+Stationary arrows: the stationary arrows (or targets) the arrows approach.
+Dance platform/mat: a type of controller pressure sensitive areas that correspond to the arrows.
+Song: a ``song'' in StepMania includes the actual song/sound track and its steps.
+Dance pattern: the set of arrows for a given song at a given difficulty.
+Steps: alternative name for ``dance pattern''.
+Step: all the arrows at a given time value. All arrows in a step have to be pressed within the step's time window for it to register as a hit.
+Double: a type of step containing two arrows.
+Triples (trips): steps containing three arrows.
+Quadruples (quads): steps containing four arrows.
+Judgment: A ``score'' given for each step hit.
+
+Note: SLDDD treats each individual arrow as a step. 
+
+Andre forkunnskaper?
