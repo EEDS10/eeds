@@ -13,10 +13,10 @@ First, \texttt{minicom}'s hardware flow control must be switched off in the \tex
 Second, \texttt{U-Boot} needs some \texttt{STK1000}/linux-specific options set in order to be able to boot linux.
 
 
-Here are the commands needed, presented as a convenient and easy-to-read one-liner in figure \ref{fig-ubootcommand}.
+Here are the commands needed, presented as a convenient and easy-to-read one-liner in figure 9.
 
 
-\begin{figure}
+\begin{figure}[h!]
 \texttt{setenv bootcmd 'mmc init; ext2load mmc 0:1 0x90400000 /boot/uImage; fsload; bootm \$(fileaddr)'; setenv bootargs 'console=ttyS0 root=/dev/mmcblk0p1 fbmem=600k rootwait'; saveenv; boot}
 \label{fig-ubootcommand}
 \caption{A convenient and easy-to-read one-liner.}
@@ -87,14 +87,6 @@ A diverse toolset of self-authored scripts were used for smoothalizing the devel
 One of these tools is a startup script on the STK1000 which 'calls home' to a 3rd party server to tell it about its new IP address.
 Developers may then programatically connect to the STK1000 over the internet without having to lookup the IP-address on the STK1000 manually using minicom or other tools, as they can simply query the third party server.
 A lot of work was put into making the development experience as frictionless as possible.
-
-
-
-and implemented transparency
-
-then we played dat music
-
-and got the steps to synch up to it
 
 
 \subsection{Features yet to be implemented}
