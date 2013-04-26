@@ -42,6 +42,7 @@ int score_great;
 int score_perfect;
 int score_combo;
 int score_greatest_combo;
+int total_notes;
 
 char* accuracy_feedback;
 int feedback_counter;
@@ -94,9 +95,9 @@ static void state_pause(){
     audio = NULL;
 }
 
-static void merge_bgs();
 
 static void state_resume(){
+    total_notes = 0;
     eeds_set_leds(0xAA);
     score_OK = 0;
     score_perfect = 0;
@@ -321,6 +322,7 @@ static void state_update(){
         for(int i=0;i<4;i++){
             if(song->measures[measure]->rows[beat][i] == '1'){
                 add_note(i, 244);
+                total_notes++;
             }
         }
     }
