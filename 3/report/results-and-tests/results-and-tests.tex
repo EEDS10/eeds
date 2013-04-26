@@ -17,6 +17,7 @@
 					\item{a driver for the STK1000's LEDs.}
 					\item{a driver for the STK1000's buttons.}
 					\item{a working installation of Linux running on the STK1000.}
+					\item{The LED driver must be able to parse the data produced by reading the buttons' state through the button driver.}
 				\end{itemize}
 			\item[Procedure] \hfill
 				\begin{enumerate}
@@ -54,16 +55,32 @@
 \subsection{Gameplay}
 	we had people test the gameplay.
 	those who did not enjoy themselves were eliminated.
-	\subsubsection{Prototyping}
-		rough test of gameplay
-		two people attempted to control the STK1000's buttons at the same time, resting one finger on each button.
-		After the conclusion of the test the participants reported that 
-	\subsubsection{External reviews}
-		we let some peeps play the finished game.
-		they rated it somewhere between 0 and 100.
-		the test involved having them play the game.
+	\subsubsection{Playtesting}
+	\begin{description}
+		\item[Description] \hfill \\
+			Video games are a recreational activity.
+			That means people play them in their spare time.
+			Who would want to spend their spare time doing something that's not enjoyable?
+			This test is designed to uncover what parts of the video game that are enjoyable and what parts are less enjoyable.
+		\item[Prerequisites] \hfill
+			\begin{itemize}
+				\item{A working build of the solution.}
+				\item{One or more live subjects.}
+			\end{itemize}
+		\item[Procedure] \hfill
+			\begin{enumerate}
+				\item{Introduce the subject to the solution.}
+				\item{Allow the subject to attempt to interface with the solution.}
+				\item{Wait.}
+				\item{Collect feedback from subject.}
+			\end{enumerate}
+		\item[Expected results] \hfill \\
+			Feedback from the participants.
+	\end{description}
 
 
 \section{Discussion}
 	hey yo what up what is there to discuss?
 	maybe we should have conducted more gameplay tests underway?
+
+	we were originally going to implement two-player mode but when we simulated the gameplay (two people each trying to get their fingers on four buttons) we realized that it wasn't very comfortable.
