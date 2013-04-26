@@ -8,8 +8,8 @@
     #include <sys/ioctl.h>
     #include "allegro_shim.h"
 #endif
-#include <stdio.h>
 #include <linux/soundcard.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include "State.h"
 #include "bmp_read.h"
@@ -34,13 +34,12 @@ bitmap_t* buffer;
 #define SOUND_BUFFER_SIZE (1024*8)
 
 int main(){
-
     int running = 1;
-
     int sound_tracker = 0;
 
-    int sound = open("/dev/dsp", O_RDWR);
     int args, status;
+    int sound = open("/dev/dsp", O_RDWR);
+
     args = 16;
     status = ioctl(sound, SOUND_PCM_WRITE_BITS, &args);
     args = 2;
@@ -50,13 +49,13 @@ int main(){
 
     short sound_buffer[SOUND_BUFFER_SIZE];
 
-
     allegro_init();
     install_keyboard();
     set_color_depth(32);
     set_gfx_mode(GFX_AUTODETECT_WINDOWED, 320, 240, 0, 0);
 
     buffer = eeds_create_bitmap(320, 240);
+
     State_init(IntroState);
     State_init(MainMenuState);
     State_init(GameState);
@@ -69,7 +68,6 @@ int main(){
     long bench_time;
 
     while(running){
-
         old_t = t;
         t = gettime();
         dt += t - old_t;
@@ -79,7 +77,6 @@ int main(){
             bench_time = gettime();
             clear_keybuf();
             State_update();
-            //printf("[%lu:%lu] update()\n", dt, gettime() - bench_time);
         }
 
         if(redraw_required){
@@ -90,19 +87,17 @@ int main(){
             bench_time = gettime();
         }
 
-        //printf("[%lu] render()\n", gettime() - bench_time);
         bench_time = gettime();
         if(audio != NULL){
             fread(sound_buffer, sizeof(short), SOUND_BUFFER_SIZE, audio);
             int written = write(sound, sound_buffer, sizeof(short)*SOUND_BUFFER_SIZE);
             audio_progress += written;
         }
-        //printf("[%lu] render_sound()\n", gettime() - bench_time);
-    }    
+    }
 
     State_deinit(MainMenuState);
     State_deinit(GameState);
-    return 0;
 
-}   
+    return 0;
+}
 END_OF_MAIN();

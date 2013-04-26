@@ -3,10 +3,7 @@
 #else
 #include "allegro_shim.h"
 #endif
-#include <stdlib.h>
-#include <unistd.h>
 #include <stdio.h>
-#include <string.h>
 #include "State.h"
 #include "leds.h"
 
@@ -67,7 +64,7 @@ static void state_render(bitmap_t* buffer){
         draw_bg = 0;
     }
 
-    /* Ugly, but speedier. */
+    /* Ugly to calculate in render loop, but it's fast. */
     for (int y = 0; y < 319; y++) {
         fire_array[0][y] = rand() % 256;
     }
@@ -79,7 +76,7 @@ static void state_render(bitmap_t* buffer){
     for (int x = 1; x < 128; x++) {
         for (int y = 1; y < 318; y++) {
             fire_array[x+1][y] = (fire_array[x-1][y] + fire_array[x+1][y] + fire_array[x][y-1] + fire_array[x][y+1]) / 4;
-            //fire_array[x+1][y] = (fire_array[x-1][y] + fire_array[x+1][y] + fire_array[x][y-1] + fire_array[x][y+1] + fire_array[x-1][y-1] + fire_array[x-1][y+1] + fire_array[x+1][y-1] + fire_array[x+1][y+1]) / 8;
+
             if (x > 1) {
                 buffer->bitmap[239-x+1][y] = fire_palette->bitmap[0][fire_array[x][y]];
             }

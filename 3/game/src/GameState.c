@@ -42,6 +42,7 @@ int score_great;
 int score_perfect;
 int score_combo;
 int score_greatest_combo;
+int total_notes;
 
 char* accuracy_feedback;
 int feedback_counter;
@@ -90,13 +91,53 @@ static void state_deinit(){
 static void state_pause(){
     eeds_free_bitmap(song_bg);
     eeds_free_bitmap(game_bg);
-    fclose(audio); 
+    fclose(audio);
     audio = NULL;
 }
 
-static void merge_bgs();
+static int isTransparent(colour_t colour);
+
+static void merge_bgs() {
+    /*  bitmap_t has width, height and colour_t **bitmap
+        need to start the loop at x =
+        (songbg->width - game_bg->width)/2
+        x = [(songbg->width - game_bg-width)/2, (songbg->width - game_bg->width)/2 + game_bg->width]
+        y = [0, songbg->height]
+     */
+    int x = (song_bg->width - game_bg->width)/2;
+    /* int endx = startx + game_bg->width; */
+    /*
+        (value1 * a + value2*(255-a))/255
+        printf("merge yo\n");
+        */
+    int overlayAlpha = 180;
+    for (int i = 0; i < game_bg->width; i++, x++) {
+        for (int j = 0; j < game_bg->height; j++) {
+            /* uh, ok, how do I create fake transparency? */
+            /* whatever I'll just overwrite game_bg */
+            if (isTransparent(game_bg->bitmap[j][i])) {
+                game_bg->bitmap[j][i] = song_bg->bitmap[j][x];
+            } else {
+                game_bg->bitmap[j][i].red =
+                    (game_bg->bitmap[j][i].red * overlayAlpha +
+                     song_bg->bitmap[j][x].red*(255 - overlayAlpha)
+                    )/255;
+                game_bg->bitmap[j][i].blue =
+                    (game_bg->bitmap[j][i].blue*overlayAlpha
+                     + song_bg->bitmap[j][x].blue*(255 - overlayAlpha)
+                    )/255;
+                game_bg->bitmap[j][i].green =
+                    (game_bg->bitmap[j][i].green*overlayAlpha
+                     + song_bg->bitmap[j][x].green*(255 - overlayAlpha)
+                    )/255;
+            }
+        }
+    }
+}
+
 
 static void state_resume(){
+    total_notes = 0;
     eeds_set_leds(0xAA);
     score_OK = 0;
     score_perfect = 0;
@@ -132,47 +173,7 @@ static void state_resume(){
     merge_bgs();
 }
 
-static int isTransparent(colour_t colour);
-
-static void merge_bgs() {
-    /*  bitmap_t has width, height and colour_t **bitmap
-        need to start the loop at x = 
-        (songbg->width - game_bg->width)/2 
-        x = [(songbg->width - game_bg-width)/2, (songbg->width - game_bg->width)/2 + game_bg->width]
-        y = [0, songbg->height]
-     */
-    int x = (song_bg->width - game_bg->width)/2;
-    /* int endx = startx + game_bg->width; */
-    /*  
-        (value1 * a + value2*(255-a))/255
-        printf("merge yo\n");
-        */
-    int overlayAlpha = 180;
-    for (int i = 0; i < game_bg->width; i++, x++) {
-        for (int j = 0; j < game_bg->height; j++) {
-            /* uh, ok, how do I create fake transparency? */
-            /* whatever I'll just overwrite game_bg */
-            if (isTransparent(game_bg->bitmap[j][i])) {
-                game_bg->bitmap[j][i] = song_bg->bitmap[j][x];
-            } else {
-                game_bg->bitmap[j][i].red =
-                    (game_bg->bitmap[j][i].red * overlayAlpha +
-                     song_bg->bitmap[j][x].red*(255 - overlayAlpha)
-                    )/255;
-                game_bg->bitmap[j][i].blue =
-                    (game_bg->bitmap[j][i].blue*overlayAlpha
-                     + song_bg->bitmap[j][x].blue*(255 - overlayAlpha)
-                    )/255;
-                game_bg->bitmap[j][i].green =
-                    (game_bg->bitmap[j][i].green*overlayAlpha
-                     + song_bg->bitmap[j][x].green*(255 - overlayAlpha)
-                    )/255;
-            }
-        }
-    }
-}
-
-/* Returns true if given colour is transparent 
+/* Returns true if given colour is transparent
     bmp transparency == r=255, b=255, g=0 */
 static int isTransparent(colour_t colour) {
     if (colour.red == 255 && colour.blue == 255 && colour.green == 0) {
@@ -280,19 +281,19 @@ static void state_update(){
     }
 
     if(key[KEY_A]){
-        hit_notes(0);     
+        hit_notes(0);
     }
 
     if(key[KEY_S]){
-        hit_notes(1);     
+        hit_notes(1);
     }
 
     if(key[KEY_D]){
-        hit_notes(2);     
+        hit_notes(2);
     }
 
     if(key[KEY_F]){
-        hit_notes(3);     
+        hit_notes(3);
     }
 
     if(feedback_counter > 0){
@@ -314,13 +315,14 @@ static void state_update(){
             beats_per_measure = song->measures[measure]->n_rows;
             if(measure == song->BPMs[current_bpm_index + 1]){
                 current_bpm_index += 2;
-                current_bpm = song->BPMs[current_bpm_index]; 
+                current_bpm = song->BPMs[current_bpm_index];
                 ms_per_measure = 4*60000000 / current_bpm;
             }
         }
         for(int i=0;i<4;i++){
             if(song->measures[measure]->rows[beat][i] == '1'){
                 add_note(i, 244);
+                total_notes++;
             }
         }
     }
