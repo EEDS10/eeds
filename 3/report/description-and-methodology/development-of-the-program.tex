@@ -97,22 +97,25 @@ then we played dat music
 and got the steps to synch up to it
 
 
-\subsection{Features left unimplemented}
-	here are some features we did not have time to implement
+\subsection{Features yet to be implemented}
+	The following is a list of features that would have been attempted to implement given more time.
 
+	\begin{description}	
+		\item[Song preview in song selection menu] \hfill \\
+			Set the background music in the song selection menu to the currently highlighted song.
+		\item[Other note types] \hfill \\
+			SLDD has one type of note: singles. That is to say, every step is an individual and can be hit independently of all the other steps.
+			In StepMania and DDR, more than one step on the same line (steps in the same measure) count as one step in total: if two arrows appear next to eachother (horisontally) in StepMania, they both have to be pressed together.
 
-	preview of the selected song in the main menu
-
-	other step types (doubles, mines, holds)
-		Note: SLDDD treats each individual arrow as a step. 
-
-	multithreading
-		the entire vidya is single threaded, meaning the playback of music runs in the same thread as the rest of the game. Because threading is for pussies.
-
-	automatic adjustment of note scroll speed
-		we have to add songs manually and tailor the notes' scroll speed
-		this is the opposite of agile cloud :(
-
-	life bar
+			For a complete list of the different notes supported by the \texttt{.SM} format, see \url{http://www.stepmania.com/wiki/The_.SM_file_format}.
+		\item[Multithreading] \hfill \\
+			SLDDD runs in one single thread.
+			Multithreading would be nice.
+		\item[Life bar] \hfill \\
+			In most rhythm games (and video games in general) it is possible to lose or receive a game over screen of some sort.
+			In StepMania this is done through a life bar which depletes when the player receives sufficiently poor judgments.
+			If this life bar reaches zero during the course of a song, the player fails the song.
+			In SLDDD there is no failure.
+	\end{description}
 
 
