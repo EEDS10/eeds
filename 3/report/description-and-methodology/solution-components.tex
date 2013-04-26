@@ -46,8 +46,8 @@ The driver reads the button's state by returning the value found in the Pin-Data
 
 For a more detailed explanation of the set-up of the buttons on the STK1000, see \cite{tdt4258-1}.	
 \subsubsection{Sound driver}
-/dev/dsp!
-OPEN SOUND SYSTEM -> http://en.wikipedia.org/wiki/Open_Sound_System
+In order to produce sound, we use the provided ALSA\footnote{Advanced Linux Sound Architecture, see http://www.alsa-project.org/} driver.
+This let us simply write raw sound data to \texttt{/dev/dsp} to play it, as described in \cite{lab-compendium}.
 
 \subsubsection{Display driver}
 The STK1000's has a screen.
@@ -71,9 +71,6 @@ Data is displayed on the screen by writing a bitmap buffer directly to \texttt{/
     Should the logical updating fall scheduling, rendering is delayed until the logical updating can catch up with real time again.
     Finally, the game only renders if the logical code has signalled that the screen needs a refresh since the last time it was redrawn. This is done to save time wasted on drawing the same image to the screen two times in a row.
 
-    This description of the timers sucks a bit maybe. Maybe it should be clarified?
-
-
     The game engine also handles input and output through buttons and leds, providing convenient interfaces for hthe programmer to use.
     The buttons are regularly polled and their state is stored in a global array of boolean values.
     This allows the programmer to simply check the array to see if a button is pressed.
@@ -85,15 +82,16 @@ Data is displayed on the screen by writing a bitmap buffer directly to \texttt{/
 
 
     Finally, the game engine also supports simple audio playing of raw audio data files.
-    
 
-	\subsubsection{Sound}
-    The sound module of the game engine is capable of playing single raw audio files, as well as controlling the soundcard to set parameters such as bitrate and frequency.
-    The game engine supports one audio file playing at a time, which can be set by loading and unloading an audio file to a global pointer.
-    Mixing, compositing, and other advanced features are not implented.
-	\subsubsection{Graphics}
 
-    The graphics rendering module is bitmap-based, allowing for arbitrary regions of bitmaps to be blitted to and fro between bitmaps.
+\subsubsection{Sound}
+The sound module of the game engine is capable of playing single raw audio files, as well as controlling the soundcard to set parameters such as bitrate and frequency.
+The game engine supports one audio file playing at a time, which can be set by loading and unloading an audio file to a global pointer.
+Mixing, compositing, and other advanced features are not implented.
+
+\subsubsection{Graphics}
+The graphics rendering module is entirely based on bitmaps.
+In order to generate the graphics to display to the user, various bitmaps are blitted in order to achieve the desired visual components and effects.
 
 
 \subsection{``Fontenizer'': the Font Engine}
@@ -104,6 +102,5 @@ Data is displayed on the screen by writing a bitmap buffer directly to \texttt{/
     Fontenizer supports the basic ASCII character set.
         
 \subsection{The \texttt{.SM} file format}
-The \texttt{.SM} was created by the developers of StepMania. It is at the heart of every ``Song'' in StepMania as StepMania reads these files to obtain the location of the actual audio file as well as the steps.
-
-yo imma just rewrite http://www.stepmania.com/wiki/The_.SM_file_format
+The \texttt{.SM}\footnote{http://www.stepmania.com/wiki/The_.SM_file_format} was created by the developers of StepMania.
+The .SM-files contain meta-data of every song such as artist and title, as well as the name of the sound file and which buttons you are supposed to press when.
