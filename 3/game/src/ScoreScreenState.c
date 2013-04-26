@@ -77,7 +77,7 @@ static void state_render(bitmap_t* buffer){
                 score_great * 5 +
                 score_OK * 3 +
                 miss * -2;
-    Font_render(font_small, "Score:", message, 180, 107, 9);
+    Font_render(font_small, buffer, "Score:", 180, 107, 9);
     sprintf(message, "%8.i", score);
     Font_render(font_small, buffer, message, 180, 137, 9);
 
