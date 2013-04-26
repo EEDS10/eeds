@@ -17,7 +17,10 @@ Luckily, Linux makes it easy to dynamically load and remove drivers at will.
 
 Many linux drivers, including the ones written for this assignment, allows other programs to interface with hardware through file-like devices.
 The user may simply \texttt{fopen} a device, and then write and/or read data to it, using the driver as a middleware translator to translate the write and read calls to whatever is appropriate for the specific device.
-
+\subsubsection{Character device drivers}
+    Character device drivers are drivers for character devices.
+    Such a driver transfers data directly to and from a user process.
+    The driver written for the LEDs and buttons in this assignment are both of this kind.
 \subsubsection{Loading drivers}
 When kernel object (.ko) file has been compiled, it may be installed into the kernel with \texttt{insmod <driver>.ko}.
 Device drivers require a file-like interface to the hardware, which is generated with the command \texttt{mknod \&dev/<device name> c <major number> <minor number>}.
