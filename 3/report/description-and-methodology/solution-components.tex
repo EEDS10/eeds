@@ -1,10 +1,10 @@
 This section describes the solutions' various components.
 
 \subsection{Linux}
-	The assignment required that the Linux 2.6 kernel be compiled for the AVR32 STK1000 development board.
-	Specifically, Linux 2.6.16.11-avr32-20060626 was used.
+The assignment required that the Linux 2.6 kernel be compiled for the AVR32 STK1000 development board.
+Specifically, Linux 2.6.16.11-avr32-20060626 was used.
 
-	Linux was compiled and flashed onto a \texttt{16GB} SD Card, by virtue of following the distributed guidelines and a great deal of blood, sweat and tears\footnote{there were so many tears.}.
+Linux was compiled and flashed onto a \texttt{16GB} SD Card, by virtue of following the distributed guidelines and a great deal of blood, sweat and tears\footnote{there were so many tears.}.
 
 \subsection{Linux Device Drivers for the STK1000}
 In the game we use the buttons to interface with the user, as well as using the LEDs to help with the interface's affordance.
@@ -16,60 +16,66 @@ Luckily, Linux makes it easy to dynamically load and remove drivers at will.
 
 Many linux drivers, including the ones written for this assignment, allows other programs to interface with hardware through file-like devices.
 The user may simply fopen a device, and then write and/or read data to it, with the driver as a middleware, translating the write and read calls to whatever is appropriate for the specific device.
-	\subsubsection{Loading drivers}
-	%insmod <driver>.ko
-	%mknod /dev/leds c $(grep <driver> /proc/devices | awk '{print $1}') 0
+
+\subsubsection{Loading drivers}
+When you have a compiled kernel object (.ko) file, you may install it to the kernel with \texttt{insmod <driver>.ko}.
+The drivers we use also require a file-like interface to the hardware, which is generated with \texttt{mknod /dev/<device name> c \$(grep <driver> /proc/devices | awk '\{print \$1\}') 0}.
+
+Subsequently, if you want to remove the drivers to preserve memory, you can remove the module with \texttt{rmmod <driver>} and deleting the file with \texttt{rm /dev/<device name>}.
+
+\subsubsection{LED driver}
+A custom driver was written for the STK1000 to facilitate the turning off and on of the LEDs.
+On initialization the driver obtains a major number dynamically and requests some region before enabling the relevant I/O pins by writing \texttt{0xFF} to the PIO Enable Register (\texttt{PER}) and to the Output Enable Register (\texttt{OER}).
+
+Upon exit, the driver turns the LEDs off by writing \texttt{0xFF} to the Clear Output Data Register (\texttt{CODR}) and \texttt{0x00} to the PIO Enable Register (\texttt{PER}) to disable the I/O pins.
+It also releases the region it requested during initialization.
+
+The driver interacts with the LEDs by first turning all the LEDs off (by writing \texttt{0xFF} to the \texttt{CODR}) and then enabling the desired LEDs by writing the given value to the Set Output Data Register (\texttt{SODR}).
 
 
-	\subsubsection{LED driver}
-		A custom driver was written for the STK1000 to facilitate the turning off and on of the LEDs.
-		On initialization the driver obtains a major number dynamically and requests some region before enabling the relevant I/O pins by writing \texttt{0xFF} to the PIO Enable Register (\texttt{PER}) and to the Output Enable Register (\texttt{OER}).
-		
-		Upon exit, the driver turns the LEDs off by writing \texttt{0xFF} to the Clear Output Data Register (\texttt{CODR}) and \texttt{0x00} to the PIO Enable Register (\texttt{PER}) to disable the I/O pins.
-		It also releases the region it requested during initialization.
+For a more detailed explanation of the set-up of the LEDs on the STK1000, see \cite{tdt4258-1}.
+\subsubsection{Button driver}
+A custom driver was written in order to allow the software to read the buttons' state.
 
-		The driver interacts with the LEDs by first turning all the LEDs off (by writing \texttt{0xFF} to the \texttt{CODR}) and then enabling the desired LEDs by writing the given value to the Set Output Data Register (\texttt{SODR}).
+The button driver allows the video game to read the state of the buttons, letting them function as a source of input for the players.
+Its initialization is similar to the LED driver's, except that it writes \texttt{0xFF} to the Pull-up Enable Register (\texttt{PUER}) rather than the \texttt{OER}.
+Its exit function is similarly different.
 
-
-		For a more detailed explanation of the set-up of the LEDs on the STK1000, see \cite{tdt4258-1}.
-	\subsubsection{Button driver}
-		A custom driver was written in order to allow the software to read the buttons' state.
-
-		The button driver allows the video game to read the state of the buttons, letting them function as a source of input for the players.
-		Its initialization is similar to the LED driver's, except that it writes \texttt{0xFF} to the Pull-up Enable Register (\texttt{PUER}) rather than the \texttt{OER}.
-		Its exit function is similarly different.
-
-		The driver reads the button's state by returning the value found in the Pin-Data Status Register (\texttt{PDSR}).
+The driver reads the button's state by returning the value found in the Pin-Data Status Register (\texttt{PDSR}).
 
 
-		For a more detailed explanation of the set-up of the buttons on the STK1000, see \cite{tdt4258-1}.	
-	\subsubsection{Sound driver}
-		/dev/dsp!
-		OPEN SOUND SYSTEM -> http://en.wikipedia.org/wiki/Open_Sound_System
-	\subsubsection{Display driver}
-		The STK1000's has a screen.
-		It has a resolution of \texttt{320}$\times$\texttt{240} and sports 32 bits per pixel (24 bit color depth, the last 8 bits are unused)\cite{lab-compendium}.
-		However, only 24 of these are enabled by default\cite{avr32-disp}.
+For a more detailed explanation of the set-up of the buttons on the STK1000, see \cite{tdt4258-1}.	
+\subsubsection{Sound driver}
+/dev/dsp!
+OPEN SOUND SYSTEM -> http://en.wikipedia.org/wiki/Open_Sound_System
 
-		Data is displayed on the screen by writing a bitmap buffer directly to \texttt{/dev/fb0}.
+\subsubsection{Display driver}
+The STK1000's has a screen.
+It has a resolution of \texttt{320}$\times$\texttt{240} and sports 32 bits per pixel (24 bit color depth, the last 8 bits are unused)\cite{lab-compendium}.
+However, only 24 of these are enabled by default\cite{avr32-disp}.
 
-		% should we mention something about orientation?
+Data is displayed on the screen by writing a bitmap buffer directly to \texttt{/dev/fb0}.
+
+% should we mention something about orientation?
 
 \subsection{Game Engine -- WORKING TITLE}
-	this is the game engine we developed. it has parts that are pretty good. like sound, it can play sound and display things on the screen.
-	\subsubsection{Sound}
-		how does the engine handle sound?
-		we just pipe that to /dev/dsa right?
-		pretty much I guess.
-	\subsubsection{Graphics}
-		them graphics are pretty good but how do we handle them????
-		everything is a bitmap, right?
+this is the game engine we developed. it has parts that are pretty good. like sound, it can play sound and display things on the screen.
+
+\subsubsection{Sound}
+how does the engine handle sound?
+we just pipe that to /dev/dsa right?
+pretty much I guess.
+
+\subsubsection{Graphics}
+them graphics are pretty good but how do we handle them????
+everything is a bitmap, right?
+
 \subsection{``Fontenizer'': the Font Engine}
-	A font rendering engine (\texttt{game/include/font.h} and \texttt{game/src/font.c}) was developed in order to easily render some given text on the screen.
-	It does this by iterating through a given string\footnote{Actually a C string.} and locating each character's corresponding glyph in a given font bitmap.
-	The glyphs are strung together and passed to the screen buffer.
+A font rendering engine (\texttt{game/include/font.h} and \texttt{game/src/font.c}) was developed in order to easily render some given text on the screen.
+It does this by iterating through a given string\footnote{Actually a C string.} and locating each character's corresponding glyph in a given font bitmap.
+The glyphs are strung together and passed to the screen buffer.
 
 \subsection{The \texttt{.SM} file format}
-	The \texttt{.SM} was created by the developers of StepMania. It is at the heart of every ``Song'' in StepMania as StepMania reads these files to obtain the location of the actual audio file as well as the steps.
-	
-	yo imma just rewrite http://www.stepmania.com/wiki/The_.SM_file_format
+The \texttt{.SM} was created by the developers of StepMania. It is at the heart of every ``Song'' in StepMania as StepMania reads these files to obtain the location of the actual audio file as well as the steps.
+
+yo imma just rewrite http://www.stepmania.com/wiki/The_.SM_file_format
