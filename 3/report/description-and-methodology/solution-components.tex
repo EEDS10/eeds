@@ -71,10 +71,6 @@ Data is displayed on the screen by writing a bitmap buffer directly to \texttt{/
     Should the logical updating fall scheduling, rendering is delayed until the logical updating can catch up with real time again.
     Finally, the game only renders if the logical code has signalled that the screen needs a refresh since the last time it was redrawn. This is done to save time wasted on drawing the same image to the screen two times in a row.
 
-    %TODO
-    This description of the timers sucks a bit maybe. Maybe it should be clarified?
-
-
     The game engine also handles input and output through buttons and leds, providing convenient interfaces for hthe programmer to use.
     The buttons are regularly polled and their state is stored in a global array of boolean values.
     This allows the programmer to simply check the array to see if a button is pressed.
