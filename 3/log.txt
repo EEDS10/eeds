@@ -89,4 +89,10 @@ co-author = cauthor
 test: what happens when we pull out the ethernet cable during a song?
 game continues.
 
-sende inn snapshot av current state til neste state som kj;rer en loop hvor den fader mellom bildene.
+We found an ammeter (FLUKE 177 TRUE RMS MULTIMETER) in room itv442.
+
+a list of differences between stepmania and SLDDD
+arrows = hexagons
+judgments 
+
+thug life be pretty dope

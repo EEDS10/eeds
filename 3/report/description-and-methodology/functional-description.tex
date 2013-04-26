@@ -1,11 +1,75 @@
-How does the vidya work?
-HOW DO I PLAY VIDYA????
-The vidya is controlled using the eight buttons on the STK1000.
-What buttons do what in the menus?
-\subsection{Gameplay}
+The solution video game is a rhythm video game and is controlled using the STK1000's buttons.
+The LEDs are used to indicate which buttons are relevant at the present.
+\subsection{The gameplay of Scorched Land Dance Dance Defence}
+	\subsubsection{The role of the LEDs}
+		The LEDs are used to indicate which buttons that can be pressed in each state.
+		For example: during gameplay \texttt{LED7}, \texttt{LED5}, \texttt{LED3} and \texttt{LED2} are lit, corresponding to the buttons used to play the game.
+	\subsubsection{Splash screen}
+		The \textit{splash screen} is the first screen displayed to the player.
+		It states the name of the game and sports some flame-like effect thing.
+		Pressing \texttt{SW3} advances the game to the \textit{song selection menu}.
+		Check out figure~\ref{img-splashscreen}.
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=4in]{{images/gameplay-splashscreen.jpg}}
+			\caption{SLDD's splash screen.}
+			\label{img-splashscreen}
+		\end{figure}
+	\subsubsection{Song selection menu}
+		This is the menu from which the player selects which song he or she wishes to play.
+		Pressing \texttt{SW3} selects the highlighted song, while pressing \texttt{SW2} traverses the list one song upwards and \texttt{SW1} traverses the list one song downards.
 
-	we could have a picture of the in-game screen with circles around the different stuff and then a legend explaining what the different stuff is. Like the stationary arrows and the incoming arrows and the life bar and stuff
+		In addition to \texttt{LED1}, \texttt{LED2} and \texttt{LED3} being lit when this screen is active, three icons are visible in the bottom right hand corner of the screen.
+		These indicate the consequence of pushing the corresponding buttons.
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=4in]{{images/gameplay-songselect.jpg}}
+			\caption{The song selection menu of SLDDD. The three icons in the bottom right hand corner means twice the affordance.}
+			\label{img-songselect}
+		\end{figure}
+	\subsubsection{In-song gameplay}
+		When a song is selected in the \textit{song selection menu}, figure~\ref{img-insong} is pretty much what appears.
+		The song's background image is rendered with a slightly transparent overlay of four white rectangles each with a hexagon outlined at the top.
+		The hexagons scroll upwards.
 
-	explain how judgments work and list the timings we have implemented
+		\texttt{SW7} corresponds to the leftmost stationary hexagon, \texttt{SW5} to the second one from the left, \texttt{SW3} to the second one from the right and \texttt{SW1} to the rightmost.
+		The given judgments are displayed at the top of the screen, while the combo counter is visible roughly in the middle of it.
+		
+		The gameplay consists of pressing the appropriate buttons when a moving hexagon is on top of the stationary hexagon outline.
+		A judgment is given for each moving hexagon, depending on how close it is to its corresponding stationary hexagon when the appropriate button is pressed.
+		Judgments are calculated from the moving hexagon's pixel offset from the stationary hexagon, see table~\ref{table-judgments} for a full list.
 
-	explain how the life bar works
+		Audio plays (in fact, the \textit{song} plays) while the game is in this state.
+		\begin{table}[h]
+			\centering
+		    \begin{tabular}{|l|l|}
+		    \hline
+		    Judgment & Timing (offset in pixels) \\ \hline
+		    Perfect & [0,3] \\ \hline
+		    Great! & [4,9] \\ \hline
+		    O.K. & [10,19] \\ \hline
+		    \end{tabular}
+		    \caption{The judgments in SLDDD and their offsets.}
+		    \label{table-judgments}
+		\end{table}
+	
+		When the song is finished the game advances to the \textit{score screen}.
+		Pressing \texttt{SW0} causes the game to return to the \textit{song selection screen}.
+		\begin{figure}[h!]
+			\centering
+			\includegraphics[width=4in]{{images/gameplay-insong.jpg}}
+			\caption{The in-song interface of SLDD. The song being played here is ``Jump Around''.}
+			\label{img-insong}
+		\end{figure}
+	\subsubsection{Score screen}
+		The \textit{score screen} summarizes the player's performance in a song.
+		An enumeration of each judgment, the player's highest combo count during the song as well as a score are displayed here.
+		The score is calculating by adding the number of perfects, greats and O.K.s multiplied with their weights. Perfect is weighted 4, great has a weight of 2 and O.K. has a weight of 1.
+
+		Pressing \texttt{SW0} returns to the \textit{song selection screen}.
+		\begin{figure}[h!]
+			\centering
+			\includegraphics[width=4in]{{images/gameplay-scorescreen.jpg}}
+			\caption{SLDDD's score screen. The song played was ``Jump Around''.}
+			\label{img-scorescreen}
+		\end{figure}
