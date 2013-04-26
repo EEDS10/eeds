@@ -96,3 +96,12 @@ arrows = hexagons
 judgments 
 
 thug life be pretty dope
+
+"hacky go lucky"
+
+
+change caption on in-song picture so that it states the correct song (32A5 by X0-000)
+
+mention what kind of effect we've got going on in the splash screen
+
+the fuck does 'blitted' mean?
