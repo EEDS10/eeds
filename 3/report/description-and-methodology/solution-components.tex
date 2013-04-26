@@ -23,7 +23,7 @@ The user may simply \texttt{fopen} a device, and then write and/or read data to 
 When kernel object (.ko) file has been compiled, it may be installed into the kernel with \texttt{insmod <driver>.ko}.
 Device drivers require a file-like interface to the hardware, which is generated with the command \texttt{mknod \&dev/<device name> c <major number> <minor number>}.
 The major number can be found in \texttt{/proc/devices}, and the minor number is \texttt{0} for the drivers written for this assignment.
-A nifty one-liner for inserting a kernel module and making a device node for it as described above is shown in figure \ref{fig-drivers}
+A nifty one-liner for inserting a kernel module and making a device node for it as described above is shown in figure 8.
 
 \begin{figure}[h!]
 \texttt{mknod /dev/<device name> c \$(grep <driver> /proc/devices | awk '\{print \$1\}') 0}

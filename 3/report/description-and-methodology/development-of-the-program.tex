@@ -13,10 +13,10 @@ First, \texttt{minicom}'s hardware flow control must be switched off in the \tex
 Second, \texttt{U-Boot} needs some \texttt{STK1000}/linux-specific options set in order to be able to boot linux.
 
 
-Here are the commands needed, presented as a convenient and easy-to-read one-liner in figure \ref{fig-ubootcommand}.
+Here are the commands needed, presented as a convenient and easy-to-read one-liner in figure 9.
 
 
-\begin{figure}
+\begin{figure}[h!]
 \texttt{setenv bootcmd 'mmc init; ext2load mmc 0:1 0x90400000 /boot/uImage; fsload; bootm \$(fileaddr)'; setenv bootargs 'console=ttyS0 root=/dev/mmcblk0p1 fbmem=600k rootwait'; saveenv; boot}
 \label{fig-ubootcommand}
 \caption{A convenient and easy-to-read one-liner.}
