@@ -77,21 +77,17 @@ The game engine was developed to enable cross-platform development of games, usi
 
 \subsection{Scorched Land Dance Dance Defence}
 
-Scorched Land Dance Dance Defence was primarily developed on x86 developer's laptops running linux, using Eeds Game Engine's allegro bindings to be able to interface with IO.
-This was done because of the rich amount of great development tools available on a modern developer laptop, including tools such as gdb, valgrind, and more.
-Scorched Land Dance Dance Defence was developed more or less sequentially, one state at a time.
+Scorched Land Dance Dance Defence was primarily developed on x86 developer's laptops running linux, using Eeds Game Engine's allegro bindings to be able to interface with IO such as screen and keyboard.
+This was done in part because it allows for use of the rich amount of great development tools available on a modern developer laptop, including tools such as \texttt{gdb}, \texttt{valgrind}, and more.
+Additionally, this approach meant that development could happen in other physical locations than in the lab.
+The productivity boost gained from this architecture and development approach was quite enabling.
+
+Scorched Land Dance Dance Defence was developed more or less in decoupled parallel, as each state in the game engine is able to more or less stand on its own.
 A diverse toolset of self-authored scripts were used for smoothalizing the development process when interfacing with the STK1000.
 One of these tools is a startup script on the STK1000 which 'calls home' to a 3rd party server to tell it about its new IP address.
 Developers may then programatically connect to the STK1000 over the internet without having to lookup the IP-address on the STK1000 manually using minicom or other tools, as they can simply query the third party server.
+A lot of work was put into making the development experience as frictionless as possible.
 
-
-yo we made them drivers
-
-then we made them font engine
-
-and implemented the .sm format
-
-then we made some graphics
 
 % digression about test resulting in us dropping 2-player mode
 TODO: this digression should probably be moved somehwhere else?
