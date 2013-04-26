@@ -1,7 +1,7 @@
 
 \subsection{Setup and compilation of Linux}
 
-Linux was installed to an 512MB SD card following the instructions from oeving3\_guidelines.txt from itslearning CITE. 
+Linux was installed to an 2GB SD card following the instructions from oeving3\_guidelines.txt from itslearning CITE. 
 The SD card was formatted to \texttt{ext2} using\texttt{gparted} on \texttt{Xubuntu 12.10} runnning on a Sony Vaio Z, as the recommended procedure using \texttt{cfdisk} on the lab machines did not work.
 An attempt was made at compiling the linux kernel, but as critical dependencies were missing, a pre-prepared disk image was used instead. The SD card was flashed with this disk image using \texttt{dd}.
 Next, the u-boot bootloader from the supplied materials for the assignment was flashed to the \texttt{STK1000} using the \texttt{JTAGICE}, and a \texttt{minicom} connection was set up to the board using a serial cable connected to \texttt{UART\_A}.
