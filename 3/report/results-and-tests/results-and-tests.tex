@@ -1,10 +1,23 @@
 \section{Energy Efficiency}
-	the solution doesn't make use of interrupts.
-	the buttons are polled each frame. some sort of interrupt-based scheme could surely be implemented.
 
-	update() is called more often than render().
+	We tried to measure the board's current consumption as in \cite{tdt4258-1} with SLDDD's \textit{splash screen} running, using a FLUKE 177 TRUE RMS MULTIMETER that was located in room itv442.
+ 	Measuring the current across \texttt{VDDCORE} proved to be unfeasible as the STK1000's did not seem to progress past the initial completely white screen when turned on while the measuring equipment was connected to the \texttt{VDDCORE} pins.
 
-	cpu usage vs redrawing on the screen (is it better to redraw large areas or just the specific areas affected between frames?)
+\begin{table}[h]
+    \begin{tabular}{|l|l|}
+    \hline
+    Pins & Measurement \\ \hline
+    \texttt{AVDDUSB} (1,2) & 0.28mA \\ \hline
+    \texttt{AVDDPL} (3,4) & 4.01mA \\ \hline
+    \texttt{AVDDOSC} (5,6) & 0.01mA \\ \hline
+    \texttt{VDDCORE} (7,8) & N/A \\ \hline
+    \texttt{VDDIO} (9,10) & 2.55mA \\ \hline
+    \end{tabular}
+    \caption{Measurements of current consumption taken on the STK1000.}
+    \label{table-currentmeasurements}
+\end{table}
+	
+	Other than that, the solution does not make use of interrupts.
 
 \section{Testing}
 \subsection{Basic functionality tests}
@@ -29,9 +42,6 @@
 				\\$n \in [0,7]$
 		\end{description}	
 
-\subsection{Energy consumption}
-	what about it? Right we should probably test it.
-
 \subsection{Game engine test suite}
 	all those tests we made
 
@@ -53,9 +63,6 @@
 		This particular technique is a kind of profiling\footnote{\url{http://en.wikipedia.org/wiki/Profiling_(computer_programming)}} dubbed ``ghetto profiling'' by one of the authors. 
 
 \subsection{Gameplay}
-	we had people test the gameplay.
-	those who did not enjoy themselves were eliminated.
-	\subsubsection{Playtesting}
 	\begin{description}
 		\item[Description] \hfill \\
 			Video games are a recreational activity.
@@ -87,9 +94,9 @@
 
 
 \section{Discussion}
-	hey yo what up what is there to discuss?
-	maybe we should have conducted more gameplay tests underway?
+	Our solution does not employ interrupts, however the difference between an interrupt-based solution and an active polling one on the STK1000 has previously been shown to be negligible\cite{tdt4258-1}.
 
-	we were originally going to implement two-player mode but when we simulated the gameplay (two people each trying to get their fingers on four buttons) we realized that it wasn't very comfortable.
-
-	Was more time spent on the video game portion than the linux/driver/stk1000 portion? was this wise?
+	Due to feedback from test subjects during the early stages of development we decided to not implement two-player mode, as having two people trying to fit eight fingers in total on the STK1000's buttons was reported to be ``unpleasant''.
+	
+	The game occasionally lags while in-song, to the frustration of the players.
+	We are unsure what the cause of this might be.
