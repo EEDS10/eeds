@@ -14,7 +14,7 @@ Second, u-boot needs some STK1000/linux-specific options set in order to be able
 
 Here are the commands needed, presented as a convenient and easy-to-read one-liner:
 
-setenv bootcmd 'mmc init; ext2load mmc 0:1 0x90400000 /boot/uImage; fsload; bootm $(fileaddr)'; setenv bootargs 'console=ttyS0 root=/dev/mmcblk0p1 fbmem=600k rootwait'; saveenv; boot
+setenv bootcmd 'mmc init; ext2load mmc 0:1 0x90400000 /boot/uImage; fsload; bootm \$(fileaddr)'; setenv bootargs 'console=ttyS0 root=/dev/mmcblk0p1 fbmem=600k rootwait'; saveenv; boot
 
 Breaking this command down into its subparts, it is easier to see what it does.
 
@@ -34,7 +34,7 @@ fsload
 
 loads a filesystem probably
 
-bootm $(fileaddr)
+bootm \$(fileaddr)
 
 boots the linux boot image
 
