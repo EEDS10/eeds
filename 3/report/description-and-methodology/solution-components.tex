@@ -4,8 +4,6 @@ This section describes the solutions' various components.
 The assignment required that the Linux 2.6 kernel be compiled for the AVR32 STK1000 development board.
 Specifically, Linux 2.6.16.11-avr32-20060626 was used.
 
-Linux was compiled and flashed onto a \texttt{2GB SanDisk UltraII} SD Card, by virtue of following the distributed guidelines and a great deal of blood, sweat and tears\footnote{there were so many tears.}.
-
 \subsection{Linux Device Drivers for the STK1000}
 In the game, STK1000's buttons are used to interface with the user.
 The board's LEDs are also used to help with the interface's affordance, highlighting which buttons are available.
@@ -18,7 +16,7 @@ Luckily, Linux makes it easy to dynamically load and remove drivers at will.
 Many linux drivers, including the ones written for this assignment, allows other programs to interface with hardware through file-like devices.
 The user may simply \texttt{fopen} a device, and then write and/or read data to it, using the driver as a middleware translator to translate the write and read calls to whatever is appropriate for the specific device.
 \subsubsection{Character device drivers}
-    Character device drivers are drivers for character devices.
+    Character device drivers are drivers for character-oriented devices.
     Such a driver transfers data directly to and from a user process.
     The driver written for the LEDs and buttons in this assignment are both of this kind.
 \subsubsection{Loading drivers}
@@ -29,7 +27,7 @@ A nifty one-liner for inserting a kernel module and making a device node for it 
 
 LISTING linsting-insertmodule: \texttt{mknod /dev/<device name> c \$(grep <driver> /proc/devices | awk '\{print \$1\}') 0}
 
-Later, to remove a driver (perhaps to preserve memory), it can be removed using \texttt{rmmod <driver>}, whilst also deleting the device file using \texttt{rm /dev/<device name>}.
+Later, to remove a driver, it can be removed using \texttt{rmmod <driver>}, whilst also deleting the device file using \texttt{rm /dev/<device name>}.
 
 \subsubsection{LED driver}
 A custom driver was written for the STK1000 to facilitate the turning off and on of the LEDs.
