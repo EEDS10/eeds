@@ -1,5 +1,95 @@
-drivers, game engine, .sm file format
-something something let's get back to this part later.
+
+\subsection{Setup and compilation of Linux}
+
+Linux was installed to an 512mb SD card following the instructions from oeving3_guidelines.txt from itslearning CITE. 
+The SD card was formatted using gparted 0.12.1 on xubuntu 12.10 runnning on a Sony Vaio Z, as the recommended procedure using cfdisk on the lab machines did not work.
+
+An attempt was made at compiling the linux kernel, but as dependencies were missing, a pre-prepared disk image from itslearning or tdt4258 was used instead. The SD card was flashed using dd.
+
+Next, the WHICH VERSION OF UBOOT IS THIS? u-boot bootloader was flashed to the STK1000 using the JTAGICE, and a minicom connection was set up to the board using a serial cable connected to UART_A.
+
+Minicom does not work together with the supplied linux materials out of the box, and a number of settings must be changed in order for the setup to work.
+First, minicom's hardware flow control must be switched off in the minicom settings.
+Second, u-boot needs some STK1000/linux-specific options set in order to be able to boot linux.
+
+Here are the commands needed, presented as a convenient and easy-to-read one-liner:
+
+setenv bootcmd 'mmc init; ext2load mmc 0:1 0x90400000 /boot/uImage; fsload; bootm \$(fileaddr)'; setenv bootargs 'console=ttyS0 root=/dev/mmcblk0p1 fbmem=600k rootwait'; saveenv; boot
+
+Breaking this command down into its subparts, it is easier to see what it does.
+
+setenv bootcmd ...
+
+This sets the command that are automatically run on boot.
+
+mmc init
+
+initializes the memory card controller on the development board
+
+ext2load mmc 0:1 0x90400000 /boot/uImage
+
+loads a ext2 filesystem from the sdcard and sets an entrypoint/location of linux' boot image
+
+fsload
+
+loads a filesystem probably
+
+bootm \$(fileaddr)
+
+boots the linux boot image
+
+setenv bootargs ...
+
+sets the arguments that are passed when boot is called
+
+console=ttyS0
+
+selects which console to connect to
+
+root=/dev/mmcbkl0p1
+
+sets the location of the file system root
+
+fbmem=600k
+
+no clue what this does
+
+rootwait
+
+This commands waits for the root address to become available, effectively allowing the mmc to warm up properly before proceeding
+
+saveenv
+
+this saves the current environment variables to the flash memory of the stk1000, so that these commands only have to be entered once
+
+boot
+
+finally, this command tells uboot to boot!
+
+
+\subsection{Drivers}
+
+The drivers were developed on the lab machines, cross-compiled to avr32 and scp'd to the stk1000 for testing.
+First, a helloworld-driver was developed.
+Then, an LED driver was developed.
+Finally, a button driver was developed.
+
+A script for inserting modules and making device nodes using information from /proc/devices was written, and is part of the solution suite.
+
+
+\subsection{Eeds Game Engine}
+
+The game engine was developed to enable cross-platform development of games, using different polyfills and libraries for different platforms. The game engine was developed in parallel with the development of Scorched Land Dance Dance Defence, because agile.
+
+\subsection{Scorched Land Dance Dance Defence}
+
+Scorched Land Dance Dance Defence was primarily developed on x86 developer's laptops running linux, using Eeds Game Engine's allegro bindings to be able to interface with IO.
+This was done because of the rich amount of great development tools available on a modern developer laptop, including tools such as gdb, valgrind, and more.
+Scorched Land Dance Dance Defence was developed more or less sequentially, one state at a time.
+A diverse toolset of self-authored scripts were used for smoothalizing the development process when interfacing with the STK1000.
+One of these tools is a startup script on the STK1000 which 'calls home' to a 3rd party server to tell it about its new IP address.
+Developers may then programatically connect to the STK1000 over the internet without having to lookup the IP-address on the STK1000 manually using minicom or other tools, as they can simply query the third party server.
+
 
 yo we made them drivers
 
@@ -10,6 +100,7 @@ and implemented the .sm format
 then we made some graphics
 
 % digression about test resulting in us dropping 2-player mode
+TODO: this digression should probably be moved somehwhere else?
 We did some prototype testing and came to the conclusion that having two players control each trying to use four buttons on the board simultaneously did not result in an enjoyable experience.
 Our testers preferred being the sole user of the STK1000's buttons.
 A possible explanation for this is that all of our testers were above the age of 20 and did not posess the child-like hand size required to operate four neighbouring STK1000 buttons at the same time.
