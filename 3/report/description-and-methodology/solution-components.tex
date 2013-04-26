@@ -23,9 +23,9 @@ The user may simply \texttt{fopen} a device, and then write and/or read data to 
 When kernel object (.ko) file has been compiled, it may be installed into the kernel with \texttt{insmod <driver>.ko}.
 Device drivers require a file-like interface to the hardware, which is generated with the command \texttt{mknod \&dev/<device name> c <major number> <minor number>}.
 The major number can be found in \texttt{/proc/devices}, and the minor number is \texttt{0} for the drivers written for this assignment.
-A nifty one-liner for inserting a kernel module and making a device node for it as described above is shown in listing \ref{listing-insertmodule}.
+A nifty one-liner for inserting a kernel module and making a device node for it as described above is shown below.
 
-LISTING linsting-insertmodule: \texttt{mknod /dev/<device name> c \$(grep <driver> /proc/devices | awk '\{print \$1\}') 0}
+\texttt{mknod /dev/<device name> c \$(grep <driver> /proc/devices | awk '\{print \$1\}') 0}
 
 Later, to remove a driver, it can be removed using \texttt{rmmod <driver>}, whilst also deleting the device file using \texttt{rm /dev/<device name>}.
 
@@ -57,7 +57,7 @@ The driver reads the button's state by returning the value found in the Pin-Data
 
 The buttons use the bottom 8 PIOB pins.
 
-For a more detailed explanation of the set-up of the buttons on the STK1000, see \cite{tdt4258-1}. Again, a C reference implementation might exists in \cite{4258-2} TODO: does it? Nope.
+For a more detailed explanation of the set-up of the buttons on the STK1000, see \cite{tdt4258-1}.
 
 \subsubsection{Sound driver}
 In order to produce sound, we use the provided ALSA\footnote{Advanced Linux Sound Architecture, see http://www.alsa-project.org/} driver.
@@ -66,7 +66,6 @@ This let us simply write raw sound data to \texttt{/dev/dsp} to play it, as desc
 The installed linux defaults to muted audio settings, and the lab guidelines recommend using \texttt{alsamixer} to manually set the volume and un-mute it each time the board boots.
 Because the authors prefer automating such work, a script is provided that programatically sets the correct audio settings using the more low level \texttt{alsactl}.
 
-TODO: this is just a marker to remind us that we need to deliver the fix_sound.sh script.
 
 \subsubsection{Display driver}
 The STK1000 has an LCD screen from Samsung.
@@ -87,7 +86,7 @@ Data is displayed on the screen by writing a bitmap buffer directly to \texttt{/
     The game engine also is responsible for timers, and makes sure that the game always runs at the same speed independent of CPU load.
     This is done by enforcing a separation of the logical update code and rendering code.
     The idea is that while logical updating at a fixed rate is critical to maintaining temporal consistency in a game, rendering is not.
-    Should the logical updating falls behind the schedule, rendering is delayed until the logical updating can catch up with real time again.
+    Should the logical updating fall behind the schedule, rendering is delayed until the logical updating can catch up with real time again.
     Finally, the game only performs a render if the logical code has signalled that the screen needs a refresh since the last time it was redrawn.
     This is done to save time that would be wasted on drawing the same image to the screen two update cycles in a row.
 
@@ -112,7 +111,7 @@ In order to generate the graphics to display to the user, various bitmaps are bl
 
 
 \subsection{``Fontenizer'': the Font Engine}
-	A font rendering engine (\texttt{game/include/font.h} and \texttt{game/src/font.c}) was developed in order to easily render some given text on the screen.
+	A font rendering engine was developed in order to easily render some given text on the screen.
 	It does this by iterating through a given string\footnote{Actually a C string.} and locating each character's corresponding glyph in a given font bitmap.
 	The glyphs are blitted one by one from the font bitmap to a destination bitmap one at a time.
     Variable horizontal character spacing is supported on a per-call basis, allowing for sophisticated kerning.
