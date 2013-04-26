@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.2.13)  26 APR 2013 07:36
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Debian) (format=pdflatex 2013.2.13)  26 APR 2013 08:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -284,48 +284,49 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 
 (./abstract/abstract.tex) [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./report.toc)
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./report.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 3.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 3.
+LaTeX Font Info:    Try loading font information for OT1+pcr on input line 28.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+[2])
 \tf@toc=\write3
 \openout3 = `report.toc'.
 
- [2] (./introduction/introduction.tex
-(./introduction/scorchedld.tex
-
-LaTeX Warning: Citation `lab-compendium' on page 1 undefined on input line 2.
-
-) (./introduction/sm.tex [1]
-<images/ddr3.jpg, id=17, 1168.365pt x 1550.79375pt>
+ [3] (./introduction/introduction.tex (./introduction/scorchedld.tex)
+(./introduction/sm.tex [1] <images/ddr3.jpg, id=21, 1168.365pt x 1550.79375pt>
 File: images/ddr3.jpg Graphic file (type jpg)
- <use images/ddr3.jpg>
+
+<use images/ddr3.jpg>
 Package pdftex.def Info: images/ddr3.jpg used on input line 12.
 (pdftex.def)             Requested size: 144.54pt x 191.83737pt.
-
-<images/sm1.jpg, id=18, 642.4pt x 481.8pt>
+ <images/sm1.jpg, id=22, 642.4pt x 481.8pt>
 File: images/sm1.jpg Graphic file (type jpg)
- <use images/sm1.jpg>
+
+<use images/sm1.jpg>
 Package pdftex.def Info: images/sm1.jpg used on input line 24.
 (pdftex.def)             Requested size: 289.07999pt x 216.81534pt.
- [2 <./images/ddr3.jpg> <./images/sm1.jpg>] <images/sm2.jpg, id=23, 642.4pt x 4
-81.8pt>
+ [2 <./images/ddr3.jpg> <./images/sm1.jpg>]
+<images/sm2.jpg, id=27, 642.4pt x 481.8pt>
 File: images/sm2.jpg Graphic file (type jpg)
-
-<use images/sm2.jpg>
+ <use images/sm2.jpg>
 Package pdftex.def Info: images/sm2.jpg used on input line 35.
 (pdftex.def)             Requested size: 289.07999pt x 216.81534pt.
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 43.
- (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 43.
-)) (./description-and-methodology/description-and-methodology.tex [3 <./images/
-sm2.jpg>] (./description-and-methodology/functional-description.tex
-LaTeX Font Info:    Try loading font information for OT1+pcr on input line 8.
-
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-<images/gameplay-splashscreen.jpg, id=28, 1027.84pt x 770.88pt>
+))
+(./description-and-methodology/description-and-methodology.tex [3 <./images/sm2
+.jpg>] (./description-and-methodology/functional-description.tex
+<images/gameplay-splashscreen.jpg, id=32, 1027.84pt x 770.88pt>
 File: images/gameplay-splashscreen.jpg Graphic file (type jpg)
 
 <use images/gameplay-splashscreen.jpg>
@@ -333,19 +334,14 @@ Package pdftex.def Info: images/gameplay-splashscreen.jpg used on input line 16
 .
 (pdftex.def)             Requested size: 289.07999pt x 216.80946pt.
 
-<images/gameplay-songselect.jpg, id=29, 1027.84pt x 770.88pt>
+<images/gameplay-songselect.jpg, id=33, 1027.84pt x 770.88pt>
 File: images/gameplay-songselect.jpg Graphic file (type jpg)
 
 <use images/gameplay-songselect.jpg>
 Package pdftex.def Info: images/gameplay-songselect.jpg used on input line 29.
 (pdftex.def)             Requested size: 289.07999pt x 216.80946pt.
  [4 <./images/gameplay-splashscreen.jpg>]
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 42.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 42.
-
-<images/gameplay-insong.jpg, id=34, 1027.84pt x 770.88pt>
+<images/gameplay-insong.jpg, id=38, 1027.84pt x 770.88pt>
 File: images/gameplay-insong.jpg Graphic file (type jpg)
 
 <use images/gameplay-insong.jpg>
@@ -356,7 +352,7 @@ Package pdftex.def Info: images/gameplay-insong.jpg used on input line 62.
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [5 <./images/gameplay-songselect.jpg>]
-<images/gameplay-scorescreen.jpg, id=42, 1027.84pt x 770.88pt>
+<images/gameplay-scorescreen.jpg, id=45, 1027.84pt x 770.88pt>
 File: images/gameplay-scorescreen.jpg Graphic file (type jpg)
 
 <use images/gameplay-scorescreen.jpg>
@@ -390,94 +386,63 @@ vice name> c $(grep <driver> /proc/devices
  []
 
 
-LaTeX Warning: Citation `tdt4258-1' on page 7 undefined on input line 40.
-
-
-LaTeX Warning: Citation `tdt4258-2' on page 7 undefined on input line 41.
-
-
-LaTeX Warning: Citation `tdt4258-1' on page 7 undefined on input line 43.
-
-
-LaTeX Warning: Citation `tdt4258-2' on page 7 undefined on input line 43.
-
-
 LaTeX Warning: Citation `compendium' on page 7 undefined on input line 46.
 
 [7]
 
-LaTeX Warning: Citation `tdt4258-1' on page 8 undefined on input line 59.
-
-
 LaTeX Warning: Citation `4258-2' on page 8 undefined on input line 59.
-
-
-LaTeX Warning: Citation `lab-compendium' on page 8 undefined on input line 63.
 
 
 LaTeX Warning: Citation `compendium' on page 8 undefined on input line 65.
 
-
-LaTeX Warning: Citation `lab-compendium' on page 8 undefined on input line 72.
-
-
-LaTeX Warning: Citation `avr32-disp' on page 8 undefined on input line 73.
-
 [8]
 LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <12> not available
 (Font)              Font shape `OT1/pcr/b/n' tried instead on input line 122.
-) (./description-and-methodology/configuration-of-the-stk1000.tex
+) (./description-and-methodology/configuration-of-the-stk1000.tex)
+(./description-and-methodology/development-of-the-program.tex
 
-LaTeX Warning: Citation `lab-compendium' on page 9 undefined on input line 2.
-
-
-LaTeX Warning: Citation `tdt4258-1' on page 9 undefined on input line 5.
-
-
-LaTeX Warning: Citation `tdt4258-2' on page 9 undefined on input line 5.
+Package caption Warning: \label without proper \caption on input line 21.
+See the caption package documentation for explanation.
 
 
-LaTeX Warning: Citation `lab-compendium' on page 9 undefined on input line 7.
+LaTeX Warning: Reference `fig-ubootcommand' on page 9 undefined on input line 1
+6.
 
 
-LaTeX Warning: Citation `tdt4258-2' on page 9 undefined on input line 10.
-
-) (./description-and-methodology/development-of-the-program.tex [9] [10])
-(./description-and-methodology/programming-environment.tex
-
-LaTeX Warning: Citation `tdt4258-1' on page 11 undefined on input line 6.
-
-)) [11] (./results-and-tests/results-and-tests.tex
-
-LaTeX Warning: Citation `tdt4258-1' on page 12 undefined on input line 3.
-
-[12]
-
-LaTeX Warning: Citation `tdt4258-1' on page 13 undefined on input line 98.
-
-) [13] (./evaluation-of-assignment/evaluation-of-assignment.tex
-
-LaTeX Warning: Reference `img-commitgraphs' on page 14 undefined on input line 
-15.
+Underfull \hbox (badness 10000) in paragraph at lines 20--22
+[]\OT1/pcr/m/n/10 setenv bootcmd 'mmc init; ext2load mmc 0:1 0x90400000 /boot/u
+Image; fsload;
+ []
 
 
-LaTeX Warning: File `{images/graph-commits.png}' not found on input line 19.
+Underfull \hbox (badness 10000) in paragraph at lines 20--22
+\OT1/pcr/m/n/10 bootm $(fileaddr)'; setenv bootargs 'console=ttyS0 root=/dev/mm
+cblk0p1
+ []
+
+[9] [10]) (./description-and-methodology/programming-environment.tex))
+(./results-and-tests/results-and-tests.tex [11] [12])
+(./evaluation-of-assignment/evaluation-of-assignment.tex [13]
+<images/graph-commits.png, id=73, 696.35156pt x 133.24782pt>
+File: images/graph-commits.png Graphic file (type png)
+
+<use images/graph-commits.png>
+Package pdftex.def Info: images/graph-commits.png used on input line 19.
+(pdftex.def)             Requested size: 433.62pt x 82.97266pt.
+) (./conclusion/conclusion.tex) [14 <./images/graph-commits.png>] (./report.bbl
+
+Underfull \hbox (badness 10000) in paragraph at lines 24--28
+[]\OT1/cmr/m/n/10 Atmel.  Power jumpers on ap7000.  $\OT1/pcr/m/n/10 http : / /
+ support . atmel . no / knowledgebase /
+ []
 
 
-! Package pdftex.def Error: File `images/graph-commits.png' not found.
+Underfull \hbox (badness 10000) in paragraph at lines 24--28
+\OT1/pcr/m/n/10 avr32studiohelp / com . atmel . avr32 . tool . stk1000 / html /
+ jumper _ settings . html #
+ []
 
-See the pdftex.def package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.19 ...ics[width=6in]{{images/graph-commits.png}}
-                                                  
-? 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-) (./conclusion/conclusion.tex) [14]
-No file report.bbl.
+)
 
 Package caption Warning: Unused \captionsetup[lstlisting] on input line 46.
 See the caption package documentation for explanation.
@@ -486,15 +451,12 @@ See the caption package documentation for explanation.
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
- 4699 strings out of 493485
- 72384 string characters out of 3143526
- 138200 words of memory out of 3000000
- 7892 multiletter control sequences out of 15000+200000
+ 4715 strings out of 493485
+ 72709 string characters out of 3143526
+ 139307 words of memory out of 3000000
+ 7906 multiletter control sequences out of 15000+200000
  10392 words of font info for 37 fonts, out of 3000000 for 9000
  957 hyphenation exceptions out of 8191
  38i,12n,43p,423b,285s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -511,10 +473,10 @@ usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/sh
 are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/te
 xlive/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on report.pdf (17 pages, 1598400 bytes).
+Output written on report.pdf (18 pages, 1655254 bytes).
 PDF statistics:
- 119 PDF objects out of 1000 (max. 8388607)
- 79 compressed objects within 1 object stream
+ 125 PDF objects out of 1000 (max. 8388607)
+ 82 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 36 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 41 words of extra memory for PDF output out of 10000 (max. 10000000)
 
