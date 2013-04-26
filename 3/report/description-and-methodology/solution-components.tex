@@ -56,14 +56,14 @@ The driver reads the button's state by returning the value found in the Pin-Data
 
 The buttons use the bottom 8 PIOB pins.
 
-For a more detailed explanation of the set-up of the buttons on the STK1000, see \cite{tdt4258-1}. Again, a C reference implementation might exists in \cite{4258-2} TODO: does it?
+For a more detailed explanation of the set-up of the buttons on the STK1000, see \cite{tdt4258-1}. Again, a C reference implementation might exists in \cite{4258-2} TODO: does it? Nope.
 
 \subsubsection{Sound driver}
 In order to produce sound, we use the provided ALSA\footnote{Advanced Linux Sound Architecture, see http://www.alsa-project.org/} driver.
 This let us simply write raw sound data to \texttt{/dev/dsp} to play it, as described in \cite{lab-compendium}.
 
-The installed linux defaults to muted audio settings, and the course guidelines \cite{compendium} TODO is it here? recommend using \texttt{alsamixer} to manually set the volume each time the board boots.
-Because the authors like automation and tools, a script is provided that programatically sets the correct audio settings using the more low level \texttt{alsactl}.
+The installed linux defaults to muted audio settings, and the lab guidelines recommend using \texttt{alsamixer} to manually set the volume and un-mute it each time the board boots.
+Because the authors prefer automating such work, a script is provided that programatically sets the correct audio settings using the more low level \texttt{alsactl}.
 
 TODO: this is just a marker to remind us that we need to deliver the fix_sound.sh script.
 
