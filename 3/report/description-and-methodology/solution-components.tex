@@ -46,8 +46,8 @@ The driver reads the button's state by returning the value found in the Pin-Data
 
 For a more detailed explanation of the set-up of the buttons on the STK1000, see \cite{tdt4258-1}.	
 \subsubsection{Sound driver}
-/dev/dsp!
-OPEN SOUND SYSTEM -> http://en.wikipedia.org/wiki/Open_Sound_System
+In order to produce sound, we use the provided ALSA\footnote{Advanced Linux Sound Architecture, see http://www.alsa-project.org/} driver.
+This let us simply write raw sound data to \texttt{/dev/dsp} to play it, as described in \cite{lab-compendium}.
 
 \subsubsection{Display driver}
 The STK1000's has a screen.
