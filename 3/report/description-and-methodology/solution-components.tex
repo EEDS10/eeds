@@ -38,12 +38,12 @@ It also releases the region it requested during initialization.
 The driver interacts with the LEDs by first turning all the LEDs off (by writing \texttt{0xFF} to the \texttt{CODR}) and then enabling the desired LEDs by writing the given value to the Set Output Data Register (\texttt{SODR}).
 
 For a more detailed explanation of the set-up of the LEDs on the STK1000, see \cite{tdt4258-1}.
-\cite{tdt4258-2} might have a reference C implementation also, but I am not sure. :TODO.
+For a reference C implementation of this, see \cite{tdt4258-2}.
 
 Noteworthy is the fact that the LEDs no longer reside in PIOC, as in previous assignments \cite{tdt4258-1} and \cite{tdt4258-2}.
-This is because PIOC is made unavailable by \texttt{SW6} on the STK1002, see jumper settings TODO ref.
+This is because PIOC is made unavailable by \texttt{SW6} on the STK1002, see \cite{lab-compendium}.
 PIOB is therefore used for both buttons and LEDs.
-The LEDs use some of the upper pins of PIOB - see \cite{compendium} page somewere (TODO where?) for a table.
+The LEDs use some of the upper pins of PIOB -- see \cite{lab-compendium}.
 
 \subsubsection{Button driver}
 A custom driver was written in order to allow the software to read the buttons' state.
