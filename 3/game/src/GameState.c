@@ -229,11 +229,13 @@ void hit_notes(int column){
                 accuracy_feedback = accuracy_perfect;
                 score_perfect++;
                 score_combo++;
+                score_greatest_combo = MAX(score_greatest_combo, score_combo);
                 feedback_counter = 20;
                 remove_note(i--);
             }else if(difference < 10){
                 accuracy_feedback = accuracy_great;
                 score_combo++;
+                score_greatest_combo = MAX(score_greatest_combo, score_combo);
                 score_great++;
                 feedback_counter = 20;
                 remove_note(i--);
@@ -241,6 +243,7 @@ void hit_notes(int column){
                 accuracy_feedback = accuracy_OK;
                 score_OK++;
                 score_combo++;
+                score_greatest_combo = MAX(score_greatest_combo, score_combo);
                 feedback_counter = 20;
                 remove_note(i--);
             }
