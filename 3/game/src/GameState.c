@@ -9,12 +9,11 @@
 #include "Font.h"
 #include "SMSong.h"
 #include "utils.h"
+#include "audio.h"
 
 extern State* MainMenuState;
 extern State* ScoreScreenState;
 
-extern FILE* audio;
-extern int audio_progress;
 
 SMSong* song;
 extern Font* font_small;
@@ -91,8 +90,7 @@ static void state_deinit(){
 static void state_pause(){
     eeds_free_bitmap(song_bg);
     eeds_free_bitmap(game_bg);
-    fclose(audio);
-    audio = NULL;
+    audio_done();
 }
 
 static int isTransparent(colour_t colour);
@@ -155,9 +153,7 @@ static void state_resume(){
     need_to_draw_song_bg = 1;
     ms_per_measure = 4*60000000 / current_bpm;
 
-    char path_to_song[256];
-    sprintf(path_to_song, "res/Songs/%s/%s.raw", song->basename, song->basename);
-    audio = fopen(path_to_song, "rb");
+    while(n_notes > 0) remove_note(0);
 
     char path_to_bg[256];
     sprintf(path_to_bg, "res/Songs/%s/%s.bmp", song->basename, song->basename);
@@ -171,6 +167,9 @@ static void state_resume(){
     fclose(fp);
     /* merge song and background overlay */
     merge_bgs();
+    char path_to_song[256];
+    sprintf(path_to_song, "res/Songs/%s/%s.raw", song->basename, song->basename);
+    audio_play(path_to_song);
 }
 
 /* Returns true if given colour is transparent
