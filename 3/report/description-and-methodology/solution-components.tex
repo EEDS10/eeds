@@ -54,20 +54,51 @@ This section describes the solutions' various components.
 
 		% should we mention something about orientation?
 
-\subsection{Game Engine -- WORKING TITLE}
-	this is the game engine we developed. it has parts that are pretty good. like sound, it can play sound and display things on the screen.
+        \subsection{EGE  - Eeds Game Engine}
+
+    A simple state-based game engine was developed specifically for this assignment to ease the development of the solution game.
+    The game engine features a simple state system which allows separation of different parts of the program.
+    Each state can be thought of almost as a separate program, with separate functions for initializing, deiniting, updating and so on.
+    In the solution game, separate states are used for the splash screen, the song selection menu, the actual gameplay part, and the score screen.
+
+    The game engine also is responsible for timers, and makes sure that the game always runs at the same speed, independent of CPU load.
+    This is done by enforcing separation of logical update code and rendering code.
+    The idea is that while logical updating at a fixed rate is critical to maintaining temporal consistency in a game, rendering is not.
+    Should the logical updating fall scheduling, rendering is delayed until the logical updating can catch up with real time again.
+    Finally, the game only renders if the logical code has signalled that the screen needs a refresh since the last time it was redrawn. This is done to save time wasted on drawing the same image to the screen two times in a row.
+
+    This description of the timers sucks a bit maybe. Maybe it should be clarified?
+
+
+    The game engine also handles input and output through buttons and leds, providing convenient interfaces for hthe programmer to use.
+    The buttons are regularly polled and their state is stored in a global array of boolean values.
+    This allows the programmer to simply check the array to see if a button is pressed.
+    Button presses can even be simulated programatically by writing to the keys array in between button polling.
+
+
+
+    The leds are exposed through a single function set_leds, which allows the programmer to set the leds.
+
+
+    Finally, the game engine also supports simple audio playing of raw audio data files.
+    
+
 	\subsubsection{Sound}
-		how does the engine handle sound?
-		we just pipe that to /dev/dsa right?
-		pretty much I guess.
+    The sound module of the game engine is capable of playing single raw audio files, as well as controlling the soundcard to set parameters such as bitrate and frequency.
+    The game engine supports one audio file playing at a time, which can be set by loading and unloading an audio file to a global pointer.
+    Mixing, compositing, and other advanced features are not implented.
 	\subsubsection{Graphics}
-		them graphics are pretty good but how do we handle them????
-		everything is a bitmap, right?
+
+    The graphics rendering module is bitmap-based, allowing for arbitrary regions of bitmaps to be blitted to and fro between bitmaps.
+
+
 \subsection{``Fontenizer'': the Font Engine}
 	A font rendering engine (\texttt{game/include/font.h} and \texttt{game/src/font.c}) was developed in order to easily render some given text on the screen.
 	It does this by iterating through a given string\footnote{Actually a C string.} and locating each character's corresponding glyph in a given font bitmap.
-	The glyphs are strung together and passed to the screen buffer.
-
+	The glyphs are blitted one by one from the font bitmap to a destination bitmap one at a time.
+    Variable horizontal character spacing is supported on a per-call basis, allowing for sophisticated kerning.
+    Fontenizer supports the basic ASCII character set.
+        
 \subsection{The \texttt{.SM} file format}
 	The \texttt{.SM} was created by the developers of StepMania. It is at the heart of every ``Song'' in StepMania as StepMania reads these files to obtain the location of the actual audio file as well as the steps.
 	
