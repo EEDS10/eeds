@@ -4,36 +4,47 @@ This section describes the solutions' various components.
 The assignment required that the Linux 2.6 kernel be compiled for the AVR32 STK1000 development board.
 Specifically, Linux 2.6.16.11-avr32-20060626 was used.
 
-Linux was compiled and flashed onto a \texttt{16GB} SD Card, by virtue of following the distributed guidelines and a great deal of blood, sweat and tears\footnote{there were so many tears.}.
+Linux was compiled and flashed onto a \texttt{2GB SanDisk UltraII} SD Card, by virtue of following the distributed guidelines and a great deal of blood, sweat and tears\footnote{there were so many tears.}.
 
 \subsection{Linux Device Drivers for the STK1000}
-In the game we use the buttons to interface with the user, as well as using the LEDs to help with the interface's affordance.
-Both these actions require interfacing with the hardware of the STK1000, which is something we'd rather not be doing in the game's code base.
+In the game, STK1000's buttons are used to interface with the user.
+The board's LEDs are also used to help with the interface's affordance, highlighting which buttons are available.
+Both these actions require interfacing with the hardware of the STK1000, which is something that is unwise to do directly in an application-level program's code base, such as the code base of SLDDD.
 
-This is where a device driver comes in, it's job is to provide a more abstract interface to the hardware.
-Loading device drivers are not straight forward, as they usually reside in kernel space.
+This is where a device driver comes in handy. Its job is to provide an abstract interface to the hardware.
+Loading device drivers is not straight forward, as they usually reside in kernel space.
 Luckily, Linux makes it easy to dynamically load and remove drivers at will.
 
 Many linux drivers, including the ones written for this assignment, allows other programs to interface with hardware through file-like devices.
-The user may simply fopen a device, and then write and/or read data to it, with the driver as a middleware, translating the write and read calls to whatever is appropriate for the specific device.
+The user may simply \texttt{fopen} a device, and then write and/or read data to it, using the driver as a middleware translator to translate the write and read calls to whatever is appropriate for the specific device.
 
 \subsubsection{Loading drivers}
-When you have a compiled kernel object (.ko) file, you may install it to the kernel with \texttt{insmod <driver>.ko}.
-The drivers we use also require a file-like interface to the hardware, which is generated with \texttt{mknod /dev/<device name> c \$(grep <driver> /proc/devices | awk '\{print \$1\}') 0}.
+When kernel object (.ko) file has been compiled, it may be installed into the kernel with \texttt{insmod <driver>.ko}.
+Device drivers require a file-like interface to the hardware, which is generated with the command \texttt{mknod &dev/<device name> c <major number> <minor number>}.
+The major number can be found in \texttt{/proc/devices}, and the minor number is \texttt{0} for the drivers written for this assignment.
+A nifty one-liner for inserting a kernel module and making a device node for it as described above is shown in listing \ref{listing-insertmodule}.
 
-Subsequently, if you want to remove the drivers to preserve memory, you can remove the module with \texttt{rmmod <driver>} and deleting the file with \texttt{rm /dev/<device name>}.
+LISTING linsting-insertmodule: \texttt{mknod /dev/<device name> c \$(grep <driver> /proc/devices | awk '\{print \$1\}') 0}
+
+Later, to remove a driver (perhaps to preserve memory}, it can be removed using \texttt{rmmod <driver>}, whilst also deleting the device file using \texttt{rm /dev/<device name>}.
 
 \subsubsection{LED driver}
 A custom driver was written for the STK1000 to facilitate the turning off and on of the LEDs.
-On initialization the driver obtains a major number dynamically and requests some region before enabling the relevant I/O pins by writing \texttt{0xFF} to the PIO Enable Register (\texttt{PER}) and to the Output Enable Register (\texttt{OER}).
+On initialization the driver obtains a major number dynamically and requests a region of memory-mapped hardware before enabling the relevant I/O pins by writing \texttt{0xFF} to the PIO Enable Register (\texttt{PER}) and to the Output Enable Register (\texttt{OER}).
 
 Upon exit, the driver turns the LEDs off by writing \texttt{0xFF} to the Clear Output Data Register (\texttt{CODR}) and \texttt{0x00} to the PIO Enable Register (\texttt{PER}) to disable the I/O pins.
 It also releases the region it requested during initialization.
 
 The driver interacts with the LEDs by first turning all the LEDs off (by writing \texttt{0xFF} to the \texttt{CODR}) and then enabling the desired LEDs by writing the given value to the Set Output Data Register (\texttt{SODR}).
 
-
 For a more detailed explanation of the set-up of the LEDs on the STK1000, see \cite{tdt4258-1}.
+\cite{tdt4258-2} might have a reference C implementation also, but I am not sure. :TODO.
+
+Noteworthy is the fact that the LEDs no longer reside in PIOC, as in previous assignments \cite{tdt4258-1} and \cite{tdt4258-2}.
+This is because PIOC is made unavailable by \texttt{SW6} on the STK1002, see jumper settings TODO ref.
+PIOB is therefore used for both buttons and LEDs.
+The LEDs use some of the upper pins of PIOB - see \cite{compendium} page somewere (TODO where?) for a table.
+
 \subsubsection{Button driver}
 A custom driver was written in order to allow the software to read the buttons' state.
 
@@ -43,15 +54,22 @@ Its exit function is similarly different.
 
 The driver reads the button's state by returning the value found in the Pin-Data Status Register (\texttt{PDSR}).
 
+The buttons use the bottom 8 PIOB pins.
 
-For a more detailed explanation of the set-up of the buttons on the STK1000, see \cite{tdt4258-1}.	
+For a more detailed explanation of the set-up of the buttons on the STK1000, see \cite{tdt4258-1}. Again, a C reference implementation might exists in \cite{4258-2} TODO: does it?
+
 \subsubsection{Sound driver}
 In order to produce sound, we use the provided ALSA\footnote{Advanced Linux Sound Architecture, see http://www.alsa-project.org/} driver.
 This let us simply write raw sound data to \texttt{/dev/dsp} to play it, as described in \cite{lab-compendium}.
 
+The installed linux defaults to muted audio settings, and the course guidelines \cite{compendium} TODO is it here? recommend using \texttt{alsamixer} to manually set the volume each time the board boots.
+Because the authors like automation and tools, a script is provided that programatically sets the correct audio settings using the more low level \texttt{alsactl}.
+
+TODO: this is just a marker to remind us that we need to deliver the fix_sound.sh script.
+
 \subsubsection{Display driver}
-The STK1000's has a screen.
-It has a resolution of \texttt{320}$\times$\texttt{240} and sports 32 bits per pixel (24 bit color depth, the last 8 bits are unused)\cite{lab-compendium}.
+The STK1000 has an LCD screen from Samsung.
+It has a resolution of \texttt{320}$\times$\texttt{240} and sports \texttt{32} bits per pixel (\texttt{24} bit color depth, the last \texttt{8} bits are unused)\cite{lab-compendium}.
 However, only 24 of these are enabled by default\cite{avr32-disp}.
 
 Data is displayed on the screen by writing a bitmap buffer directly to \texttt{/dev/fb0}.
