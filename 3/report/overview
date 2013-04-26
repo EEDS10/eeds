@@ -22,7 +22,13 @@ Description and Methodology
 			^OK?
 		linux device drivers
 			led driver
+				^?OK?
 			button driver
+				^OK?
+			sound driver
+				/dev/dsp
+			display driver
+				/dev/fb0
 		sound
 		game engine
 		the .sm file format
@@ -34,6 +40,10 @@ Description and Methodology
 		Audio
 			"see previous assignment"
 	Development of the Program
+		
+
+		Features we did not implement
+			^init'd
 
 	Programming Environment
 		Allegro 4.2
