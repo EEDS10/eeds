@@ -39,25 +39,20 @@ static void state_pause(){
 }
 
 static void state_resume(){
-    printf("entered SSS\n");
-
     eeds_set_leds(1);
     redraw_required = 1;
 
     FILE*fp = fopen("res/score_bg.bmp", "rb");
     if(fp == NULL){
-        printf("DAYMn that score_bg was not even loaded!\n");
+        fprintf(stderr, "Unable to open score background.\n");
     }
     score_bg = eeds_load_bmp(fp);
+
     fclose(fp);
-    printf("resume done\n");
 }
 
 static void state_render(bitmap_t* buffer){
-
-    printf("before blit \n");
     eeds_render_bitmap(score_bg, buffer, 0, 0);
-    printf("after blit \n");
 
     char message[30];
     sprintf(message, "PERFECT! %4.i", score_perfect);
@@ -77,6 +72,7 @@ static void state_render(bitmap_t* buffer){
                 score_great * 5 +
                 score_OK * 3 +
                 miss * -2;
+
     Font_render(font_small, buffer, "Score:", 180, 107, 9);
     sprintf(message, "%8.i", score);
     Font_render(font_small, buffer, message, 180, 137, 9);
@@ -88,8 +84,6 @@ static void state_render(bitmap_t* buffer){
 }
 
 static void state_update(){
-
-
     if(key[KEY_ESC]){
         State_change(MainMenuState);
     }

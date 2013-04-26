@@ -10,6 +10,7 @@
 #include "State.h"
 #include "SMSong.h"
 #include "Font.h"
+#include "leds.h"
 
 extern State* GameState;
 
@@ -26,10 +27,8 @@ int key_cooldown = 0;
 bitmap_t* menu_bg;
 
 static void state_init(){
-    printf("main_menu_init()\n");
     font_large = Font_load("res/fonts/font_large.bmp", 28, 36);
     font_small = Font_load("res/fonts/font_small.bmp", 20, 24);
-    printf("done loading fonts...\n");
 
     n_songs = 6;
     songs = malloc(sizeof(SMSong*)*n_songs);
@@ -51,17 +50,14 @@ static void state_init(){
     FILE* fp = fopen("res/menu.bmp", "rw");
     menu_bg = eeds_load_bmp(fp);
     fclose(fp);
-    printf("init done!\n");
 }
 
 
 static void state_deinit(){
-
 }
 
 
 static void state_pause(){
-
 }
 
 
@@ -93,6 +89,7 @@ static void state_update(){
     if (key[KEY_SPACE]){
         State_change(GameState);
     }
+
     if(key_cooldown == 0){
         if (key[KEY_UP]){
             active_selection--;

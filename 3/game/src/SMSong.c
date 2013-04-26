@@ -5,6 +5,7 @@
 #include "utils.h"
 #include "SMSong.h"
 
+/* Sorry about this macro hell. */
 
 #define BEGINPARSE() do{ int n; if(0){
 #define ENDPARSE() }}while(0);
@@ -51,19 +52,17 @@ int intify(char*item){
 
 
 SMSong* SMSong_load(char* filename, char*basename){
-
-
     FILE* fp = fopen(filename, "rt");
 
     if(fp == NULL){
-        printf("SHIIEETT COULDN'T EVEN OPEN, YO\n");
+        fprintf(stderr, "Could not open %s.\n", filename);
         return NULL;
     }
 
     SMSong* song = (SMSong*) malloc(sizeof(SMSong));
 
     if(song == NULL){
-        printf("OH MY GOD SONG iS NOT EVEN MALLOCED YO\n");
+        fprintf(stderr, "Could not allocate heap for song.\n");
     }
 
     song->basename = strdup(basename);
@@ -93,7 +92,7 @@ SMSong* SMSong_load(char* filename, char*basename){
         PARSELIST("#BGCHANGES:", BGchanges, int, intify);
         PARSECUSTOM("#NOTES:")
             char* status = fgets(line, 1024, fp);
-         
+
             /* skip notestype */
             status = fgets(line, 1024, fp);
 
