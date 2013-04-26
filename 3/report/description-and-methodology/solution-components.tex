@@ -7,14 +7,15 @@ This section describes the solutions' various components.
 	Linux was compiled and flashed onto a \texttt{16GB} SD Card, by virtue of following the distributed guidelines and a great deal of blood, sweat and tears\footnote{there were so many tears.}.
 
 \subsection{Linux Device Drivers for the STK1000}
-	Something about LDDs?
-	Linux Device Drivers are pretty cool.
-	They live in kernel space.
-	Kernel space is like user space in the same way that the actions of children are like the actions of adults.
+In the game we use the buttons to interface with the user, as well as using the LEDs to help with the interface's affordance.
+Both these actions require interfacing with the hardware of the STK1000, which is something we'd rather not be doing in the game's code base.
 
+This is where a device driver comes in, it's job is to provide a more abstract interface to the hardware.
+Loading device drivers are not straight forward, as they usually reside in kernel space.
+Luckily, Linux makes it easy to dynamically load and remove drivers at will.
 
-	Init and Exit functions and cleanup and such
-
+Many linux drivers, including the ones written for this assignment, allows other programs to interface with hardware through file-like devices.
+The user may simply fopen a device, and then write and/or read data to it, with the driver as a middleware, translating the write and read calls to whatever is appropriate for the specific device.
 	\subsubsection{Loading drivers}
 	%insmod <driver>.ko
 	%mknod /dev/leds c $(grep <driver> /proc/devices | awk '{print $1}') 0
