@@ -76,36 +76,34 @@ Data is displayed on the screen by writing a bitmap buffer directly to \texttt{/
 
 % should we mention something about orientation?
 
-        \subsection{EGE  - Eeds Game Engine}
+    \subsection{EGE  - Eeds Game Engine}
 
-    A simple state-based game engine was developed specifically for this assignment to ease the development of the solution game.
+    A simple state based game engine was developed specifically for this assignment to ease the development of the solution game.
     The game engine features a simple state system which allows separation of different parts of the program.
-    Each state can be thought of almost as a separate program, with separate functions for initializing, deiniting, updating and so on.
-    In the solution game, separate states are used for the splash screen, the song selection menu, the actual gameplay part, and the score screen.
+    Each state can be thought of almost as a separate program, with separate functions for initializing, deinitializing, updating and so on.
+    In the solution game separate states are used for the \textit{splash screen}, the \textit{song selection menu}, the actual gameplay part, and the \textit{score screen}.
 
-    The game engine also is responsible for timers, and makes sure that the game always runs at the same speed, independent of CPU load.
-    This is done by enforcing separation of logical update code and rendering code.
+    The game engine also is responsible for timers, and makes sure that the game always runs at the same speed independent of CPU load.
+    This is done by enforcing a separation of the logical update code and rendering code.
     The idea is that while logical updating at a fixed rate is critical to maintaining temporal consistency in a game, rendering is not.
-    Should the logical updating fall scheduling, rendering is delayed until the logical updating can catch up with real time again.
-    Finally, the game only renders if the logical code has signalled that the screen needs a refresh since the last time it was redrawn. This is done to save time wasted on drawing the same image to the screen two times in a row.
+    Should the logical updating falls behind the schedule, rendering is delayed until the logical updating can catch up with real time again.
+    Finally, the game only performs a render if the logical code has signalled that the screen needs a refresh since the last time it was redrawn.
+    This is done to save time that would be wasted on drawing the same image to the screen two update cycles in a row.
 
-    The game engine also handles input and output through buttons and leds, providing convenient interfaces for hthe programmer to use.
+    The game engine also handles input and output through buttons and LEDs, providing convenient interfaces for the programmer to use.
     The buttons are regularly polled and their state is stored in a global array of boolean values.
     This allows the programmer to simply check the array to see if a button is pressed.
-    Button presses can even be simulated programatically by writing to the keys array in between button polling.
+    Button presses can even be simulated programatically by writing to the global button array inbetween polling the buttons.
+
+    The LEDs are exposed through a single function \texttt{set_leds}, which allows the programmer to turn the LEDs on and off.
 
 
-
-    The leds are exposed through a single function set_leds, which allows the programmer to set the leds.
-
-
-    Finally, the game engine also supports simple audio playing of raw audio data files.
-
+    Finally, the game engine also supports simple audio playback of raw audio data files.
 
 \subsubsection{Sound}
 The sound module of the game engine is capable of playing single raw audio files, as well as controlling the soundcard to set parameters such as bitrate and frequency.
-The game engine supports one audio file playing at a time, which can be set by loading and unloading an audio file to a global pointer.
-Mixing, compositing, and other advanced features are not implented.
+The game engine supports playback of one audio file at a time, which can be set by loading and unloading an audio file to a global pointer.
+Mixing, compositing, and other advanced features have not been implented.
 
 \subsubsection{Graphics}
 The graphics rendering module is entirely based on bitmaps.
@@ -120,5 +118,8 @@ In order to generate the graphics to display to the user, various bitmaps are bl
     Fontenizer supports the basic ASCII character set.
         
 \subsection{The \texttt{.SM} file format}
-The \texttt{.SM}\footnote{http://www.stepmania.com/wiki/The_.SM_file_format} was created by the developers of StepMania.
-The .SM-files contain meta-data of every song such as artist and title, as well as the name of the sound file and which buttons you are supposed to press when.
+The \texttt{.SM}\footnote{http://www.stepmania.com/wiki/The_.SM_file_format} ile format was created by the developers of StepMania, possibly to facilitate the creation and sharing of notes for songs.
+An \texttt{.SM}-file contains the dance steps for a song, as well as metadata relating to the song itself (the name of the audio file, the name of the artist and such).
+
+The game engine is capable of reading \texttt{.SM}-files and extracting the relevant data.
+Implementing this file format was deemed a feasible alternative to creating notes by hand from scratch, as the popularity of StepMania means there are a wide range of publicly accessible StepMania songs available free of charge on the internet.
