@@ -116,26 +116,3 @@ and got the steps to synch up to it
 	life bar
 
 
-\subsection{Tools}
-
-Because manual work is boring and automation is awesome, several tools and scripts were developed to make life easier.
-
-connect.sh
-This is a script which automatically opens an SSH-connection to the STK1000, without prompting for a password. It can detect when the IP-address of the board has changed, and can find the new address automatically using a thrid party server as a connection broker.
-
-flashnboot.sh
-This is a script which flashes U-Boot to an STK1000, configures it to boot correctly from an SD-card with the supplied linux SD-image, and then boots the board.
-Its primary use is to set up a new board for linux development.
-
-load\_drivers.sh
-This is a script which automatically loads the drivers and makes the device nodes for the LEDs and buttons on the STK1000.
-
-fix\_sound.sh
-This is a script which automatically unmutes the STK1000.
-
-The call-home-script
-This is a script which pings a third party connection broker web server at boot time to let the world know at which IP-address it can be reached.
-
-Makefiles
-The Makefiles for the drivers and for the game were set up to automatically cross-compile and upload the code from the lab-PCs to the STK1000, and optionally run them as well, without prompting for any user input such as passwords or similar things.
-
