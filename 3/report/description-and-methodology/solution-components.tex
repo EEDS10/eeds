@@ -71,6 +71,7 @@ Data is displayed on the screen by writing a bitmap buffer directly to \texttt{/
     Should the logical updating fall scheduling, rendering is delayed until the logical updating can catch up with real time again.
     Finally, the game only renders if the logical code has signalled that the screen needs a refresh since the last time it was redrawn. This is done to save time wasted on drawing the same image to the screen two times in a row.
 
+    %TODO
     This description of the timers sucks a bit maybe. Maybe it should be clarified?
 
 
@@ -85,15 +86,16 @@ Data is displayed on the screen by writing a bitmap buffer directly to \texttt{/
 
 
     Finally, the game engine also supports simple audio playing of raw audio data files.
-    
 
-	\subsubsection{Sound}
-    The sound module of the game engine is capable of playing single raw audio files, as well as controlling the soundcard to set parameters such as bitrate and frequency.
-    The game engine supports one audio file playing at a time, which can be set by loading and unloading an audio file to a global pointer.
-    Mixing, compositing, and other advanced features are not implented.
-	\subsubsection{Graphics}
 
-    The graphics rendering module is bitmap-based, allowing for arbitrary regions of bitmaps to be blitted to and fro between bitmaps.
+\subsubsection{Sound}
+The sound module of the game engine is capable of playing single raw audio files, as well as controlling the soundcard to set parameters such as bitrate and frequency.
+The game engine supports one audio file playing at a time, which can be set by loading and unloading an audio file to a global pointer.
+Mixing, compositing, and other advanced features are not implented.
+
+\subsubsection{Graphics}
+The graphics rendering module is entirely based on bitmaps.
+In order to generate the graphics to display to the user, various bitmaps are blitted in order to achieve the desired visual components and effects.
 
 
 \subsection{``Fontenizer'': the Font Engine}
