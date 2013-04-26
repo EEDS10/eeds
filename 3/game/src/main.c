@@ -3,17 +3,16 @@
 #else
     #include <linux/fb.h>
     #include <fcntl.h>
-    #include <linux/soundcard.h>
     #include <sys/types.h>
     #include <sys/ioctl.h>
     #include "allegro_shim.h"
 #endif
-#include <linux/soundcard.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "State.h"
 #include "bmp_read.h"
 #include "utils.h"
+#include "audio.h"
 
 #define MILLISECONDS_PER_TICK 20
 
@@ -26,29 +25,14 @@ long t;
 long old_t;
 long dt;
 
-FILE* audio;
-int audio_progress;
 
 bitmap_t* buffer;
 
-#define SOUND_BUFFER_SIZE (1024*8)
 
 int main(){
     int running = 1;
-    int sound_tracker = 0;
 
-    int args, status;
-    int sound = open("/dev/dsp", O_RDWR);
-
-    args = 16;
-    status = ioctl(sound, SOUND_PCM_WRITE_BITS, &args);
-    args = 2;
-    status = ioctl(sound, SOUND_PCM_WRITE_CHANNELS, &args);
-    args = 44100;
-    status = ioctl(sound, SOUND_PCM_WRITE_RATE, &args);
-
-    short sound_buffer[SOUND_BUFFER_SIZE];
-
+    audio_init();
     allegro_init();
     install_keyboard();
     set_color_depth(32);
@@ -88,11 +72,8 @@ int main(){
         }
 
         bench_time = gettime();
-        if(audio != NULL){
-            fread(sound_buffer, sizeof(short), SOUND_BUFFER_SIZE, audio);
-            int written = write(sound, sound_buffer, sizeof(short)*SOUND_BUFFER_SIZE);
-            audio_progress += written;
-        }
+
+        audio_drive();
     }
 
     State_deinit(MainMenuState);

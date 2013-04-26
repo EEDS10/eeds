@@ -30,7 +30,7 @@ debug: bin/game
 	cgdb bin/game
 
 avr32: 
-	make CC=avr32-linux-gcc  CC_FLAGS=-"-std=c99 -g -D NO_ALLEGRO=1 -Iinclude/ -O2" LD_FLAGS=" -lm -02"
+	make CC=avr32-linux-gcc  CC_FLAGS=-"-std=c99 -g -D NO_ALLEGRO=1 -Iinclude/ -O2" LD_FLAGS=" -lm -O2"
 
 upload: avr32
 	$(SSHPASS) scp -p -o $(SSHOPTS) -r bin root@$$(wget -qO- http://arkt.is/ip/):game/

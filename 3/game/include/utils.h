@@ -19,11 +19,11 @@
 #endif
 
 
-//#define FLIP_ENDIANNESS_INT32(a)(((a>>24)&0xff)     | \
+#define FLIP_ENDIANNESS_INT32(a)(((a>>24)&0xff)     | \
                                  ((a<<8)&0xff0000)  | \
                                  ((a>>8)&0xff00)    | \
                                  ((a<<24)&0xff000000))
-#define FLIP_ENDIANNESS_INT32(a) (a)
+//#define FLIP_ENDIANNESS_INT32(a) (a)
 
 
 long gettime();
